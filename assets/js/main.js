@@ -69,21 +69,46 @@
     window.addEventListener('hashchange', syncLang);
   }
 
+  /* ---------- Reveal: once-only fade/rise for [data-reveal] (styles in CSS) ---------- */
+  function initReveal() {
+    var items = document.querySelectorAll('[data-reveal]');
+    function disarm() { root.classList.remove('reveal-ready'); }
+    if (!items.length || !('IntersectionObserver' in window) || reduceMotion.matches) { disarm(); return; }
+    root.classList.add('reveal-ready');
+    root.setAttribute('data-reveal-booted', '');
+    var STAGGER = 80, MAX_STEPS = 5;
+    function reveal(entries, io) {
+      /* Elements entering together are staggered in document order */
+      var batch = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
+      batch.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+      batch.forEach(function (el, i) {
+        el.style.transitionDelay = Math.min(i, MAX_STEPS) * STAGGER + 'ms';
+        el.classList.add('is-revealed');
+        io.unobserve(el);
+      });
+    }
+    /* Hero items reveal as soon as any part is visible; the rest wait until slightly inside the viewport */
+    var ioHero = new IntersectionObserver(reveal, { rootMargin: '0px' });
+    var io = new IntersectionObserver(reveal, { rootMargin: '0px 0px -8% 0px' });
+    Array.prototype.forEach.call(items, function (el) { (el.closest('.hero') ? ioHero : io).observe(el); });
+    /* If the visitor switches reduced motion on later, show everything at once */
+    var onChange = function () { if (reduceMotion.matches) { io.disconnect(); ioHero.disconnect(); disarm(); } };
+    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', onChange);
+  }
+  initReveal();
+
+  /* ---------- Hero fills the first viewport: measure the real header height ---------- */
+  var header = document.querySelector('.site-header');
+  if (header) {
+    var setHeaderH = function () { root.style.setProperty('--header-h', header.getBoundingClientRect().height + 'px'); };
+    setHeaderH();
+    if ('ResizeObserver' in window) new ResizeObserver(setHeaderH).observe(header);
+    else window.addEventListener('resize', setHeaderH);
+  }
+
   /* ---------- Motion-only enhancements (skipped for reduced motion) ---------- */
   function enhanceMotion() {
     if (reduceMotion.matches) return;
-
-    /* Subtle section reveals */
-    if ('IntersectionObserver' in window) {
-      var items = document.querySelectorAll('.reveal');
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
-        });
-      }, { rootMargin: '0px 0px -8% 0px' });
-      root.classList.add('reveal-ready');
-      Array.prototype.forEach.call(items, function (el) { io.observe(el); });
-    }
 
     /* Scroll-linked progress for the Automation Journey (passive listener, native scrolling untouched) */
     var journey = document.querySelector('[data-journey]');

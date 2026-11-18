@@ -18,7 +18,7 @@
 <body>
 <a class="skip-link" href="#main">Ugrás a tartalomhoz</a>
 <header class="site-header">
-  <div class="wrap header-inner">
+  <div class="wrap wrap--wide header-inner">
     <a class="brand" href="./">Malczanek Roland</a>
     <nav aria-label="Főmenü">
       <ul class="nav-list">
@@ -32,18 +32,21 @@
 <main id="main">
 
   <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <p class="eyebrow">IT controlling · Pénzügy · Automatizálás</p>
-      <h1 id="hero-title">Pénzügy. Automatizálás. Jobb munkamódszerek.</h1>
-      <p class="lead">Nem csak beszámolok arról, hogyan zajlik a munka. Jobb módszereket építek hozzá.</p>
+    <div class="wrap wrap--wide hero__inner">
+      <div class="hero__main">
+        <p class="eyebrow" data-reveal>IT controlling · Pénzügy · Automatizálás</p>
+        <h1 id="hero-title"><span class="hero__line" data-reveal>Pénzügy.</span> <span class="hero__line hero__line--accent" data-reveal>Automatizálás.</span> <span class="hero__line" data-reveal><span class="nb">Jobb</span> <span class="nb">munkamódszerek.</span></span></h1>
+        <p class="lead" data-reveal>Nem csak beszámolok arról, hogyan zajlik a munka. Jobb módszereket építek hozzá.</p>
+        <!-- HU draft marker: hero CTA ("See what I built") and "Scroll to explore" cue are not shown until approved Hungarian wording exists. -->
+      </div>
     </div>
   </section>
 
   <section class="section" id="building" aria-labelledby="building-title">
     <div class="wrap">
-      <div class="section__head"><h2 id="building-title">A riportolástól az építésig</h2></div>
-      <div class="prose reveal"><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: a riportolástól az építésig vezető út végleges leírása jóváhagyásra vár.</p></div>
-      <div class="ownership reveal">
+      <div class="section__head" data-reveal><h2 id="building-title">A riportolástól az építésig</h2></div>
+      <div class="prose" data-reveal><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: a riportolástól az építésig vezető út végleges leírása jóváhagyásra vár.</p></div>
+      <div class="ownership" data-reveal>
         <div class="ownership__col ownership__col--lead"><h3>Roland felel</h3><ul><li>Kontextus</li><li>Döntések</li><li>Megvalósítás</li><li>Tesztelés</li><li>Eredmény</li></ul></div>
         <div class="ownership__col"><h3>Copilot és Claude támogat</h3><ul><li>Kutatás</li><li>Architektúra</li><li>Kritikai átnézés</li><li>Kód</li><li>Hibakeresés</li></ul></div>
       </div>
@@ -52,9 +55,10 @@
 
   <section class="section section--tint" id="bring" aria-labelledby="bring-title">
     <div class="wrap">
-      <div class="section__head"><h2 id="bring-title">Amit hozok</h2><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: a bevezető jóváhagyásra vár.</p></div>
+      <!-- HU draft: English What I Bring copy approved; Hungarian translation pending, placeholders intentionally kept. -->
+      <div class="section__head" data-reveal><h2 id="bring-title">Amit hozok</h2><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: a bevezető jóváhagyásra vár.</p></div>
       <ul class="card-grid">
-<li class="reveal"><article class="card proof-card" id="bring-finance">
+<li data-reveal><article class="card proof-card" id="bring-finance">
 <h3 class="card__title">Pénzügy és IT-controlling</h3>
 <p class="card__claim" data-placeholder><span class="ph-tag">Helykitöltő</span>Rövid állítás, a végleges szöveg jóváhagyásra vár.</p>
 <button type="button" class="disclosure-btn" id="proof-finance-btn" aria-controls="proof-finance-panel" aria-expanded="false"><span>Lássuk a bizonyítékot</span><span class="sr-only">: Pénzügy és IT-controlling</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 6l5 5 5-5"/></svg></button>
@@ -67,7 +71,7 @@
 
 </div></div>
 </article></li>
-<li class="reveal"><article class="card proof-card" id="bring-process">
+<li data-reveal><article class="card proof-card" id="bring-process">
 <h3 class="card__title">Folyamatfejlesztés</h3>
 <p class="card__claim" data-placeholder><span class="ph-tag">Helykitöltő</span>Rövid állítás, a végleges szöveg jóváhagyásra vár.</p>
 <button type="button" class="disclosure-btn" id="proof-process-btn" aria-controls="proof-process-panel" aria-expanded="false"><span>Lássuk a bizonyítékot</span><span class="sr-only">: Folyamatfejlesztés</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 6l5 5 5-5"/></svg></button>
@@ -80,7 +84,7 @@
 
 </div></div>
 </article></li>
-<li class="reveal"><article class="card proof-card" id="bring-automation">
+<li data-reveal><article class="card proof-card" id="bring-automation">
 <h3 class="card__title">Automatizálás és digitalizáció</h3>
 <p class="card__claim" data-placeholder><span class="ph-tag">Helykitöltő</span>Rövid állítás, a végleges szöveg jóváhagyásra vár.</p>
 <button type="button" class="disclosure-btn" id="proof-automation-btn" aria-controls="proof-automation-panel" aria-expanded="false"><span>Lássuk a bizonyítékot</span><span class="sr-only">: Automatizálás és digitalizáció</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 6l5 5 5-5"/></svg></button>
@@ -93,7 +97,7 @@
 <p><a class="deep-link" href="#built-journey">Automatizálási út</a> <span data-placeholder><span class="ph-tag">Helykitöltő</span>Hivatkozás egy kapcsolódó Built vagy Pályafutás elemre (cél: helykitöltő).</span></p>
 </div></div>
 </article></li>
-<li class="reveal"><article class="card proof-card" id="bring-ai">
+<li data-reveal><article class="card proof-card" id="bring-ai">
 <h3 class="card__title">Munka MI-vel</h3>
 <p class="card__claim" data-placeholder><span class="ph-tag">Helykitöltő</span>Rövid állítás, a végleges szöveg jóváhagyásra vár.</p>
 <button type="button" class="disclosure-btn" id="proof-ai-btn" aria-controls="proof-ai-panel" aria-expanded="false"><span>Lássuk a bizonyítékot</span><span class="sr-only">: Munka MI-vel</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 6l5 5 5-5"/></svg></button>
@@ -106,7 +110,7 @@
 <p><a class="deep-link" href="#built-portfolio">Ez a portfólió</a> <span data-placeholder><span class="ph-tag">Helykitöltő</span>Hivatkozás egy kapcsolódó Built vagy Pályafutás elemre (cél: helykitöltő).</span></p>
 </div></div>
 </article></li>
-<li class="reveal"><article class="card proof-card" id="bring-ambiguity">
+<li data-reveal><article class="card proof-card" id="bring-ambiguity">
 <h3 class="card__title">Építkezés bizonytalanságból</h3>
 <p class="card__claim" data-placeholder><span class="ph-tag">Helykitöltő</span>Rövid állítás, a végleges szöveg jóváhagyásra vár.</p>
 <button type="button" class="disclosure-btn" id="proof-ambiguity-btn" aria-controls="proof-ambiguity-panel" aria-expanded="false"><span>Lássuk a bizonyítékot</span><span class="sr-only">: Építkezés bizonytalanságból</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 6l5 5 5-5"/></svg></button>
@@ -119,7 +123,7 @@
 <p><a class="deep-link" href="#built-csap">CSAP zászlóshajó</a> <span data-placeholder><span class="ph-tag">Helykitöltő</span>Hivatkozás egy kapcsolódó Built vagy Pályafutás elemre (cél: helykitöltő).</span></p>
 </div></div>
 </article></li>
-<li class="reveal"><article class="card proof-card" id="bring-capability">
+<li data-reveal><article class="card proof-card" id="bring-capability">
 <h3 class="card__title">Képességfejlesztés</h3>
 <p class="card__claim" data-placeholder><span class="ph-tag">Helykitöltő</span>Rövid állítás, a végleges szöveg jóváhagyásra vár.</p>
 <button type="button" class="disclosure-btn" id="proof-capability-btn" aria-controls="proof-capability-panel" aria-expanded="false"><span>Lássuk a bizonyítékot</span><span class="sr-only">: Képességfejlesztés</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 6l5 5 5-5"/></svg></button>
@@ -138,12 +142,12 @@
 
   <section class="section" id="built" aria-labelledby="built-title">
     <div class="wrap">
-      <div class="section__head"><h2 id="built-title">Built</h2><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: a Built szakasz bevezetője jóváhagyásra vár.</p></div>
+      <div class="section__head" data-reveal><h2 id="built-title">Built</h2><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: a Built szakasz bevezetője jóváhagyásra vár.</p></div>
 
       <h3 class="subhead" id="built-journey" tabindex="-1">Automatizálási út</h3>
       <p class="journey-summary">Feladatautomatizálás → riportolás átalakítása → folyamatautomatizálás</p>
       <ol class="journey" data-journey>
-<li class="stage reveal" data-stage id="built-stage-1" tabindex="-1">
+<li class="stage" data-reveal data-stage id="built-stage-1" tabindex="-1">
 <p class="stage__kind">Feladatautomatizálás</p>
 <h4>PowerPoint VBA</h4>
 <p data-placeholder><span class="ph-tag">Helykitöltő</span>Szakaszleírás, a végleges szöveg jóváhagyásra vár.</p>
@@ -154,7 +158,7 @@
 </figure>
 
 </li>
-<li class="stage reveal" data-stage id="built-stage-2" tabindex="-1">
+<li class="stage" data-reveal data-stage id="built-stage-2" tabindex="-1">
 <p class="stage__kind">Riportolás átalakítása</p>
 <h4>Excel VBA-tól a Power BI-ig</h4>
 <p data-placeholder><span class="ph-tag">Helykitöltő</span>Szakaszleírás, a végleges szöveg jóváhagyásra vár.</p>
@@ -165,7 +169,7 @@
 </figure>
 
 </li>
-<li class="stage reveal" data-stage id="built-stage-3" tabindex="-1">
+<li class="stage" data-reveal data-stage id="built-stage-3" tabindex="-1">
 <p class="stage__kind">Folyamatautomatizálás</p>
 <h4>Power Platform és CSAP</h4>
 <p data-placeholder><span class="ph-tag">Helykitöltő</span>Szakaszleírás, a végleges szöveg jóváhagyásra vár.</p>
@@ -179,7 +183,7 @@
       </ol>
 
       <div class="built-more">
-<article class="csap reveal" id="built-csap" tabindex="-1">
+<article class="csap" data-reveal id="built-csap" tabindex="-1">
 <h3 class="csap__title">CSAP zászlóshajó</h3>
 <div class="csap__depth">
 <div><h4>Áttekintés</h4><p data-placeholder><span class="ph-tag">Helykitöltő</span>Áttekintő szöveg, a végleges változat jóváhagyásra vár. A nyilvános bemutatók kizárólag fiktív adatokat használnak.</p></div>
@@ -193,7 +197,7 @@
 </div></div></div>
 </div>
 </article>
-<article class="card mini-card reveal" id="built-portfolio" tabindex="-1">
+<article class="card mini-card" data-reveal id="built-portfolio" tabindex="-1">
 <h3 class="card__title">Ez a portfólió</h3>
 <p class="card__sub">A kiállítás építése, miközben megtanulom az eszközöket.</p>
 <p class="card__claim" data-placeholder><span class="ph-tag">Helykitöltő</span>Rövid kártyaszöveg, a végleges változat jóváhagyásra vár.</p>
@@ -204,9 +208,9 @@
 
   <section class="section section--tint" id="career" aria-labelledby="career-title">
     <div class="wrap">
-      <div class="section__head"><h2 id="career-title">Szakmai pályafutás</h2><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: a pályafutás bevezetője jóváhagyásra vár.</p></div>
+      <div class="section__head" data-reveal><h2 id="career-title">Szakmai pályafutás</h2><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: a pályafutás bevezetője jóváhagyásra vár.</p></div>
       <ol class="employers">
-<li><article class="employer employer--a reveal" id="career-a" tabindex="-1">
+<li><article class="employer employer--a" data-reveal id="career-a" tabindex="-1">
 <div class="employer__label">
 <h3 class="employer__name" data-placeholder>Munkáltató neve</h3>
 <p class="employer__period" data-placeholder>Időszak</p>
@@ -228,7 +232,7 @@
 <div class="evidence__grid"><div><h5>Mért eredmények</h5><p data-placeholder><span class="ph-tag">Helykitöltő</span>Mért eredmények, jóváhagyásra vár. Számadat nem került bele.</p></div><div><h5>Elismerések</h5><p data-placeholder><span class="ph-tag">Helykitöltő</span>Elismerések, jóváhagyásra vár.</p></div><div><h5>Konkrét példák</h5><p data-placeholder><span class="ph-tag">Helykitöltő</span>Konkrét példák, jóváhagyásra vár.</p></div><div><h5>Kapcsolódó Built hivatkozások</h5><p><a class="deep-link" href="#built-csap">CSAP zászlóshajó</a></p></div></div>
 </div></div></div>
 </article></li>
-<li><article class="employer employer--b reveal" id="career-b" tabindex="-1">
+<li><article class="employer employer--b" data-reveal id="career-b" tabindex="-1">
 <div class="employer__label">
 <h3 class="employer__name" data-placeholder>Munkáltató neve</h3>
 <p class="employer__period" data-placeholder>Időszak</p>
@@ -248,15 +252,15 @@
 
   <section class="section" id="about" aria-labelledby="about-title">
     <div class="wrap">
-      <div class="section__head"><h2 id="about-title">Rólam</h2></div>
-      <div class="prose reveal"><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: a Rólam szöveg jóváhagyásra vár.</p></div>
+      <div class="section__head" data-reveal><h2 id="about-title">Rólam</h2></div>
+      <div class="prose" data-reveal><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: a Rólam szöveg jóváhagyásra vár.</p></div>
     </div>
   </section>
 
   <section class="section section--tint" id="contact" aria-labelledby="contact-title">
     <div class="wrap">
-      <div class="section__head"><h2 id="contact-title">Kapcsolat</h2></div>
-      <div class="prose reveal"><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: az elérhetőségek és a szöveg jóváhagyásra vár.</p></div>
+      <div class="section__head" data-reveal><h2 id="contact-title">Kapcsolat</h2></div>
+      <div class="prose" data-reveal><p data-placeholder><span class="ph-tag">Helykitöltő</span>Ideiglenes szöveg: az elérhetőségek és a szöveg jóváhagyásra vár.</p></div>
     </div>
   </section>
 
