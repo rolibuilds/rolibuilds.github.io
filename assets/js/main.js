@@ -65,7 +65,9 @@
   revealTarget();
   window.addEventListener('hashchange', revealTarget);
 
-  /* ---------- Story disclosures (accordion): height follows the visible layer; CSS handles the fades ---------- */
+  /* ---------- Story disclosures (accordion) ----------
+     Idle states use natural height (nothing can be clipped). While opening or closing, the stage
+     animates between two measured heights; CSS handles the fades. */
   Array.prototype.forEach.call(document.querySelectorAll('[data-story]'), function (story) {
     var stage = story.querySelector('.story__stage');
     var teaser = story.querySelector('.story__teaser');
@@ -73,23 +75,61 @@
     var btn = full && story.querySelector('.story__btn[aria-controls="' + full.id + '"]');
     var label = btn && btn.querySelector('[data-story-label]');
     if (!stage || !full || !btn) return;
-    var isOpen = false;
-    function settle() { stage.style.height = (isOpen ? full.offsetHeight : (teaser ? teaser.offsetHeight : 0)) + 'px'; }
+    var isOpen = false, timer = 0;
+    story.setAttribute('data-state', 'closed');
     btn.hidden = false;
-    settle();
-    if ('ResizeObserver' in window) {
-      var ro = new ResizeObserver(settle);
-      ro.observe(full);
-      if (teaser) ro.observe(teaser);
-    } else window.addEventListener('resize', settle);
+    function finish() {
+      clearTimeout(timer);
+      story.setAttribute('data-state', isOpen ? 'open' : 'closed');
+      stage.style.height = '';
+      stage.removeEventListener('transitionend', onEnd);
+    }
+    function onEnd(ev) { if (ev.target === stage && ev.propertyName === 'height') finish(); }
     btn.addEventListener('click', function () {
       isOpen = !isOpen;
       btn.setAttribute('aria-expanded', String(isOpen));
       if (label) label.textContent = btn.getAttribute(isOpen ? 'data-label-open' : 'data-label-closed');
+      if (reduceMotion.matches) {
+        story.classList.toggle('is-open', isOpen);
+        finish();
+        return;
+      }
+      var from = stage.offsetHeight;
+      clearTimeout(timer);
+      stage.style.height = from + 'px';
+      story.setAttribute('data-state', isOpen ? 'opening' : 'closing');
       story.classList.toggle('is-open', isOpen);
-      settle();
+      var target = isOpen ? full.offsetHeight : (teaser ? teaser.offsetHeight : 0);
+      void stage.offsetHeight;
+      stage.style.height = target + 'px';
+      stage.addEventListener('transitionend', onEnd);
+      timer = setTimeout(finish, 900);
     });
   });
+
+  /* ---------- Capability cards: every collapsed card gets the tallest collapsed height; open cards grow alone ---------- */
+  var cardGrid = document.querySelector('.card-grid');
+  if (cardGrid) {
+    var cards = cardGrid.querySelectorAll('.proof-card');
+    var equalise = function () {
+      var cols = getComputedStyle(cardGrid).gridTemplateColumns.split(' ').length;
+      Array.prototype.forEach.call(cards, function (c) { c.style.minHeight = ''; });
+      if (cols < 2) return;
+      var max = 0;
+      Array.prototype.forEach.call(cards, function (c) {
+        var panel = c.querySelector('.disclosure-panel');
+        var h = c.offsetHeight - (panel ? panel.offsetHeight : 0);
+        if (h > max) max = h;
+      });
+      Array.prototype.forEach.call(cards, function (c) { c.style.minHeight = max + 'px'; });
+    };
+    var queue = 0;
+    var schedule = function () { cancelAnimationFrame(queue); queue = requestAnimationFrame(equalise); };
+    equalise();
+    if ('ResizeObserver' in window) new ResizeObserver(schedule).observe(cardGrid);
+    else window.addEventListener('resize', schedule);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  }
 
   /* ---------- Language switch keeps the visitor on the same section ---------- */
   var langLink = document.querySelector('.lang-switch');
