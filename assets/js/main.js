@@ -263,7 +263,7 @@
     add(careerEl, '', 'hidden');
     var employerEls = careerEl.querySelectorAll('.employer');
     Array.prototype.forEach.call(employerEls, function (em) { add(em, em.getAttribute('data-employer'), 'career'); });
-    var aboutTitle = txt(q('#about-title'));
+    var aboutTitle = document.documentElement.lang === 'en' ? 'About me' : txt(q('#about-title')); /* EN context label per brief; HU keeps its heading */
     add(q('.about-open'), 'about', '', aboutTitle, '');
     Array.prototype.forEach.call(document.querySelectorAll('#about .about-ch'), function (ch) {
       add(ch, ch.id.replace('about-', ''), '', aboutTitle, txt(q('.about-ch__label', ch)));
