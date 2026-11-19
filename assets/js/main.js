@@ -249,11 +249,11 @@
     var txt = function (el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; };
     var q = function (sel, root) { return (root || document).querySelector(sel); };
     var zones = [];
-    var add = function (el, tone, kind, primary, secondary, card) { if (el) zones.push({ el: el, tone: tone, kind: kind, primary: primary, secondary: secondary, card: card }); };
+    var add = function (el, tone, kind, primary, secondary, card, cap) { if (el) zones.push({ el: el, tone: tone, kind: kind, primary: primary, secondary: secondary, card: card, cap: cap }); };
     var capTitle = txt(q('#capabilities-title'));
     var capCards = document.querySelectorAll('#capabilities .proof-card');
-    add(q('#capabilities'), 'default', '', capTitle, txt(q('.card__title', capCards[0])));
-    Array.prototype.forEach.call(capCards, function (c) { add(c, 'default', '', capTitle, txt(q('.card__title', c)), true); });
+    add(q('#capabilities'), 'default', '', capTitle, txt(q('.card__title', capCards[0])), false, true);
+    Array.prototype.forEach.call(capCards, function (c) { add(c, 'default', '', capTitle, txt(q('.card__title', c)), true, true); });
     var builtTitle = txt(q('#built-title'));
     add(q('#built'), 'default', '', builtTitle, txt(q('.subhead', q('#building'))));
     add(q('#building'), 'default', '', builtTitle, txt(q('.subhead', q('#building'))));
@@ -313,7 +313,9 @@
         }
         setCtx(cur.tone, 'career', txt(em.querySelector('.employer__name')), txt(roleEl));
       } else {
-        setCtx(cur.tone, '', cur.primary, cur.secondary);
+        /* With a multi-column Capabilities grid no single card is current: show the primary line only */
+        var cols = cur.cap ? getComputedStyle(q('.card-grid')).gridTemplateColumns.split(' ').length : 1;
+        setCtx(cur.tone, '', cur.primary, cols > 1 ? '' : cur.secondary);
       }
       ctx.classList.add('is-visible');
     };
