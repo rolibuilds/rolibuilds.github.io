@@ -60,6 +60,37 @@
   revealTarget();
   window.addEventListener('hashchange', revealTarget);
 
+  /* ---------- Built stories: teaser <-> full story, centre-out; height follows the visible layer ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-story]'), function (story) {
+    var stage = story.querySelector('.story__stage');
+    var teaser = story.querySelector('.story__teaser');
+    var full = story.querySelector('.story__full');
+    var btn = story.querySelector('.story__btn');
+    var label = story.querySelector('[data-story-label]');
+    if (!stage || !teaser || !full || !btn) return;
+    var isOpen = false, timer = 0;
+    var texts = { open: 'Show the short version', closed: label ? label.textContent : '' };
+    function settle() { stage.style.height = (isOpen ? full : teaser).offsetHeight + 'px'; }
+    btn.hidden = false;
+    settle();
+    if ('ResizeObserver' in window) { var ro = new ResizeObserver(settle); ro.observe(teaser); ro.observe(full); }
+    else window.addEventListener('resize', settle);
+    btn.addEventListener('click', function () {
+      isOpen = !isOpen;
+      btn.setAttribute('aria-expanded', String(isOpen));
+      if (label) label.textContent = isOpen ? texts.open : texts.closed;
+      story.classList.toggle('is-open', isOpen);
+      if (!reduceMotion.matches) {
+        story.classList.remove('is-animating');
+        void story.offsetWidth;
+        story.classList.add('is-animating');
+        clearTimeout(timer);
+        timer = setTimeout(function () { story.classList.remove('is-animating'); }, 560);
+      }
+      settle();
+    });
+  });
+
   /* ---------- Language switch keeps the visitor on the same section ---------- */
   var langLink = document.querySelector('.lang-switch');
   if (langLink) {
