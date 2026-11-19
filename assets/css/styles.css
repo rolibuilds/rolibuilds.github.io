@@ -336,6 +336,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .story__full .story__note { color: var(--color-muted); font-size: .9375rem; font-style: italic; }
 .reporting { max-width: var(--measure); }
 .journey-intro, .built-more { margin-top: var(--block-gap); }
+.built-more { display: grid; gap: var(--space-4); }
 .journey-lead { margin-bottom: var(--space-2); }
 .journey-path { display: flex; flex-wrap: wrap; gap: .25rem .5rem; margin-bottom: var(--space-4); color: var(--color-muted); font-size: .8125rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
 .journey-path li { display: inline-flex; align-items: center; gap: .5rem; }
@@ -347,9 +348,9 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
    Desktop: left summary (circle, eyebrow, title, progression) + right story. Mobile: title, story, control, progression. */
 .journey { --journey-progress: 0; position: relative; display: grid; gap: var(--block-gap); padding-left: 2.25rem; counter-reset: stage; }
 .journey::before, .journey::after { content: ""; position: absolute; left: .6875rem; top: .75rem; width: 2px; border-radius: 2px; }
-.journey::before { bottom: .75rem; background: var(--color-border); }
+.journey::before { bottom: var(--journey-end, .75rem); background: var(--color-border); }
 .journey::after { height: 0; background: var(--color-accent); }
-.journey.is-live::after { height: calc((100% - 1.5rem) * var(--journey-progress)); }
+.journey.is-live::after { height: calc((100% - .75rem - var(--journey-end, .75rem)) * var(--journey-progress)); }
 .stage { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2) var(--space-5); }
 .stage::before {
   counter-increment: stage; content: counter(stage);
@@ -362,10 +363,12 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .stage--end::before { content: ""; counter-increment: none; background: var(--color-accent); border-color: var(--color-accent); }
 .stage__summary { display: contents; }
 .stage__head { order: 1; }
+.stage__endbody { order: 2; }
+.stage__endbody .stage__more { margin-top: var(--space-1); }
 .stage > .story { order: 2; }
 .stage__flow { order: 3; }
 @media (min-width: 62rem) {
-  .stage:not(.stage--end) { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+  .stage { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
   .stage__summary { display: block; position: sticky; align-self: start; top: calc(var(--header-h) + var(--space-3)); }
   .stage > .story { order: 0; max-width: var(--measure); }
 }
@@ -409,12 +412,13 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .csap__title { font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem); font-weight: 720; letter-spacing: -.02em; }
 .csap__overview { max-width: var(--measure); margin-top: var(--space-3); }
 .csap__capability { margin-top: var(--space-3); }
+.csap__capability .principle { margin-top: var(--space-2); }
 .csap__controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-3); }
 .csap__controls .story__btn { margin-top: 0; min-height: 3rem; }
 .csap .story__full { padding-top: var(--space-4); }
 .csap .story__full > p { max-width: var(--measure); }
 .csap__lists { display: grid; gap: var(--space-3); margin-top: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
-.portfolio-card { max-width: 56rem; }
+.portfolio-card__title { font-size: clamp(1.375rem, 1.05rem + 1.4vw, 2rem); }
 .portfolio-card .prose { margin-top: var(--space-2); max-width: var(--measure); }
 .portfolio-card .prose > * + *, .csap__overview > * + * { margin-top: var(--space-2); }
 
@@ -482,6 +486,28 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .disclosure-btn--tone:hover { color: color-mix(in srgb, var(--t-accent) 65%, var(--color-text)); border-color: currentColor; background: color-mix(in srgb, var(--t-accent) 12%, transparent); }
 .career .disclosure-btn { transition: color var(--tone-dur) var(--ease), border-color var(--tone-dur) var(--ease), background-color var(--dur) var(--ease); }
 
+/* Mobile-only Career context (created by main.js, aria-hidden): employer + current role, directly under the fixed header */
+.career-ctx { display: none; }
+@media (max-width: 40rem) {
+  .career-ctx {
+    --ctx-h: 3rem;
+    display: block; position: sticky; top: var(--header-h); z-index: 5; height: var(--ctx-h); margin: 0 calc(-1 * var(--space-2)) calc(-1 * var(--ctx-h));
+    padding: .375rem max(var(--space-2), env(safe-area-inset-right)) .375rem max(var(--space-2), env(safe-area-inset-left));
+    border-bottom: 1px solid color-mix(in srgb, var(--t-accent) 35%, transparent);
+    background: color-mix(in srgb, var(--t-tint) 96%, transparent); box-sizing: border-box;
+    opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 200ms var(--ease), visibility 0s linear 200ms;
+  }
+  .career-ctx.is-visible { opacity: 1; visibility: visible; transition-delay: 0s; }
+  @supports (backdrop-filter: blur(1px)) { .career-ctx { backdrop-filter: blur(8px); } }
+  .career-ctx[data-employer="otp"] { --t-accent: var(--tone-otp-accent); --t-tint: var(--tone-otp-tint); }
+  .career-ctx[data-employer="vodafone"] { --t-accent: var(--tone-vodafone-accent); --t-tint: var(--tone-vodafone-tint); }
+  .career-ctx[data-employer="docler"] { --t-accent: var(--tone-docler-accent); --t-tint: var(--tone-docler-tint); }
+  .career-ctx[data-employer="realszisztema"] { --t-accent: var(--tone-realszisztema-accent); --t-tint: var(--tone-realszisztema-tint); }
+  .career-ctx__employer, .career-ctx__role { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .career-ctx__employer { color: var(--t-accent); font-size: .6875rem; font-weight: 700; letter-spacing: .1em; line-height: 1.3; text-transform: uppercase; }
+  .career-ctx__role { font-size: .9375rem; font-weight: 650; line-height: 1.3; }
+  .employer, .role { scroll-margin-top: 3rem; }
+}
 /* ==========================================================================
    Reveal system: opt in with [data-reveal]. Armed only by JS (class set in
    theme-init.js), never for reduced motion. Transform/opacity only: no layout shift.
@@ -507,7 +533,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 @media (min-width: 56rem) { .about-open__inner { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--space-5); } }
 .about-open h2 { margin-block: var(--space-2) var(--space-3); font-size: clamp(3.25rem, 1.8rem + 7vw, 7.5rem); font-weight: 780; letter-spacing: -.04em; line-height: .95; }
 .about-open .eyebrow { margin-bottom: 0; max-width: 28rem; }
-.about-open__lead { max-width: 36rem; font-size: clamp(1.25rem, 1.05rem + .9vw, 1.75rem); line-height: 1.4; text-wrap: balance; }
+.about-open__lead { max-width: 36rem; font-size: clamp(1.1875rem, 1.05rem + .45vw, 1.4375rem); line-height: 1.4; text-wrap: balance; }
 .about-open__more { margin-top: var(--space-2); max-width: 36rem; color: var(--color-muted); font-size: 1.125rem; }
 .portrait { margin: 0; }
 .portrait__frame { aspect-ratio: 4 / 5; border-radius: 999px 999px var(--radius) var(--radius); background: linear-gradient(165deg, light-dark(#e9d3b8, #3a2f26), light-dark(#d9b48f, #2a221c)); }
@@ -520,8 +546,9 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .about-ch--music { --ch-bg: var(--about-music-bg); --ch-accent: var(--about-music-accent); padding-bottom: 0; }
 .about-ch--travel { --ch-bg: var(--about-travel-bg); --ch-accent: var(--about-travel-accent); }
 .about-ch--ai { --ch-bg: var(--about-ai-bg); --ch-accent: var(--about-ai-accent); }
-.about-ch__head { margin-bottom: var(--space-3); padding-top: var(--space-2); border-top: 1px solid var(--about-line); }
+.about-ch__head { margin-bottom: var(--space-3); }
 .about-ch__label { margin-bottom: var(--space-1); color: var(--ch-accent); }
+.about-ch__title { padding-top: var(--space-1); border-top: 1px solid var(--about-line); }
 .about-ch__title { font-size: clamp(2rem, 1.2rem + 3.6vw, 4rem); font-weight: 780; letter-spacing: -.02em; line-height: 1.02; text-transform: uppercase; text-wrap: balance; }
 .about-ch .facts-label { color: var(--ch-accent); }
 .about-ch__grid { display: grid; gap: var(--space-4); align-items: start; }

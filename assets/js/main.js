@@ -68,6 +68,12 @@
   /* ---------- Story disclosures (accordion) ----------
      Idle states use natural height (nothing can be clipped). While opening or closing, the stage
      animates between two measured heights; CSS handles the fades. */
+  var mobileMq = window.matchMedia('(max-width: 40rem)');
+  var pendingRepos = null;
+  function headerHeight() { var h = document.querySelector('.site-header'); return h ? h.getBoundingClientRect().height : 0; }
+  ['wheel', 'touchstart', 'keydown'].forEach(function (t) {
+    window.addEventListener(t, function () { pendingRepos = null; }, { passive: true });
+  });
   Array.prototype.forEach.call(document.querySelectorAll('[data-story]'), function (story) {
     var stage = story.querySelector('.story__stage');
     var teaser = story.querySelector('.story__teaser');
@@ -75,7 +81,8 @@
     var btn = full && story.querySelector('.story__btn[aria-controls="' + full.id + '"]');
     var label = btn && btn.querySelector('[data-story-label]');
     if (!stage || !full || !btn) return;
-    var isOpen = false, timer = 0;
+    var isOpen = false, timer = 0, repos = null;
+    var stageItem = story.closest('.stage');
     story.setAttribute('data-state', 'closed');
     btn.hidden = false;
     function finish() {
@@ -83,10 +90,20 @@
       story.setAttribute('data-state', isOpen ? 'open' : 'closed');
       stage.style.height = '';
       stage.removeEventListener('transitionend', onEnd);
+      /* Mobile: after SHOW LESS has fully collapsed, bring the milestone top back under the header only if it was left above it. */
+      if (!isOpen && repos && repos === pendingRepos && stageItem && mobileMq.matches) {
+        pendingRepos = null;
+        if (stageItem.getBoundingClientRect().top < headerHeight() - 2) {
+          stageItem.scrollIntoView({ block: 'start', behavior: reduceMotion.matches ? 'instant' : 'smooth' });
+        }
+      }
+      repos = null;
     }
     function onEnd(ev) { if (ev.target === stage && ev.propertyName === 'height') finish(); }
     btn.addEventListener('click', function () {
       isOpen = !isOpen;
+      repos = null; pendingRepos = null;
+      if (!isOpen && stageItem) { repos = {}; pendingRepos = repos; }
       btn.setAttribute('aria-expanded', String(isOpen));
       if (label) label.textContent = btn.getAttribute(isOpen ? 'data-label-open' : 'data-label-closed');
       if (reduceMotion.matches) {
@@ -207,6 +224,61 @@
       if (!toneTicking) { toneTicking = true; requestAnimationFrame(syncTone); }
     }, { passive: true });
     window.addEventListener('resize', syncTone);
+  }
+
+  /* ---------- Journey timeline ends at the final endpoint node ---------- */
+  var journeyEl = document.querySelector('[data-journey]');
+  var endStage = journeyEl && journeyEl.querySelector('.stage--end');
+  if (endStage) {
+    var setJourneyEnd = function () {
+      journeyEl.style.setProperty('--journey-end', Math.max(0, endStage.offsetHeight - 0.9 * parseFloat(getComputedStyle(document.documentElement).fontSize)) + 'px');
+    };
+    setJourneyEnd();
+    window.addEventListener('resize', setJourneyEnd);
+    window.addEventListener('load', setJourneyEnd);
+  }
+
+  /* ---------- Mobile Career context: employer + current role under the fixed header (decorative duplicate, aria-hidden) ---------- */
+  var careerEl = document.getElementById('career');
+  var employers = careerEl ? careerEl.querySelectorAll('.employer') : [];
+  if (employers.length) {
+    var ctx = document.createElement('div');
+    ctx.className = 'career-ctx';
+    ctx.setAttribute('aria-hidden', 'true');
+    ctx.innerHTML = '<span class="career-ctx__employer"></span><span class="career-ctx__role"></span>';
+    var ctxEmp = ctx.firstChild, ctxRole = ctx.lastChild;
+    var ctxWrap = careerEl.querySelector('.wrap');
+    ctxWrap.insertBefore(ctx, ctxWrap.firstChild);
+    var ctxTicking = false, lastKey = '';
+    var ctxUpdate = function () {
+      ctxTicking = false;
+      if (!mobileMq.matches) { ctx.classList.remove('is-visible'); return; }
+      var hh = headerHeight(), ctxH = ctx.offsetHeight;
+      var first = employers[0].getBoundingClientRect(), last = employers[employers.length - 1].getBoundingClientRect();
+      var show = first.top <= hh + ctxH && last.bottom > hh + ctxH;
+      ctx.classList.toggle('is-visible', show);
+      if (!show) return;
+      var line = hh + ctxH + 8, cur = employers[0];
+      Array.prototype.forEach.call(employers, function (em) { if (em.getBoundingClientRect().top <= line) cur = em; });
+      var roles = cur.querySelectorAll('.role'), roleEl = null;
+      if (roles.length) {
+        roleEl = roles[0];
+        Array.prototype.forEach.call(roles, function (r) { if (r.getBoundingClientRect().top <= line) roleEl = r; });
+        roleEl = roleEl.querySelector('h4');
+      } else {
+        roleEl = cur.querySelector('.progression .is-latest');
+      }
+      var emp = cur.querySelector('.employer__name'), key = cur.getAttribute('data-employer') + '|' + (roleEl ? roleEl.textContent : '');
+      if (key === lastKey) return;
+      lastKey = key;
+      ctx.setAttribute('data-employer', cur.getAttribute('data-employer'));
+      ctxEmp.textContent = emp ? emp.textContent : '';
+      ctxRole.textContent = roleEl ? roleEl.textContent : '';
+    };
+    var ctxQueue = function () { if (!ctxTicking) { ctxTicking = true; requestAnimationFrame(ctxUpdate); } };
+    window.addEventListener('scroll', ctxQueue, { passive: true });
+    window.addEventListener('resize', ctxQueue);
+    ctxUpdate();
   }
 
   /* ---------- Motion-only enhancements (skipped for reduced motion) ---------- */
