@@ -68,7 +68,7 @@
   /* ---------- Story disclosures (accordion) ----------
      Idle states use natural height (nothing can be clipped). While opening or closing, the stage
      animates between two measured heights; CSS handles the fades. */
-  var mobileMq = window.matchMedia('(max-width: 40rem)');
+  var mobileMq = window.matchMedia('(max-width: 40rem), (pointer: coarse) and (max-width: 85.4rem)');
   var pendingRepos = null;
   var pageCtxEl = null;
   function ctxBarHeight() { return pageCtxEl && pageCtxEl.classList.contains('is-visible') ? pageCtxEl.offsetHeight : 0; }
@@ -249,11 +249,11 @@
     var txt = function (el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; };
     var q = function (sel, root) { return (root || document).querySelector(sel); };
     var zones = [];
-    var add = function (el, tone, kind, primary, secondary) { if (el) zones.push({ el: el, tone: tone, kind: kind, primary: primary, secondary: secondary }); };
+    var add = function (el, tone, kind, primary, secondary, card) { if (el) zones.push({ el: el, tone: tone, kind: kind, primary: primary, secondary: secondary, card: card }); };
     var capTitle = txt(q('#capabilities-title'));
     var capCards = document.querySelectorAll('#capabilities .proof-card');
     add(q('#capabilities'), 'default', '', capTitle, txt(q('.card__title', capCards[0])));
-    Array.prototype.forEach.call(capCards, function (c) { add(c, 'default', '', capTitle, txt(q('.card__title', c))); });
+    Array.prototype.forEach.call(capCards, function (c) { add(c, 'default', '', capTitle, txt(q('.card__title', c)), true); });
     var builtTitle = txt(q('#built-title'));
     add(q('#built'), 'default', '', builtTitle, txt(q('.subhead', q('#building'))));
     add(q('#building'), 'default', '', builtTitle, txt(q('.subhead', q('#building'))));
@@ -293,11 +293,13 @@
       ctxTicking = false;
       if (!mobileMq.matches) { ctx.classList.remove('is-visible'); return; }
       /* zones are in document order, so the last one above the reading line is current */
-      var line = headerHeight() + ctx.offsetHeight + 8, cur = null;
+      var line = headerHeight() + ctx.offsetHeight + 8, cur = null, curTop = 0;
       for (var i = 0; i < zones.length; i++) {
         /* Contact releases the bar as soon as it is well into view */
         var at = zones[i].el.id === 'contact' ? Math.max(line, window.innerHeight * 0.7) : line;
-        if (zones[i].el.getBoundingClientRect().top <= at) cur = zones[i];
+        var zt = zones[i].el.getBoundingClientRect().top;
+        /* cards in the same grid row share a top: the first (leftmost) one stays current */
+        if (zt <= at && !(zones[i].card && cur && cur.card && Math.abs(zt - curTop) < 2)) { cur = zones[i]; curTop = zt; }
       }
       if (!cur || cur.kind === 'hidden') { ctx.classList.remove('is-visible'); return; }
       if (cur.kind === 'career') {
@@ -318,6 +320,8 @@
     var ctxQueue = function () { if (!ctxTicking) { ctxTicking = true; requestAnimationFrame(ctxUpdate); } };
     window.addEventListener('scroll', ctxQueue, { passive: true });
     window.addEventListener('resize', ctxQueue);
+    window.addEventListener('orientationchange', ctxQueue);
+    mobileMq.addEventListener('change', ctxQueue);
     ctxUpdate();
   }
 
