@@ -517,9 +517,6 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
   .page-ctx__primary.is-long { font-size: .75rem; letter-spacing: .02em; }
   .page-ctx__secondary { color: var(--color-text); font-size: .75rem; line-height: 1.3; }
   .page-ctx__secondary[hidden] { display: none; }
-  /* Career keeps its approved hierarchy: small employer label, larger role line */
-  .page-ctx[data-kind="career"] .page-ctx__primary { font-size: .6875rem; letter-spacing: .1em; line-height: 1.3; }
-  .page-ctx[data-kind="career"] .page-ctx__secondary { font-size: .9375rem; font-weight: 650; }
   .employer, .role { scroll-margin-top: 3rem; }
 }
 /* ==========================================================================
