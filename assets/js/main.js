@@ -106,6 +106,38 @@
     else window.addEventListener('resize', setHeaderH);
   }
 
+  /* ---------- Sticky header: subtle bottom border once the page has scrolled ---------- */
+  if (header) {
+    var syncScrolled = function () { header.classList.toggle('is-scrolled', (window.pageYOffset || root.scrollTop) > 4); };
+    syncScrolled();
+    window.addEventListener('scroll', syncScrolled, { passive: true });
+  }
+
+  /* ---------- Career tone: follows the employer chapter that dominates the viewport, in both scroll directions ---------- */
+  var career = document.getElementById('career');
+  var employers = career ? career.querySelectorAll('[data-employer]') : [];
+  if (employers.length) {
+    var toneTicking = false;
+    var syncTone = function () {
+      toneTicking = false;
+      /* Dominant chapter = the one closest to a reading line 40% down the viewport */
+      var line = window.innerHeight * 0.4, best = null, bestDist = Infinity;
+      Array.prototype.forEach.call(employers, function (el) {
+        var r = el.getBoundingClientRect();
+        var dist = line < r.top ? r.top - line : (line > r.bottom ? line - r.bottom : 0);
+        if (dist < bestDist) { bestDist = dist; best = el; }
+      });
+      if (best && career.getAttribute('data-tone') !== best.getAttribute('data-employer')) {
+        career.setAttribute('data-tone', best.getAttribute('data-employer'));
+      }
+    };
+    syncTone();
+    window.addEventListener('scroll', function () {
+      if (!toneTicking) { toneTicking = true; requestAnimationFrame(syncTone); }
+    }, { passive: true });
+    window.addEventListener('resize', syncTone);
+  }
+
   /* ---------- Motion-only enhancements (skipped for reduced motion) ---------- */
   function enhanceMotion() {
     if (reduceMotion.matches) return;
