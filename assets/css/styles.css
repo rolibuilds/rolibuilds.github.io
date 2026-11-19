@@ -62,6 +62,7 @@
   --about-line: color-mix(in srgb, var(--color-text) 24%, transparent);
 
   /* Scale */
+  --subhead-fs: 1.125rem;     /* shared subsection heading (Music: Concerts, Festivals) */
   --space-1: .5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
@@ -486,26 +487,39 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .disclosure-btn--tone:hover { color: color-mix(in srgb, var(--t-accent) 65%, var(--color-text)); border-color: currentColor; background: color-mix(in srgb, var(--t-accent) 12%, transparent); }
 .career .disclosure-btn { transition: color var(--tone-dur) var(--ease), border-color var(--tone-dur) var(--ease), background-color var(--dur) var(--ease); }
 
-/* Mobile-only Career context (created by main.js, aria-hidden): employer + current role, directly under the fixed header */
-.career-ctx { display: none; }
+/* Mobile-only page context bar (created by main.js, aria-hidden): one sticky bar under the fixed header, primary + secondary title */
+.page-ctx { display: none; }
 @media (max-width: 40rem) {
-  .career-ctx {
-    --ctx-h: 3rem;
-    display: block; position: sticky; top: var(--header-h); z-index: 5; height: var(--ctx-h); margin: 0 calc(-1 * var(--space-2)) calc(-1 * var(--ctx-h));
-    padding: .375rem max(var(--space-2), env(safe-area-inset-right)) .375rem max(var(--space-2), env(safe-area-inset-left));
-    border-bottom: 1px solid color-mix(in srgb, var(--t-accent) 35%, transparent);
-    background: color-mix(in srgb, var(--t-tint) 96%, transparent); box-sizing: border-box;
-    opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 200ms var(--ease), visibility 0s linear 200ms;
+  .page-ctx {
+    --ctx-h: 3rem; --ctx-accent: var(--color-accent); --ctx-bg: var(--color-bg);
+    display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;
+    position: sticky; top: var(--header-h); z-index: 5; height: var(--ctx-h); margin-bottom: calc(-1 * var(--ctx-h));
+    padding: 0 max(var(--space-2), env(safe-area-inset-right)) 0 max(var(--space-2), env(safe-area-inset-left));
+    border-bottom: 1px solid color-mix(in srgb, var(--ctx-accent) 35%, transparent);
+    background: color-mix(in srgb, var(--ctx-bg) 96%, transparent);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 200ms var(--ease), visibility 0s linear 200ms, background-color 300ms var(--ease);
   }
-  .career-ctx.is-visible { opacity: 1; visibility: visible; transition-delay: 0s; }
-  @supports (backdrop-filter: blur(1px)) { .career-ctx { backdrop-filter: blur(8px); } }
-  .career-ctx[data-employer="otp"] { --t-accent: var(--tone-otp-accent); --t-tint: var(--tone-otp-tint); }
-  .career-ctx[data-employer="vodafone"] { --t-accent: var(--tone-vodafone-accent); --t-tint: var(--tone-vodafone-tint); }
-  .career-ctx[data-employer="docler"] { --t-accent: var(--tone-docler-accent); --t-tint: var(--tone-docler-tint); }
-  .career-ctx[data-employer="realszisztema"] { --t-accent: var(--tone-realszisztema-accent); --t-tint: var(--tone-realszisztema-tint); }
-  .career-ctx__employer, .career-ctx__role { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .career-ctx__employer { color: var(--t-accent); font-size: .6875rem; font-weight: 700; letter-spacing: .1em; line-height: 1.3; text-transform: uppercase; }
-  .career-ctx__role { font-size: .9375rem; font-weight: 650; line-height: 1.3; }
+  .page-ctx.is-visible { opacity: 1; visibility: visible; transition-delay: 0s; }
+  @supports (backdrop-filter: blur(1px)) { .page-ctx { backdrop-filter: blur(8px); } }
+  .page-ctx[data-tone="otp"] { --ctx-accent: var(--tone-otp-accent); --ctx-bg: var(--tone-otp-tint); }
+  .page-ctx[data-tone="vodafone"] { --ctx-accent: var(--tone-vodafone-accent); --ctx-bg: var(--tone-vodafone-tint); }
+  .page-ctx[data-tone="docler"] { --ctx-accent: var(--tone-docler-accent); --ctx-bg: var(--tone-docler-tint); }
+  .page-ctx[data-tone="realszisztema"] { --ctx-accent: var(--tone-realszisztema-accent); --ctx-bg: var(--tone-realszisztema-tint); }
+  .page-ctx[data-tone="about"] { --ctx-bg: var(--about-open-bg); }
+  .page-ctx[data-tone="karate"] { --ctx-accent: var(--about-karate-accent); --ctx-bg: var(--about-karate-bg); }
+  .page-ctx[data-tone="reading"] { --ctx-accent: var(--about-reading-accent); --ctx-bg: var(--about-reading-bg); }
+  .page-ctx[data-tone="music"] { --ctx-accent: var(--about-music-accent); --ctx-bg: var(--about-music-bg); }
+  .page-ctx[data-tone="travel"] { --ctx-accent: var(--about-travel-accent); --ctx-bg: var(--about-travel-bg); }
+  .page-ctx[data-tone="ai"] { --ctx-accent: var(--about-ai-accent); --ctx-bg: var(--about-ai-bg); }
+  .page-ctx__primary, .page-ctx__secondary { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .page-ctx__primary { color: var(--ctx-accent); font-size: .875rem; font-weight: 700; letter-spacing: .04em; line-height: 1.3; text-transform: uppercase; }
+  .page-ctx__primary.is-long { font-size: .75rem; letter-spacing: .02em; }
+  .page-ctx__secondary { color: var(--color-text); font-size: .75rem; line-height: 1.3; }
+  .page-ctx__secondary[hidden] { display: none; }
+  /* Career keeps its approved hierarchy: small employer label, larger role line */
+  .page-ctx[data-kind="career"] .page-ctx__primary { font-size: .6875rem; letter-spacing: .1em; line-height: 1.3; }
+  .page-ctx[data-kind="career"] .page-ctx__secondary { font-size: .9375rem; font-weight: 650; }
   .employer, .role { scroll-margin-top: 3rem; }
 }
 /* ==========================================================================
@@ -560,7 +574,6 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
   .about-ch__grid--travel { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: center; }
 }
 .prose--wide { max-width: 40rem; }
-.prose--wide p:first-child { font-size: 1.375rem; line-height: 1.5; }
 .about-ch__intro { max-width: 44rem; margin-bottom: var(--space-4); font-size: clamp(1.1875rem, 1rem + .7vw, 1.5rem); line-height: 1.45; }
 .cutout img { display: block; max-height: 80svh; width: auto; margin-inline: auto; }
 
@@ -611,3 +624,5 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 }
 a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--color-accent-soft); }
 .contact-cta[aria-disabled="true"] { color: var(--color-muted); border-color: var(--color-border-strong); }
+
+.music-sub { margin-bottom: var(--space-1); color: var(--ch-accent); font-size: var(--subhead-fs); font-weight: 700; letter-spacing: .08em; line-height: 1.3; text-transform: uppercase; }

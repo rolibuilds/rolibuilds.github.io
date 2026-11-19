@@ -70,6 +70,8 @@
      animates between two measured heights; CSS handles the fades. */
   var mobileMq = window.matchMedia('(max-width: 40rem)');
   var pendingRepos = null;
+  var pageCtxEl = null;
+  function ctxBarHeight() { return pageCtxEl && pageCtxEl.classList.contains('is-visible') ? pageCtxEl.offsetHeight : 0; }
   function headerHeight() { var h = document.querySelector('.site-header'); return h ? h.getBoundingClientRect().height : 0; }
   ['wheel', 'touchstart', 'keydown'].forEach(function (t) {
     window.addEventListener(t, function () { pendingRepos = null; }, { passive: true });
@@ -82,7 +84,7 @@
     var label = btn && btn.querySelector('[data-story-label]');
     if (!stage || !full || !btn) return;
     var isOpen = false, timer = 0, repos = null;
-    var stageItem = story.closest('.stage');
+    var stageItem = story.closest('.stage') || story.closest('.reporting');
     story.setAttribute('data-state', 'closed');
     btn.hidden = false;
     function finish() {
@@ -90,11 +92,13 @@
       story.setAttribute('data-state', isOpen ? 'open' : 'closed');
       stage.style.height = '';
       stage.removeEventListener('transitionend', onEnd);
-      /* Mobile: after SHOW LESS has fully collapsed, bring the milestone top back under the header only if it was left above it. */
+      /* Mobile: after SHOW LESS has fully collapsed, bring the block top back below the header and context bar only if it was left above them. */
       if (!isOpen && repos && repos === pendingRepos && stageItem && mobileMq.matches) {
         pendingRepos = null;
-        if (stageItem.getBoundingClientRect().top < headerHeight() - 2) {
-          stageItem.scrollIntoView({ block: 'start', behavior: reduceMotion.matches ? 'instant' : 'smooth' });
+        var offset = headerHeight() + ctxBarHeight();
+        var top = stageItem.getBoundingClientRect().top;
+        if (top < offset - 2) {
+          window.scrollTo({ top: top + window.pageYOffset - offset - 16, behavior: reduceMotion.matches ? 'instant' : 'smooth' });
         }
       }
       repos = null;
@@ -238,42 +242,78 @@
     window.addEventListener('load', setJourneyEnd);
   }
 
-  /* ---------- Mobile Career context: employer + current role under the fixed header (decorative duplicate, aria-hidden) ---------- */
+  /* ---------- Mobile page context bar: one sticky, aria-hidden bar (primary + secondary title) derived from existing headings ---------- */
+  var mainEl = document.getElementById('main');
   var careerEl = document.getElementById('career');
-  var employers = careerEl ? careerEl.querySelectorAll('.employer') : [];
-  if (employers.length) {
+  if (mainEl && careerEl) {
+    var txt = function (el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; };
+    var q = function (sel, root) { return (root || document).querySelector(sel); };
+    var zones = [];
+    var add = function (el, tone, kind, primary, secondary) { if (el) zones.push({ el: el, tone: tone, kind: kind, primary: primary, secondary: secondary }); };
+    var capTitle = txt(q('#capabilities-title'));
+    var capCards = document.querySelectorAll('#capabilities .proof-card');
+    add(q('#capabilities'), 'default', '', capTitle, txt(q('.card__title', capCards[0])));
+    Array.prototype.forEach.call(capCards, function (c) { add(c, 'default', '', capTitle, txt(q('.card__title', c))); });
+    var builtTitle = txt(q('#built-title'));
+    add(q('#built'), 'default', '', builtTitle, txt(q('.subhead', q('#building'))));
+    add(q('#building'), 'default', '', builtTitle, txt(q('.subhead', q('#building'))));
+    add(q('#built-journey'), 'default', '', builtTitle, txt(q('.subhead', q('#built-journey'))));
+    add(q('#built-csap'), 'default', '', txt(q('#csap-title')), txt(q('.csap__eyebrow', q('#built-csap'))));
+    add(q('#built-portfolio'), 'default', '', txt(q('#portfolio-title')), txt(q('.csap__eyebrow', q('#built-portfolio'))));
+    add(careerEl, '', 'hidden');
+    var employerEls = careerEl.querySelectorAll('.employer');
+    Array.prototype.forEach.call(employerEls, function (em) { add(em, em.getAttribute('data-employer'), 'career'); });
+    var aboutTitle = txt(q('#about-title'));
+    add(q('.about-open'), 'about', '', aboutTitle, '');
+    Array.prototype.forEach.call(document.querySelectorAll('#about .about-ch'), function (ch) {
+      add(ch, ch.id.replace('about-', ''), '', aboutTitle, txt(q('.about-ch__label', ch)));
+    });
+    add(q('#contact'), '', 'hidden');
+
     var ctx = document.createElement('div');
-    ctx.className = 'career-ctx';
+    ctx.className = 'page-ctx';
     ctx.setAttribute('aria-hidden', 'true');
-    ctx.innerHTML = '<span class="career-ctx__employer"></span><span class="career-ctx__role"></span>';
-    var ctxEmp = ctx.firstChild, ctxRole = ctx.lastChild;
-    var ctxWrap = careerEl.querySelector('.wrap');
-    ctxWrap.insertBefore(ctx, ctxWrap.firstChild);
+    ctx.innerHTML = '<span class="page-ctx__primary"></span><span class="page-ctx__secondary"></span>';
+    var ctxP = ctx.firstChild, ctxS = ctx.lastChild;
+    mainEl.insertBefore(ctx, mainEl.firstChild);
+    pageCtxEl = ctx;
     var ctxTicking = false, lastKey = '';
+    var setCtx = function (tone, kind, primary, secondary) {
+      var key = [tone, kind, primary, secondary].join('|');
+      if (key === lastKey) return;
+      lastKey = key;
+      ctx.setAttribute('data-tone', tone);
+      if (kind) ctx.setAttribute('data-kind', kind); else ctx.removeAttribute('data-kind');
+      ctxP.textContent = primary;
+      ctxP.classList.toggle('is-long', primary.length > 28 && kind !== 'career');
+      ctxS.textContent = secondary;
+      ctxS.hidden = !secondary;
+    };
     var ctxUpdate = function () {
       ctxTicking = false;
       if (!mobileMq.matches) { ctx.classList.remove('is-visible'); return; }
-      var hh = headerHeight(), ctxH = ctx.offsetHeight;
-      var first = employers[0].getBoundingClientRect(), last = employers[employers.length - 1].getBoundingClientRect();
-      var show = first.top <= hh + ctxH && last.bottom > hh + ctxH;
-      ctx.classList.toggle('is-visible', show);
-      if (!show) return;
-      var line = hh + ctxH + 8, cur = employers[0];
-      Array.prototype.forEach.call(employers, function (em) { if (em.getBoundingClientRect().top <= line) cur = em; });
-      var roles = cur.querySelectorAll('.role'), roleEl = null;
-      if (roles.length) {
-        roleEl = roles[0];
-        Array.prototype.forEach.call(roles, function (r) { if (r.getBoundingClientRect().top <= line) roleEl = r; });
-        roleEl = roleEl.querySelector('h4');
-      } else {
-        roleEl = cur.querySelector('.progression .is-latest');
+      /* zones are in document order, so the last one above the reading line is current */
+      var line = headerHeight() + ctx.offsetHeight + 8, cur = null;
+      for (var i = 0; i < zones.length; i++) {
+        /* Contact releases the bar as soon as it is well into view */
+        var at = zones[i].el.id === 'contact' ? Math.max(line, window.innerHeight * 0.7) : line;
+        if (zones[i].el.getBoundingClientRect().top <= at) cur = zones[i];
       }
-      var emp = cur.querySelector('.employer__name'), key = cur.getAttribute('data-employer') + '|' + (roleEl ? roleEl.textContent : '');
-      if (key === lastKey) return;
-      lastKey = key;
-      ctx.setAttribute('data-employer', cur.getAttribute('data-employer'));
-      ctxEmp.textContent = emp ? emp.textContent : '';
-      ctxRole.textContent = roleEl ? roleEl.textContent : '';
+      if (!cur || cur.kind === 'hidden') { ctx.classList.remove('is-visible'); return; }
+      if (cur.kind === 'career') {
+        var em = cur.el, roles = em.querySelectorAll('.role'), roleEl;
+        if (roles.length) {
+          roleEl = roles[0];
+          Array.prototype.forEach.call(roles, function (r) { if (r.getBoundingClientRect().top <= line) roleEl = r; });
+          roleEl = roleEl.querySelector('h4');
+        } else {
+          roleEl = em.querySelector('.progression .is-latest');
+        }
+        setCtx(cur.tone, 'career', txt(em.querySelector('.employer__name')), txt(roleEl));
+      } else {
+        setCtx(cur.tone, '', cur.primary, cur.secondary);
+      }
+      ctx.classList.add('is-visible');
     };
     var ctxQueue = function () { if (!ctxTicking) { ctxTicking = true; requestAnimationFrame(ctxUpdate); } };
     window.addEventListener('scroll', ctxQueue, { passive: true });
