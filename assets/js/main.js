@@ -37,7 +37,39 @@
     backdrop.setAttribute('aria-hidden', 'true');
     siteHeader.appendChild(backdrop);
     navBtn.hidden = false;
+    /* The dropdown does not lock the page: once the document itself has moved more than a few
+       pixels from where it was when the menu opened, the menu closes. Scroll events fire only for
+       real document movement (not menu focus, browser-chrome resizes or touch jitter). The
+       listener exists only while the menu is open. */
+    var menuScrollY = 0;
+    var menuRebase = false;
+    var menuRebaseTimer = 0;
+    var onMenuScroll = function () {
+      var y = window.pageYOffset || document.documentElement.scrollTop;
+      if (menuRebase) { menuScrollY = y; return; }
+      if (Math.abs(y - menuScrollY) > 10) setMenu(false, false);
+    };
+    /* A resize or rotation can shift the document without the visitor scrolling: re-base instead of closing. */
+    var onMenuResize = function () {
+      menuRebase = true;
+      clearTimeout(menuRebaseTimer);
+      menuRebaseTimer = setTimeout(function () {
+        menuRebase = false;
+        menuScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      }, 200);
+    };
     var setMenu = function (open, returnFocus) {
+      var wasOpen = siteHeader.classList.contains('is-menu-open');
+      if (open && !wasOpen) {
+        menuScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        window.addEventListener('scroll', onMenuScroll, { passive: true });
+        window.addEventListener('resize', onMenuResize);
+      } else if (!open && wasOpen) {
+        window.removeEventListener('scroll', onMenuScroll);
+        window.removeEventListener('resize', onMenuResize);
+        menuRebase = false;
+        clearTimeout(menuRebaseTimer);
+      }
       siteHeader.classList.toggle('is-menu-open', open);
       navBtn.setAttribute('aria-expanded', String(open));
       navBtn.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
@@ -316,9 +348,11 @@
       if (!mobileMq.matches) { ctx.classList.remove('is-visible'); return; }
       /* zones are in document order, so the last one above the reading line is current */
       var line = headerHeight() + ctx.offsetHeight + 8, cur = null, curTop = 0;
+      /* On tall viewports Contact may never rise above 70% of the screen: at the very end of the page it is fully in view, so it releases the bar anyway */
+      var atPageEnd = (window.pageYOffset || document.documentElement.scrollTop) + window.innerHeight >= document.documentElement.scrollHeight - 2;
       for (var i = 0; i < zones.length; i++) {
         /* Contact releases the bar as soon as it is well into view */
-        var at = zones[i].el.id === 'contact' ? Math.max(line, window.innerHeight * 0.7) : line;
+        var at = zones[i].el.id === 'contact' ? (atPageEnd ? Infinity : Math.max(line, window.innerHeight * 0.7)) : line;
         var zt = zones[i].el.getBoundingClientRect().top;
         /* cards in the same grid row share a top: the first (leftmost) one stays current */
         if (zt <= at && !(zones[i].card && cur && cur.card && Math.abs(zt - curTop) < 2)) { cur = zones[i]; curTop = zt; }
