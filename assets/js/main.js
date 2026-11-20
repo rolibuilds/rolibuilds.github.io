@@ -372,4 +372,58 @@
     window.addEventListener('load', jQueue);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(jQueue);
   }
+  /* ---------- Image modal: one native <dialog>, built only when JavaScript and showModal() exist ---------- */
+  (function () {
+    var frames = document.querySelectorAll('[data-enlarge]');
+    var probe = document.createElement('dialog');
+    if (!frames.length || typeof probe.showModal !== 'function') return;
+    var dlg = document.createElement('dialog');
+    dlg.className = 'img-modal';
+    var panel = document.createElement('div');
+    panel.className = 'img-modal__panel';
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'img-modal__close';
+    close.textContent = 'Close';
+    close.setAttribute('aria-label', 'Close enlarged image');
+    var big = document.createElement('img');
+    big.className = 'img-modal__img';
+    big.alt = '';
+    big.draggable = false;
+    panel.appendChild(close);
+    panel.appendChild(big);
+    dlg.appendChild(panel);
+    document.body.appendChild(dlg);
+    var opener = null;
+    function shut() { if (dlg.open) dlg.close(); }
+    close.addEventListener('click', shut);
+    /* backdrop: a click whose target is the dialog itself (outside the panel) */
+    dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target === panel) shut(); });
+    dlg.addEventListener('close', function () {
+      if (opener) { opener.focus({ preventScroll: true }); opener = null; }
+    });
+    dlg.addEventListener('contextmenu', function (e) { if (e.target === big) e.preventDefault(); });
+    Array.prototype.forEach.call(frames, function (frame) {
+      var img = frame.querySelector('img');
+      if (!img) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'proof__btn';
+      btn.setAttribute('aria-haspopup', 'dialog');
+      frame.insertBefore(btn, img);
+      btn.appendChild(img);
+      var hint = document.createElement('span');
+      hint.className = 'sr-only';
+      hint.textContent = ' (opens enlarged image dialog)';
+      btn.appendChild(hint);
+      img.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+      btn.addEventListener('click', function () {
+        opener = btn;
+        big.src = img.currentSrc || img.src;
+        dlg.setAttribute('aria-label', img.alt);
+        dlg.showModal();
+        close.focus({ preventScroll: true });
+      });
+    });
+  })();
 })();
