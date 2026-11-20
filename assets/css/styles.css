@@ -483,6 +483,12 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .evidence__block--recognition h4::before { content: "\2605\00a0"; }
 .recognition + .recognition { margin-top: var(--space-2); }
 .recognition__title { font-weight: 680; }
+/* Recognition proof images: each sits directly under its own item, same frame, natural aspect ratio */
+.proof { display: block; margin-top: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm); overflow: hidden; background: var(--color-surface); line-height: 0; }
+.proof img { display: block; width: 100%; height: auto; }
+.proof--certificate { max-width: 26rem; }
+.proof--award { max-width: 15rem; }
+.proof:focus-visible { border-radius: var(--radius-sm); }
 .disclosure-btn--tone { color: var(--t-accent); border-color: var(--t-accent); }
 .disclosure-btn--tone:hover { color: color-mix(in srgb, var(--t-accent) 65%, var(--color-text)); border-color: currentColor; background: color-mix(in srgb, var(--t-accent) 12%, transparent); }
 .career .disclosure-btn { transition: color var(--tone-dur) var(--ease), border-color var(--tone-dur) var(--ease), background-color var(--dur) var(--ease); }

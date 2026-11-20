@@ -230,18 +230,6 @@
     window.addEventListener('resize', syncTone);
   }
 
-  /* ---------- Journey timeline ends at the final endpoint node ---------- */
-  var journeyEl = document.querySelector('[data-journey]');
-  var endStage = journeyEl && journeyEl.querySelector('.stage--end');
-  if (endStage) {
-    var setJourneyEnd = function () {
-      journeyEl.style.setProperty('--journey-end', Math.max(0, endStage.offsetHeight - 0.9 * parseFloat(getComputedStyle(document.documentElement).fontSize)) + 'px');
-    };
-    setJourneyEnd();
-    window.addEventListener('resize', setJourneyEnd);
-    window.addEventListener('load', setJourneyEnd);
-  }
-
   /* ---------- Mobile page context bar: one sticky, aria-hidden bar (primary + secondary title) derived from existing headings ---------- */
   var mainEl = document.getElementById('main');
   var careerEl = document.getElementById('career');
@@ -327,32 +315,59 @@
     ctxUpdate();
   }
 
-  /* ---------- Motion-only enhancements (skipped for reduced motion) ---------- */
-  function enhanceMotion() {
-    if (reduceMotion.matches) return;
-
-    /* Scroll-linked progress for the Automation Journey (passive listener, native scrolling untouched) */
-    var journey = document.querySelector('[data-journey]');
-    if (journey) {
-      var stages = journey.querySelectorAll('[data-stage]');
-      var ticking = false;
-      var update = function () {
-        ticking = false;
-        var rect = journey.getBoundingClientRect();
-        var mid = window.innerHeight * 0.55;
-        var p = Math.max(0, Math.min(1, (mid - rect.top) / rect.height));
-        journey.style.setProperty('--journey-progress', p.toFixed(3));
-        Array.prototype.forEach.call(stages, function (s) {
-          s.classList.toggle('is-reached', s.getBoundingClientRect().top < mid);
-        });
-      };
-      journey.classList.add('is-live');
-      update();
-      window.addEventListener('scroll', function () {
-        if (!ticking) { ticking = true; requestAnimationFrame(update); }
-      }, { passive: true });
-      window.addEventListener('resize', update);
+  /* ---------- Automation Journey progress rail (all viewports, one shared calculation) ----------
+     Decorative scroll-position feedback: the dark rail runs from the top of the timeline to the centre of the
+     endpoint node and reflects where a reading line sits inside that span (clamped 0-1, so it retracts on scroll up).
+     It is positioned from rendered geometry, so disclosures, fonts, images, rotation and resizing all recalculate it.
+     No timers or easing: native scrolling is untouched and reduced motion simply gets the same static position. */
+  var journey = document.querySelector('[data-journey]');
+  if (journey) {
+    var jStages = journey.querySelectorAll('[data-stage]');
+    var jEnd = journey.querySelector('.stage--end');
+    var jTicking = false, jListening = false, jEndRail = -1;
+    var jUpdate = function () {
+      jTicking = false;
+      var rem = parseFloat(getComputedStyle(root).fontSize) || 16;
+      var endRail = Math.max(0, (jEnd ? jEnd.offsetHeight - 0.9 * rem : 0.75 * rem));
+      if (endRail !== jEndRail) { jEndRail = endRail; journey.style.setProperty('--journey-end', endRail + 'px'); }
+      var rect = journey.getBoundingClientRect();
+      /* reading line: 55% of the visible area below the fixed header and (when shown) the context bar */
+      var offset = headerHeight() + ctxBarHeight();
+      var line = offset + (window.innerHeight - offset) * 0.55;
+      var railTop = rect.top + 0.75 * rem, railLen = rect.height - 0.75 * rem - endRail;
+      var p = railLen > 0 ? (line - railTop) / railLen : 0;
+      p = p > 0 ? (p < 1 ? p : 1) : 0; /* also maps NaN to 0 */
+      journey.style.setProperty('--journey-progress', p.toFixed(4));
+      Array.prototype.forEach.call(jStages, function (st) {
+        st.classList.toggle('is-reached', st.getBoundingClientRect().top < line);
+      });
+    };
+    var jQueue = function () { if (!jTicking) { jTicking = true; requestAnimationFrame(jUpdate); } };
+    var jListen = function (on) {
+      if (on === jListening) return;
+      jListening = on;
+      window[on ? 'addEventListener' : 'removeEventListener']('scroll', jQueue, { passive: true });
+    };
+    journey.classList.add('is-live');
+    jUpdate();
+    /* scroll work only while the Journey is within about one screen of the viewport; a final update clamps the rail when it leaves */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        jListen(entries[entries.length - 1].isIntersecting);
+        jQueue();
+      }, { rootMargin: '100% 0px 100% 0px' }).observe(journey);
+    } else {
+      jListen(true);
     }
+    /* layout changes without scrolling: disclosures, fonts, images, rotation, resizing */
+    if ('ResizeObserver' in window) {
+      var jRo = new ResizeObserver(jQueue);
+      jRo.observe(journey);
+      if (jEnd) jRo.observe(jEnd);
+    }
+    window.addEventListener('resize', jQueue);
+    window.addEventListener('orientationchange', jQueue);
+    window.addEventListener('load', jQueue);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(jQueue);
   }
-  enhanceMotion();
 })();
