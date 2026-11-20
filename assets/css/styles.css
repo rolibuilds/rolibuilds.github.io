@@ -12,6 +12,15 @@
   font-display: swap;
 }
 /* Metric-matched fallback to limit layout shift while Inter loads */
+/* Allura: registered only; not applied to any element yet. Self-hosted, SIL OFL (see assets/fonts/allura/OFL.txt). */
+@font-face {
+  font-family: "Allura";
+  src: url("../fonts/allura/allura-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @font-face {
   font-family: "Inter Fallback";
   src: local("Arial");
