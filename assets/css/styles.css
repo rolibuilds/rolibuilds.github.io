@@ -542,13 +542,17 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
    About: one warm editorial family. Chapters differ tonally, never dramatically.
    Every hobby block uses the same header: thin line, small label, creative title.
    ========================================================================== */
-.about-open { display: grid; align-items: center; min-height: calc(100svh - var(--header-h)); padding-block: clamp(3rem, 8vw, 6rem); background: var(--about-open-bg); border-top: 1px solid var(--color-border); }
-.about-open__inner { display: grid; gap: var(--space-4); align-items: center; }
-@media (min-width: 56rem) { .about-open__inner { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--space-5); } }
+.about-open { padding-block: clamp(3rem, 6vw, 5rem); background: var(--about-open-bg); border-top: 1px solid var(--color-border); }
+.about-open__inner { display: grid; gap: var(--space-4); align-items: start; }
+.about-open__text { max-width: 44rem; }
+/* Two-column composition only when a portrait figure is present */
+@media (min-width: 56rem) { .about-open__inner:has(.about-open__art) { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--space-5); align-items: center; } }
+@media (min-width: 56rem) and (max-width: 64rem) { .about-open__inner:has(.about-open__art) { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); } }
 .about-open h2 { margin-block: var(--space-2) var(--space-3); font-size: clamp(3.25rem, 1.8rem + 7vw, 7.5rem); font-weight: 780; letter-spacing: -.04em; line-height: .95; }
 .about-open .eyebrow { margin-bottom: 0; max-width: 28rem; }
-.about-open__lead { max-width: 36rem; font-size: clamp(1.1875rem, 1.05rem + .45vw, 1.4375rem); line-height: 1.4; text-wrap: balance; }
-.about-open__more { margin-top: var(--space-2); max-width: 36rem; color: var(--color-muted); font-size: 1.125rem; }
+.about-open__body { max-width: 40rem; margin-top: var(--space-2); font-size: clamp(1.0625rem, 1rem + .2vw, 1.1875rem); line-height: 1.65; }
+.about-open h2 + .about-open__body { margin-top: var(--space-3); }
+.about-open__more { margin-top: var(--space-3); max-width: 40rem; color: var(--color-muted); font-size: 1rem; font-weight: 600; line-height: 1.5; }
 .portrait { margin: 0; }
 .portrait__frame { aspect-ratio: 4 / 5; border-radius: 999px 999px var(--radius) var(--radius); background: linear-gradient(165deg, light-dark(#e9d3b8, #3a2f26), light-dark(#d9b48f, #2a221c)); }
 .portrait img { display: block; width: 100%; height: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 999px 999px var(--radius) var(--radius); }
