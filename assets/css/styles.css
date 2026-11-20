@@ -650,8 +650,14 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .fest:has(.fest__bg) .concert__meta, .fest:has(.fest__bg) .artist-wall { color: #c9d3cd; }
 .fest:has(.fest__bg)::after { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(12, 20, 18, .66); }
 .fest .prose { max-width: 40rem; margin-top: .5rem; }
-/* Closing statement: Allura at regular weight, plain white, no ornament; wraps naturally (balanced) in the text column */
-.fest__sign { max-width: 40rem; margin-top: var(--space-4); font-family: "Allura", cursive; font-weight: 400; font-style: normal; font-synthesis: none; font-size: clamp(2.25rem, 1.5rem + 2.6vw, 3.5rem); line-height: 1.15; color: #fff; text-wrap: balance; text-decoration: none; }
+/* Closing statement: Allura at regular weight, plain white, handwritten-note feel. Two lines with an offset second line and a slight tilt on wide screens; natural wrapping and no tilt on narrow ones. */
+.fest__sign { max-width: 40rem; margin-top: var(--space-4); font-family: "Allura", cursive; font-weight: 400; font-style: normal; font-synthesis: none; font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem); line-height: 1.2; color: #fff; opacity: .9; text-decoration: none; transform-origin: left center; }
+@media (min-width: 40rem) { .fest__sign { transform: rotate(-.75deg); } }
+@media (min-width: 56rem) {
+  .fest__sign { transform: rotate(-1.5deg); }
+  .fest__sign span { display: block; }
+  .fest__sign span + span { margin-left: 2.25rem; transform: translateY(.12em); }
+}
 .fest__inner { display: grid; gap: var(--space-4); align-items: center; }
 @media (min-width: 56rem) { .fest__inner:has(.fest__photo) { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: var(--space-5); } }
 .fest__photo img { border-radius: var(--radius-sm); }
