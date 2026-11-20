@@ -361,7 +361,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
   transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .stage.is-reached::before { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-on-accent); }
-.stage--end::before { content: ""; counter-increment: none; background: var(--color-accent); border-color: var(--color-accent); }
+.stage--end::before { content: ""; counter-increment: none; }
 .stage__summary { display: contents; }
 .stage__head { order: 1; }
 .stage__endbody { order: 2; }
@@ -486,7 +486,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 /* Recognition proof images: each sits directly under its own item, same frame, natural aspect ratio */
 .proof { display: block; margin-top: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm); overflow: hidden; background: var(--color-surface); line-height: 0; }
 .proof img { display: block; width: 100%; height: auto; }
-.proof--certificate { max-width: 26rem; }
+.proof--certificate { max-width: 18rem; }
 .proof--award { max-width: 15rem; }
 .proof:focus-visible { border-radius: var(--radius-sm); }
 .disclosure-btn--tone { color: var(--t-accent); border-color: var(--t-accent); }
@@ -577,6 +577,8 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
   .about-open__text:has(> .about-open__art) { grid-template-columns: minmax(0, 8.4fr) minmax(0, 2.8fr); column-gap: var(--space-4); }
 }
 @media (min-width: 64rem) { .about-open__text:has(> .about-open__art) { column-gap: var(--space-5); } }
+/* Portrait sits a little further left, into the unused space beside the text column (column widths unchanged) */
+@media (min-width: 75rem) { .about-open__text > .about-open__art { margin-left: -3.5rem; } }
 /* Tablet portrait: the opening is content-driven instead of filling the viewport (the portrait slot stays in the markup) */
 @media (min-width: 48rem) and (max-width: 64rem) and (orientation: portrait) { .about-open { min-height: 0; } }
 
@@ -634,15 +636,26 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .someday { display: grid; gap: .5rem; font-size: clamp(1.75rem, 1rem + 3vw, 3.25rem); font-weight: 780; line-height: 1.02; letter-spacing: -.02em; text-transform: uppercase; }
 .someday__dot { display: none; }
 .someday span:last-child { color: var(--ch-accent); }
+.prose cite { font-style: italic; }
 .reading-figure { margin-top: var(--space-3); max-width: 28rem; }
 .reading-figure img { border-radius: var(--radius); box-shadow: 0 0 0 1px light-dark(transparent, rgb(255 255 255 / .08)); }
-/* Travel: Warsaw is the dominant image; Milan with the Yann Tiersen concert image sits beside it as one connected group */
-.city-images { display: grid; gap: var(--space-2); max-width: 50rem; align-items: end; grid-template-columns: minmax(0, 1fr); }
-.city--milan { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: var(--space-1); align-items: end; }
+/* Travel: one image group. Warsaw is primary; Milan above the Yann Tiersen image forms a secondary column whose height matches Warsaw.
+   One shared gap; every frame uses the same radius via .media-figure. Mobile stacks Warsaw, Milan, Yann Tiersen. */
+.city-images { --city-gap: var(--space-2); display: grid; gap: var(--city-gap); max-width: 50rem; grid-template-columns: minmax(0, 1fr); }
+.city--milan { display: grid; gap: var(--city-gap); }
+.city-images .media-figure { overflow: hidden; border-radius: var(--radius-sm); }
+.city-images img { height: 100%; object-fit: cover; }
+.city--primary .media-figure { aspect-ratio: 1 / 1; }
+.city--primary img { object-position: 50% 35%; }
+.city--milan .media-figure:first-child { aspect-ratio: 1 / 1; }
+.city--milan .media-figure:first-child img { object-position: 50% 30%; }
+.city__concert { aspect-ratio: 4 / 3; }
 @media (min-width: 40rem) {
-  .city-images { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--space-3); align-items: start; }
-  .city--milan { grid-template-columns: minmax(0, 1fr); align-content: start; }
-  .city__concert { width: 72%; justify-self: end; }
+  .city-images { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+  .city--primary .media-figure { aspect-ratio: 6 / 7; }
+  /* contain: size lets the Warsaw frame set the row height; the secondary column then fills exactly that height */
+  .city--milan { contain: size; grid-template-rows: minmax(0, 1fr) auto; }
+  .city--milan .media-figure:first-child { aspect-ratio: auto; min-height: 0; }
 }
 @media (min-width: 56rem) { .about-ch__grid--travel .city-images { grid-column: 1 / -1; } }
 

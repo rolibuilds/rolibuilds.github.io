@@ -341,6 +341,8 @@
       Array.prototype.forEach.call(jStages, function (st) {
         st.classList.toggle('is-reached', st.getBoundingClientRect().top < line);
       });
+      /* the endpoint node follows the same rule: filled only while the reading line is past its top, like the numbered nodes */
+      if (jEnd) jEnd.classList.toggle('is-reached', jEnd.getBoundingClientRect().top < line);
     };
     var jQueue = function () { if (!jTicking) { jTicking = true; requestAnimationFrame(jUpdate); } };
     var jListen = function (on) {
