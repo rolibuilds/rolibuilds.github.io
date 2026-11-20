@@ -69,19 +69,57 @@
         window.removeEventListener('resize', onMenuResize);
         menuRebase = false;
         clearTimeout(menuRebaseTimer);
+        if (typeof clearTap === 'function') clearTap();
       }
       siteHeader.classList.toggle('is-menu-open', open);
       navBtn.setAttribute('aria-expanded', String(open));
       navBtn.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
       if (!open && returnFocus) navBtn.focus();
     };
-    navBtn.addEventListener('click', function () {
-      setMenu(!siteHeader.classList.contains('is-menu-open'), false);
+    navBtn.addEventListener('click', function (e) {
+      var opening = !siteHeader.classList.contains('is-menu-open');
+      setMenu(opening, false);
+      /* Keyboard activation (Enter or Space) has click detail 0; a mouse or touch click has detail >= 1.
+         Only keyboard users get focus moved to the first link, so Tab continues through the menu in order.
+         The links precede the trigger in the document, so without this Tab would skip them. */
+      if (opening && e.detail === 0) {
+        var first = siteNav.querySelector('a');
+        if (first) first.focus({ preventScroll: true });
+      }
     });
     siteNav.addEventListener('click', function (e) {
       if (e.target.closest && e.target.closest('a')) setMenu(false, false);
     });
-    backdrop.addEventListener('click', function () { setMenu(false, false); });
+    /* Backdrop: a tap closes the menu. With pointer events, a tap is a gesture that starts and ends on the
+       backdrop, moves less than BACKDROP_TAP_SLOP CSS px, is not cancelled (the browser cancels the pointer
+       when it takes over to pan the page) and leaves the document where it was. Drags are left to the
+       browser and to the scroll-dismiss above; default actions are never prevented. */
+    var BACKDROP_TAP_SLOP = 7;
+    var tap = null;
+    var clearTap = function () { tap = null; };
+    var docY = function () { return window.pageYOffset || document.documentElement.scrollTop; };
+    if (window.PointerEvent) {
+      backdrop.addEventListener('pointerdown', function (e) {
+        if (e.isPrimary === false || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        tap = { id: e.pointerId, x: e.clientX, y: e.clientY, sy: docY() };
+      });
+      backdrop.addEventListener('pointermove', function (e) {
+        if (!tap || e.pointerId !== tap.id) return;
+        if (Math.abs(e.clientX - tap.x) > BACKDROP_TAP_SLOP || Math.abs(e.clientY - tap.y) > BACKDROP_TAP_SLOP) tap = null;
+      });
+      backdrop.addEventListener('pointerup', function (e) {
+        var t = tap;
+        tap = null;
+        if (!t || e.pointerId !== t.id || e.target !== backdrop) return;
+        if (Math.abs(e.clientX - t.x) > BACKDROP_TAP_SLOP || Math.abs(e.clientY - t.y) > BACKDROP_TAP_SLOP) return;
+        if (Math.abs(docY() - t.sy) > 2) return;
+        setMenu(false, false);
+      });
+      backdrop.addEventListener('pointercancel', clearTap);
+      window.addEventListener('orientationchange', clearTap);
+    } else {
+      backdrop.addEventListener('click', function () { setMenu(false, false); });
+    }
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape' || !siteHeader.classList.contains('is-menu-open')) return;
       var inside = siteNav.contains(document.activeElement) || document.activeElement === navBtn;
