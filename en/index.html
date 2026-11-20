@@ -286,7 +286,6 @@
 </div>
 <div class="stage__endbody">
 <p class="stage__endpoint">Guided exercises, innovation work and an imperfect first attempt at process automation eventually led to a much larger AI-supported project.</p>
-<p class="stage__more"><a class="deep-link-arrow" href="#built-csap">Explore my flagship project</a></p>
 </div>
 </li>
       </ol>
@@ -308,10 +307,12 @@
 <li>Claude: planned UI support.</li>
 </ul></div>
 </div>
-<!-- DEMO: becomes a real link (assets/video/csap/) only when a real demo exists. Never publish a fake demo. -->
+<!-- DEMO: becomes a real link (assets/video/csap/) only when a real demo exists. Never publish a fake demo.
+     MVP: the demo control below is switched off with the temporary flag data-mvp="demo-off" plus the hidden attribute (no space, no focus, not announced).
+     To restore it later, remove both attributes from that button. -->
 <div class="csap__controls">
 <button type="button" class="disclosure-btn story__btn" aria-expanded="false" aria-controls="csap-more" data-label-open="Show less" data-label-closed="More about the project" hidden><span data-story-label>More about the project</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 6l5 5 5-5"/></svg></button>
-<button type="button" class="btn btn--ghost" aria-disabled="true">Watch the demo<span class="coming-soon">Coming soon</span></button>
+<button type="button" class="btn btn--ghost" aria-disabled="true" data-mvp="demo-off" hidden>Watch the demo<span class="coming-soon">Coming soon</span></button>
 </div>
 <div class="story__stage">
 <div class="story__full" id="csap-more">
@@ -514,12 +515,11 @@
         <div class="about-open__text" data-reveal>
           <p class="eyebrow">Where the application ends, and Roli begins.</p>
           <h2 id="about-title">About</h2>
+          <figure class="about-open__art portrait"><div class="portrait__frame"><img src="../assets/images/about/portrait/about-portrait-cafe.jpg" srcset="../assets/images/about/portrait/about-portrait-cafe-640.jpg 640w, ../assets/images/about/portrait/about-portrait-cafe.jpg 960w" sizes="(min-width: 56rem) 30vw, 18rem" width="960" height="1200" alt="A seated person in sunglasses and a light blue T-shirt at an outdoor café table, with two coffee glasses in front of them and a sunlit square behind." loading="lazy" decoding="async"></div></figure>
           <p class="about-open__body">I’m a finance and controlling professional who, looking back, has always been drawn to more efficient digital ways of working. I’m not a developer or a web developer. My strength is understanding the business problem and combining nearly seven years of controlling experience with the ability to shape and deliver useful automation for finance and controlling processes, with AI support.</p>
           <p class="about-open__body">CSAP has made that direction tangible. It has shown me how a properly planned workflow can become a working process much faster than the traditional transformation projects I was used to seeing. That’s the direction I want to pursue: combining controlling expertise with practical, AI-supported automation.</p>
-          <p class="about-open__more">Beyond work, these are some of the things that help me recharge.</p>
+          <p class="about-open__more">Beyond work, the following are some of the things that help me recharge.</p>
         </div>
-        <!-- PORTRAIT (optional, not yet available): when an authorised image exists in assets/images/about/portrait/, add after the text div:
-        <figure class="about-open__art portrait"><div class="portrait__frame"><img src="…" alt="(describe the actual image)"></div></figure> -->
       </div>
     </div>
     <article class="about-ch about-ch--karate" id="about-karate" aria-labelledby="karate-t">
@@ -534,7 +534,7 @@
 <p>There’s something refreshing about entering the dojo as a complete beginner, focusing on the basics and seeing progress come from regular practice rather than shortcuts.</p>
             </div>
           </div>
-          <!-- KARATE CUT-OUT (optional, transparent PNG, assets/images/about/karate/): <figure class="cutout"><img src="…" alt="…"></figure> -->
+          <figure class="cutout"><img src="../assets/images/about/karate/karate-cutout.png" srcset="../assets/images/about/karate/karate-cutout-320.png 320w, ../assets/images/about/karate/karate-cutout.png 480w" sizes="(min-width: 56rem) 14rem, 12rem" width="480" height="1247" alt="A person standing in a white karate uniform with a white belt." loading="lazy" decoding="async"></figure>
           <div class="karate-mark" aria-hidden="true"><span class="karate-mark__belt"></span><span class="karate-mark__stripe"></span></div>
         </div>
       </div>
@@ -545,6 +545,7 @@
           <div class="about-ch__text">
             <div class="about-ch__head"><p class="about-ch__label">Reading</p>
 <h3 id="reading-t" class="about-ch__title">Two books at a time</h3></div>
+            <figure class="media-figure reading-figure"><img src="../assets/images/about/reading/reading-two-books-at-a-time.jpg" srcset="../assets/images/about/reading/reading-two-books-at-a-time-640.jpg 640w, ../assets/images/about/reading/reading-two-books-at-a-time.jpg 960w" sizes="(min-width: 56rem) 30vw, calc(100vw - 2rem)" width="960" height="720" alt="Two books lying side by side on a white table: a paperback with a blue illustrated cover and a larger hardback with a dark green cover." loading="lazy" decoding="async"></figure>
           </div>
           <div class="prose prose--wide">
 <p>I usually have two books on the go: one that teaches me something and one that simply pulls me into a good story.</p>
@@ -554,7 +555,6 @@
 <p>My takeaway wasn’t simply that hard work leads to success. It was that determination becomes meaningful when it’s followed by responsibility, useful work and the willingness to develop real expertise.</p>
 <p>That idea connects naturally with how I approach automation and AI. Not as a shortcut, but as a field where consistent effort, practical work and growing competence can create genuine value.</p>
           </div>
-          <!-- BOOK PHOTOS (optional, own photographs only, assets/images/about/books/): <figure class="media-figure">…</figure> -->
         </div>
       </div>
     </article>
@@ -571,18 +571,15 @@
 <p>Not every memorable concert needs to be loud, though. Seeing Ludovico Einaudi live was a very different experience, but equally memorable.</p>
             </div>
 <ul class="concerts" aria-label="Concerts">
-<li class="concert"><h5 class="concert__name">Guns N’ Roses</h5><p class="concert__meta">Prague · 2017</p></li>
-<li class="concert"><h5 class="concert__name">Ludovico Einaudi</h5><p class="concert__meta">Live</p></li>
-<li class="concert"><h5 class="concert__name">System of a Down</h5><p class="concert__meta">Warsaw · 2026</p>
-<!-- CONCERT IMAGE (optional, one per event; own photo preferred, SOAD stadium image first; no third-party photography until rights are confirmed):
-<figure class="media-figure"><img src="../assets/images/about/music/FILENAME" alt="…" width="…" height="…" loading="lazy"><figcaption>System of a Down, Warsaw, 2026</figcaption></figure> --></li>
+<li class="concert"><figure class="media-figure concert__photo"><img src="../assets/images/about/music/guns-n-roses-prague-2017.jpg" srcset="../assets/images/about/music/guns-n-roses-prague-2017-640.jpg 640w, ../assets/images/about/music/guns-n-roses-prague-2017.jpg 960w" sizes="(min-width: 48rem) calc((min(100vw, 75rem) - 5rem) / 3), calc(100vw - 2rem)" width="960" height="720" alt="A performer on stage with raised arms, seen from behind, facing a large outdoor festival crowd." loading="lazy" decoding="async"></figure><h5 class="concert__name">Guns N’ Roses</h5><p class="concert__meta">Prague · 2017</p></li>
+<li class="concert"><figure class="media-figure concert__photo"><img src="../assets/images/about/music/ludovico-einaudi-concert.jpg" srcset="../assets/images/about/music/ludovico-einaudi-concert-640.jpg 640w, ../assets/images/about/music/ludovico-einaudi-concert.jpg 960w" sizes="(min-width: 48rem) calc((min(100vw, 75rem) - 5rem) / 3), calc(100vw - 2rem)" width="960" height="720" alt="A concert stage with a grand piano, beams of light fanning upwards and a large video screen on each side." loading="lazy" decoding="async"></figure><h5 class="concert__name">Ludovico Einaudi</h5><p class="concert__meta">Live</p></li>
+<li class="concert"><figure class="media-figure concert__photo"><img src="../assets/images/about/music/system-of-a-down-warsaw-2026.jpg" srcset="../assets/images/about/music/system-of-a-down-warsaw-2026-640.jpg 640w, ../assets/images/about/music/system-of-a-down-warsaw-2026.jpg 960w" sizes="(min-width: 48rem) calc((min(100vw, 75rem) - 5rem) / 3), calc(100vw - 2rem)" width="960" height="720" alt="A person in a black cap taking a selfie in front of a large stadium with a steel-and-fabric façade." loading="lazy" decoding="async"></figure><h5 class="concert__name">System of a Down</h5><p class="concert__meta">Warsaw · 2026</p></li>
 </ul>
           </section>
         </div>
       </div>
 <div class="fest" id="about-fishing" data-reveal>
-          <!-- FISHING BACKGROUND (optional; blurred, full width; assets/images/about/music/):
-          <img class="fest__bg" src="../assets/images/about/music/FISHING1_FILENAME" alt="" aria-hidden="true" loading="lazy"> -->
+          <img class="fest__bg" src="../assets/images/about/music/fishing-on-orfu-background.jpg" width="1280" height="961" alt="" aria-hidden="true" loading="lazy" decoding="async">
           <div class="wrap fest__inner">
             <section class="fest__text" aria-labelledby="festivals-t">
               <h4 id="festivals-t" class="music-sub">Festivals</h4>
@@ -593,8 +590,7 @@
 <!-- ARTIST WALL (optional, static, restrained):
 <ul class="artist-wall" aria-label="Artists seen at the festival"><li>Esti Kornél</li><li>30Y</li><li>Hiperkarma</li><li>Elefánt</li><li>Ivan &amp; The Parazol</li><li>Kistehén</li><li>Analog Balaton</li><li>Vad Fruttik</li><li>Bëlga</li><li>Csaknekedkislány</li></ul> -->
             </section>
-            <!-- FISHING PHOTO (optional; sharp editorial image beside the copy; no frame or polaroid styling):
-            <figure class="fest__photo media-figure"><img src="../assets/images/about/music/FISHING3_FILENAME" alt="…" width="…" height="…" loading="lazy"><figcaption>Fishing on Orfű</figcaption></figure> -->
+            <figure class="fest__photo media-figure"><img src="../assets/images/about/music/fishing-on-orfu-detail.jpg" srcset="../assets/images/about/music/fishing-on-orfu-detail-640.jpg 640w, ../assets/images/about/music/fishing-on-orfu-detail.jpg 960w" sizes="(min-width: 56rem) 40vw, calc(100vw - 2rem)" width="960" height="720" alt="Two hands holding festival cups together in a toast, with a grassy festival area behind." loading="lazy" decoding="async"></figure>
           </div>
         </div>
     </article>
@@ -610,8 +606,11 @@
 <p>There are still places I’d love to see one day. French Polynesia and the Bahamas are high on that list: turquoise water, white sand and the chance to experience marine life far beyond what I’ve seen so far.</p>
             </div>
           </div>
-          <!-- CITY IMAGES (optional; one Warsaw, one Milan; assets/images/about/travel/; no concert images, no tropical stock): <ul class="city-images">…</ul> -->
           <p class="someday" aria-label="French Polynesia, Bahamas, someday"><span>French Polynesia</span><span class="someday__dot" aria-hidden="true">·</span><span>Bahamas</span><span class="someday__dot" aria-hidden="true">·</span><span>Someday</span></p>
+          <ul class="city-images">
+<li class="city city--primary"><figure class="media-figure"><img src="../assets/images/about/travel/warsaw-palace-of-culture.jpg" srcset="../assets/images/about/travel/warsaw-palace-of-culture-640.jpg 640w, ../assets/images/about/travel/warsaw-palace-of-culture.jpg 960w" sizes="(min-width: 40rem) calc(min(100vw - 2rem, 50rem) * .62), calc(100vw - 2rem)" width="960" height="960" alt="The Palace of Culture and Science tower rising above trees under a cloudy blue sky, with a park path in the foreground." loading="lazy" decoding="async"></figure></li>
+<li class="city city--secondary"><figure class="media-figure"><img src="../assets/images/about/travel/milan-duomo.jpg" srcset="../assets/images/about/travel/milan-duomo-480.jpg 480w, ../assets/images/about/travel/milan-duomo.jpg 720w" sizes="(min-width: 40rem) calc(min(100vw - 2rem, 50rem) * .36), 70vw" width="720" height="900" alt="The white marble façade of Milan Cathedral under a clear blue sky, with a crowd in the square in front." loading="lazy" decoding="async"></figure></li>
+</ul>
         </div>
       </div>
     </article>
