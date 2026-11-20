@@ -71,7 +71,6 @@
   --radius: .875rem;          /* cards: 14px */
   --radius-sm: .5rem;         /* controls */
   --measure: 70ch;
-  --hobby-measure: 50rem;     /* shared body-copy width for the About hobby chapters */
   --wrap: 75rem;              /* 1200px */
   --dur: 220ms;
   --ease: cubic-bezier(.4, 0, .2, 1);
@@ -602,15 +601,9 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
   .about-ch__grid--reading { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); }
   .about-ch__grid--travel { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: center; }
 }
-.prose--wide { max-width: var(--hobby-measure); }
-/* Hobby descriptions share one body-copy treatment (size, weight, line-height, spacing inherited from body/.prose) and one measure */
-.about-ch__intro { max-width: var(--hobby-measure); margin-bottom: var(--space-4); }
-.about-ch .prose { max-width: var(--hobby-measure); }
-.about-ch .prose p, .about-ch__intro { text-wrap: pretty; }
-/* Where a text column is narrower than the shared measure, the copy may extend into the empty column gap */
-@media (min-width: 56rem) {
-  .about-ch--karate .prose, .about-ch--travel .prose, .about-ch--ai .prose, .fest .prose { margin-right: -3.5rem; }
-}
+.prose--wide { max-width: 40rem; }
+/* Music introduction: body-copy size inherited like the other hobby paragraphs; measure about 70 characters per line */
+.about-ch__intro { max-width: 44rem; margin-bottom: var(--space-4); }
 .cutout img { display: block; max-height: 22rem; max-width: 100%; width: auto; height: auto; margin-inline: auto; }
 @media (min-width: 56rem) { .cutout img { max-height: 29rem; margin-inline: 0 auto; } .about-ch__grid:has(.cutout) { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--space-4); } }
 /* The decorative belt mark gives way to the real cut-out when one is present */
@@ -620,7 +613,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .karate-mark__stripe { position: absolute; top: -1px; bottom: -1px; right: 18%; width: .75rem; background: var(--ch-accent); }
 @media (max-width: 55.99rem) { .karate-mark { width: 12rem; height: 2.25rem; } }
 
-.music-block .prose { margin-top: .5rem; }
+.music-block .prose { max-width: 48rem; margin-top: .5rem; }
 .concerts { display: grid; gap: var(--space-2); margin-block: var(--space-3) var(--space-5); }
 @media (min-width: 48rem) { .concerts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); } }
 .concert { padding-top: var(--space-2); border-top: 3px solid var(--ch-accent); }
@@ -634,7 +627,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .fest:has(.fest__bg) { --ch-accent: #f1b27d; color: #eef2ee; background: #1d2724; }
 .fest:has(.fest__bg) .concert__meta, .fest:has(.fest__bg) .artist-wall { color: #c9d3cd; }
 .fest:has(.fest__bg)::after { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(12, 20, 18, .66); }
-.fest .prose { margin-top: .5rem; }
+.fest .prose { max-width: 40rem; margin-top: .5rem; }
 .fest__inner { display: grid; gap: var(--space-4); align-items: center; }
 @media (min-width: 56rem) { .fest__inner:has(.fest__photo) { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: var(--space-5); } }
 .fest__photo img { border-radius: var(--radius-sm); }
