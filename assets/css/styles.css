@@ -194,6 +194,53 @@ a:hover { color: var(--color-accent-hover); text-decoration-thickness: 2px; }
   .nav-list .lang-switch { padding-inline: .5rem; }
   .theme-toggle { width: 2.5rem; }
 }
+/* Header with collapsible navigation (en markup: .has-menu). Inline from 64rem; below that, JS users get a hamburger and a dropdown panel. Without JS the inline list remains. */
+.has-menu .header-end { display: flex; align-items: center; gap: 0 var(--space-3); }
+.has-menu .nav-toggle { display: none; }
+.has-menu .nav-backdrop { display: none; }
+@media (max-width: 40rem) {
+  .has-menu .header-end { width: 100%; }
+  .has-menu .header-end nav { flex: 1 1 auto; }
+  .has-menu .theme-toggle { width: 2.5rem; }
+}
+@media (max-width: 63.99rem) {
+  .js { --header-h: 3.8125rem; }
+  .js .has-menu .header-inner { flex-wrap: nowrap; }
+  .js .has-menu .header-end { width: auto; margin-left: auto; gap: 0 .25rem; }
+  .js .has-menu .header-end nav {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 2; flex: none;
+    background: var(--color-bg); border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 .75rem 1.5rem -1rem rgba(0, 0, 0, .35);
+    visibility: hidden; opacity: 0; transform: translateY(-.375rem);
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility 0s linear var(--dur);
+  }
+  .js .has-menu.is-menu-open .header-end nav { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+  .js .has-menu .nav-list { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 0; width: min(100%, 75rem); margin-inline: auto; padding: .25rem var(--space-2) .5rem; }
+  .js .has-menu .nav-list li + li { border-top: 1px solid var(--color-border); }
+  .js .has-menu .nav-list a { display: flex; min-height: 3.25rem; font-size: .9375rem; letter-spacing: .08em; }
+  .js .has-menu .nav-toggle {
+    display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; min-height: 2.75rem; padding: 0;
+    background: none; border: 0; border-radius: var(--radius-sm); color: var(--color-text); cursor: pointer;
+  }
+  .js .has-menu .nav-toggle[hidden] { display: none; }
+  .js .has-menu .nav-toggle:hover { color: var(--color-accent); }
+  .nav-toggle__bars, .nav-toggle__bars::before, .nav-toggle__bars::after {
+    display: block; width: 1.25rem; height: 2px; background: currentColor; border-radius: 1px;
+    transition: transform var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  }
+  .nav-toggle__bars { position: relative; }
+  .nav-toggle__bars::before, .nav-toggle__bars::after { content: ""; position: absolute; left: 0; }
+  .nav-toggle__bars::before { top: -.375rem; }
+  .nav-toggle__bars::after { top: .375rem; }
+  .is-menu-open .nav-toggle__bars { background: transparent; }
+  .is-menu-open .nav-toggle__bars::before { transform: translateY(.375rem) rotate(45deg); }
+  .is-menu-open .nav-toggle__bars::after { transform: translateY(-.375rem) rotate(-45deg); }
+  .js .has-menu .nav-backdrop { display: block; position: absolute; top: 100%; left: 0; right: 0; height: 100vh; z-index: 1; background: rgba(0, 0, 0, .28); opacity: 0; visibility: hidden; transition: opacity var(--dur) var(--ease), visibility 0s linear var(--dur); }
+  .js .has-menu.is-menu-open .nav-backdrop { opacity: 1; visibility: visible; transition-delay: 0s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .has-menu .header-end nav, .nav-backdrop, .nav-toggle__bars, .nav-toggle__bars::before, .nav-toggle__bars::after { transition: none !important; }
+}
 .theme-toggle .icon-sun { display: none; }
 .theme-toggle[aria-pressed="true"] .icon-sun { display: block; }
 .theme-toggle[aria-pressed="true"] .icon-moon { display: none; }
@@ -660,6 +707,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 }
 /* Wide columns: the paragraph no longer ends on a second line, so one body line of space keeps the note where it sat. */
 @media (min-width: 63.875rem) { .fest__sign { margin-top: 1.75rem; } }
+@media (min-width: 73rem) { .fest__sign { font-size: clamp(2.25rem, 1.71rem + .74vw, 2.375rem); } }
 @media (min-width: 56rem) and (max-width: 61.99rem) { .fest__inner:has(.fest__sign) { padding-bottom: var(--space-4); } }
 .fest__inner { display: grid; gap: var(--space-4); align-items: center; }
 @media (min-width: 56rem) { .fest__inner:has(.fest__photo) { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: var(--space-5); } }

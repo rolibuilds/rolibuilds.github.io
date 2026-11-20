@@ -26,6 +26,40 @@
     if (darkQuery.addEventListener) darkQuery.addEventListener('change', syncToggle);
   }
 
+  /* ---------- Collapsible navigation (one nav, one state; inline at >= 64rem) ---------- */
+  var navBtn = document.querySelector('[data-nav-toggle]');
+  var siteNav = document.querySelector('[data-site-nav]');
+  var siteHeader = document.querySelector('.site-header');
+  if (navBtn && siteNav && siteHeader) {
+    var inlineMq = window.matchMedia('(min-width: 64rem)');
+    var backdrop = document.createElement('div');
+    backdrop.className = 'nav-backdrop';
+    backdrop.setAttribute('aria-hidden', 'true');
+    siteHeader.appendChild(backdrop);
+    navBtn.hidden = false;
+    var setMenu = function (open, returnFocus) {
+      siteHeader.classList.toggle('is-menu-open', open);
+      navBtn.setAttribute('aria-expanded', String(open));
+      navBtn.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+      if (!open && returnFocus) navBtn.focus();
+    };
+    navBtn.addEventListener('click', function () {
+      setMenu(!siteHeader.classList.contains('is-menu-open'), false);
+    });
+    siteNav.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('a')) setMenu(false, false);
+    });
+    backdrop.addEventListener('click', function () { setMenu(false, false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || !siteHeader.classList.contains('is-menu-open')) return;
+      var inside = siteNav.contains(document.activeElement) || document.activeElement === navBtn;
+      setMenu(false, inside);
+    });
+    var onInlineChange = function () { if (inlineMq.matches) setMenu(false, false); };
+    if (inlineMq.addEventListener) inlineMq.addEventListener('change', onInlineChange);
+    else if (inlineMq.addListener) inlineMq.addListener(onInlineChange);
+  }
+
   /* ---------- Disclosures (button + panel, independent of each other) ---------- */
   var buttons = document.querySelectorAll('.disclosure-btn');
   Array.prototype.forEach.call(buttons, function (btn) {
