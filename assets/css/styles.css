@@ -429,6 +429,10 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
   .stage__summary { display: block; position: sticky; align-self: start; top: calc(var(--header-h) + var(--ctx-offset, 0px) + var(--space-3)); }
   .stage > .story { order: 0; max-width: var(--measure); }
 }
+/* Editorial interlude inside the Journey: not a numbered milestone (no node, no progression, no sticky summary) */
+.interlude { padding-block: var(--space-4); border-block: 1px solid var(--color-border); }
+.interlude__title { margin-bottom: var(--space-1); color: var(--color-accent); font-size: .8125rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
+.interlude .story__stage { max-width: var(--measure); }
 .stage__kind { margin-bottom: .375rem; color: var(--color-accent); }
 .stage h4 { font-size: clamp(1.375rem, 1.1rem + 1.2vw, 2rem); font-weight: 700; letter-spacing: -.015em; }
 .stage__more { margin-top: var(--space-1); }
@@ -444,11 +448,11 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .stage__flow dd { font-size: .9375rem; line-height: 1.5; }
 /* Journey disclosure control: simple text link when the layout is a single column */
 @media (max-width: 61.99rem) {
-  .stage .story__btn { min-height: 2.75rem; margin-top: var(--space-1); padding: 0 .5rem; margin-left: -.5rem; border: 0; border-radius: var(--radius-sm); background: transparent; }
-  .stage .story__btn:hover { background: transparent; text-decoration: underline; }
-  .stage .story__btn svg { display: none; }
-  .stage .story__btn::after { content: "\2193"; }
-  .stage .story__btn[aria-expanded="true"]::after { content: "\2191"; }
+  .stage .story__btn, .interlude .story__btn { min-height: 2.75rem; margin-top: var(--space-1); padding: 0 .5rem; margin-left: -.5rem; border: 0; border-radius: var(--radius-sm); background: transparent; }
+  .stage .story__btn:hover, .interlude .story__btn:hover { background: transparent; text-decoration: underline; }
+  .stage .story__btn svg, .interlude .story__btn svg { display: none; }
+  .stage .story__btn::after, .interlude .story__btn::after { content: "\2193"; }
+  .stage .story__btn[aria-expanded="true"]::after, .interlude .story__btn[aria-expanded="true"]::after { content: "\2191"; }
 }
 .media-link { font-weight: 600; text-decoration-thickness: 2px; }
 
