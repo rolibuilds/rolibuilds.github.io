@@ -355,6 +355,7 @@
     add(careerEl, '', 'hidden');
     var employerEls = careerEl.querySelectorAll('.employer');
     Array.prototype.forEach.call(employerEls, function (em) { add(em, em.getAttribute('data-employer'), 'career'); });
+    add(q('#recommendations'), '', 'hidden'); /* releases the Career context; the bar stays hidden through Recommendations */
     var aboutTitle = document.documentElement.lang === 'en' ? 'About me' : txt(q('#about-title')); /* EN context label per brief; HU keeps its heading */
     add(q('.about-open'), 'about', 'hidden'); /* bar stays hidden through the whole About introduction; it starts at Karate */
     Array.prototype.forEach.call(document.querySelectorAll('#about .about-ch'), function (ch) {

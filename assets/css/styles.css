@@ -772,3 +772,28 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
    ("... starts with being" / "... beginner, focusing", about 687px at 17px) physically fits the text column; below that it wraps naturally. */
 .karate-br { display: none; }
 @media (min-width: 73rem) { .karate-br { display: inline; } }
+
+/* ==========================================================================
+   Recommendations (between Professional Career and About): one editorial block,
+   featured recommendation plus two secondary ones. Reuses the Story disclosure.
+   ========================================================================== */
+.recs .section__head { margin-bottom: var(--space-4); }
+.recs .eyebrow { margin-bottom: var(--space-1); }
+.recs__grid, .recs__side { display: grid; gap: var(--space-3); align-content: start; }
+@media (min-width: 56rem) {
+  .recs__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-4); align-items: start; }
+}
+.rec { padding: var(--space-3); background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.rec--featured { background: var(--color-surface); }
+@media (min-width: 48rem) { .rec--featured { padding: var(--space-4); } }
+.rec__who { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); }
+.rec__photo { flex: none; display: block; width: 4.5rem; height: 4.5rem; object-fit: cover; border-radius: 50%; border: 1px solid var(--color-border); }
+.rec__name { font-size: 1.125rem; font-weight: 680; letter-spacing: -.01em; }
+.rec--featured .rec__name { font-size: 1.375rem; }
+.rec__title { margin-top: .125rem; font-size: .9375rem; color: var(--color-text); }
+.rec__rel { margin-top: .125rem; font-size: .8125rem; color: var(--color-muted); }
+.rec--featured .story__teaser p, .rec--featured .story__full p { font-size: 1.1875rem; }
+.rec .story__btn { margin-top: var(--space-2); }
+.rec__btn::after { content: "\2193" / ""; }
+.rec__btn[aria-expanded="true"]::after { content: "\2191" / ""; }
+.recs__note { margin-top: var(--space-4); font-size: .8125rem; color: var(--color-muted); }
