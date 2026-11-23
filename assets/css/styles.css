@@ -559,6 +559,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 [data-employer="docler"] .employer__mark { border-radius: 18%; }
 [data-employer="realszisztema"] .employer__mark { clip-path: polygon(50% 5%, 100% 95%, 0 95%); }
 .employer__period { margin-top: .25rem; color: var(--color-muted); font-weight: 550; font-variant-numeric: tabular-nums; }
+.employer__roles { margin-top: var(--space-2); font-size: .9375rem; line-height: 1.35; }
 .progression { display: grid; gap: .5rem; margin-top: var(--space-2); }
 .progression li { position: relative; padding-left: 1.5rem; font-size: .9375rem; line-height: 1.35; }
 .progression li::before { content: ""; position: absolute; left: 0; top: .2em; width: .75rem; height: .75rem; border-radius: 50%; border: 2px solid var(--t-accent); background: var(--color-bg); transition: border-color var(--tone-dur) var(--ease), background-color var(--tone-dur) var(--ease); }
