@@ -421,7 +421,7 @@
   var journey = document.querySelector('[data-journey]');
   if (journey) {
     var jStages = journey.querySelectorAll('[data-stage]');
-    var jEnd = journey.querySelector('.stage--end');
+    var jEnd = journey.querySelector('.stage--end') || jStages[jStages.length - 1]; /* the rail ends at the node of the last step */
     var jTicking = false, jListening = false, jEndRail = -1;
     var jUpdate = function () {
       jTicking = false;
