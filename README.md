@@ -23,4 +23,4 @@ The English page is served directly at `/` (`index.html`), with no redirect. `en
 
 ## Search
 
-No `noindex` or `nofollow` directive is used anywhere. `robots.txt` allows all crawlers and points to `sitemap.xml`, which lists only `https://rolandmalczanek.com/`.
+No robots-blocking directive is used on any page. `robots.txt` allows all crawlers and points to `sitemap.xml`, which lists only `https://rolandmalczanek.com/`.
