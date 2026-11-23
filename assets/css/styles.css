@@ -456,7 +456,9 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 @media (min-width: 48rem) { .stage__figure { width: min(100%, 17rem); } }
 @media (min-width: 62rem) { .stage__figure { grid-column: 2; grid-row: 2; align-self: center; justify-self: center; width: min(100%, 15rem); margin-block: var(--space-2); } }
 @media (min-width: 72rem) { .stage__figure { width: min(100%, 18.75rem); } }
-@media (max-width: 40rem) { .stage__figure { display: none; } }
+@media (max-width: 40rem) { .stage__figure:not(.stage__figure--video) { display: none; } .stage__figure--video { width: 100%; } }
+/* Step 4 demo video (inactive): same slot as the illustrations, 3:2 poster, stays visible on mobile once enabled */
+.stage__figure video { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius-sm); }
 .stage__caption { margin-top: .5rem; text-align: center; color: var(--color-muted); font-size: .8125rem; font-style: italic; line-height: 1.4; }
 /* Editorial interlude inside the Journey: not a numbered milestone (no node, no progression, no sticky summary) */
 .interlude { padding-block: var(--space-4); border-block: 1px solid var(--color-border); }
