@@ -834,6 +834,14 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
 .rec__rel { margin-top: .125rem; font-size: .8125rem; color: var(--color-muted); }
 .rec--featured .story__teaser p, .rec--featured .story__full p { font-size: 1.1875rem; }
 .rec .story__btn { margin-top: var(--space-2); }
+/* Equal-height recommendation cards: the LinkedIn links sit at the bottom of both */
+.rec { display: flex; flex-direction: column; }
+.rec__link { margin-top: auto; padding-top: var(--space-2); font-size: var(--built-fs); }
+@media (min-width: 56rem) {
+  .recs__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
+  .recs__side { display: contents; }
+}
+
 .rec__btn::after { content: "\2193" / ""; }
 .rec__btn[aria-expanded="true"]::after { content: "\2191" / ""; }
 .recs__note { margin-top: var(--space-4); font-size: .8125rem; color: var(--color-muted); }
