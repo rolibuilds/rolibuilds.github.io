@@ -678,6 +678,8 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .about-open h2 + .about-open__body { margin-top: var(--space-3); }
 @media (min-width: 56rem) { .about-open__body { font-size: 1.0625rem; } }
 .about-open__more { margin-top: var(--space-3); max-width: 40rem; color: var(--color-muted); font-size: 1rem; font-weight: 600; line-height: 1.5; }
+/* Takeaway line under the About text: larger, with an accent rule */
+.about-open .about-open__pull { margin-top: var(--space-3); padding-left: var(--space-2); border-left: 3px solid var(--color-accent); font-size: clamp(1.25rem, 1.1rem + .6vw, 1.5rem); font-weight: 600; line-height: 1.45; text-wrap: balance; }
 .portrait { margin: 0; }
 .portrait__frame { aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: linear-gradient(165deg, light-dark(#e9d3b8, #3a2f26), light-dark(#d9b48f, #2a221c)); }
 .portrait img { display: block; width: 100%; height: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; }
