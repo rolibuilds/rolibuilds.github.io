@@ -712,6 +712,13 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .about-ch__intro { max-width: 44rem; margin-bottom: var(--space-4); }
 .cutout img { display: block; max-height: 22rem; max-width: 100%; width: auto; height: auto; margin-inline: auto; }
 @media (min-width: 56rem) { .cutout img { max-height: 29rem; margin-inline: 0 auto; } .about-ch__grid:has(.cutout) { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--space-4); } }
+/* Outside work: half-height karate section (same background and type as the old karate chapter), image capped, three-column row below */
+#outside-work .about-ch__grid { align-items: center; }
+#outside-work .about-ch__head { margin-bottom: var(--space-2); }
+#outside-work .cutout img { max-height: 14rem; margin-inline: auto; }
+@media (min-width: 56rem) { #outside-work .cutout img { max-height: 20rem; margin-inline: 0 auto; } }
+#outside-work .outside__row { margin-top: var(--space-3); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 48rem) { #outside-work .outside__row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 /* The decorative belt mark gives way to the real cut-out when one is present */
 .about-ch__grid:has(.cutout) .karate-mark { display: none; }
 
