@@ -429,6 +429,26 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
   .stage__summary { display: block; position: sticky; align-self: start; top: calc(var(--header-h) + var(--ctx-offset, 0px) + var(--space-3)); }
   .stage > .story { order: 0; max-width: var(--measure); }
 }
+/* Journey visuals: one static slot per numbered milestone. Mobile/tablet portrait: after the progression. Two-column layout: right column, directly below the story and its control. */
+.stage__visual {
+  order: 4; justify-self: start; align-self: start; width: min(100%, 15rem); height: auto; aspect-ratio: 2 / 1;
+  margin-top: var(--space-1); opacity: .88;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  mask-composite: intersect;
+}
+/* Dark theme: the pale artwork is only dimmed (no filter, inversion or recolouring) so it reads as part of the page, not a white panel */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .stage__visual { opacity: .78; } }
+:root[data-theme="dark"] .stage__visual { opacity: .78; }
+@media (min-width: 48rem) { .stage__visual { width: min(100%, 17rem); } }
+@media (min-width: 62rem) {
+  .stage[data-stage] { grid-template-rows: auto 1fr; }
+  .stage[data-stage] > .stage__summary { grid-column: 1; grid-row: 1 / span 2; }
+  .stage[data-stage] > .story { grid-column: 2; grid-row: 1; }
+  .stage__visual { grid-column: 2; grid-row: 2; width: min(100%, 15rem); margin-top: 0; }
+}
+@media (min-width: 72rem) { .stage__visual { width: min(100%, 18.75rem); } }
 /* Editorial interlude inside the Journey: not a numbered milestone (no node, no progression, no sticky summary) */
 .interlude { padding-block: var(--space-4); border-block: 1px solid var(--color-border); }
 .interlude__title { margin-bottom: var(--space-1); color: var(--color-accent); font-size: .8125rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
