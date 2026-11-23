@@ -342,25 +342,16 @@
     var q = function (sel, root) { return (root || document).querySelector(sel); };
     var zones = [];
     var add = function (el, tone, kind, primary, secondary, card, cap) { if (el) zones.push({ el: el, tone: tone, kind: kind, primary: primary, secondary: secondary, card: card, cap: cap }); };
-    var capTitle = txt(q('#capabilities-title'));
-    var capCards = document.querySelectorAll('#capabilities .proof-card');
-    add(q('#capabilities'), 'default', '', capTitle, txt(q('.card__title', capCards[0])), false, true);
-    Array.prototype.forEach.call(capCards, function (c) { add(c, 'default', '', capTitle, txt(q('.card__title', c)), true, true); });
+    add(q('.about-open'), 'about', 'hidden'); /* bar stays hidden through the About introduction */
     var builtTitle = txt(q('#built-title'));
-    add(q('#built'), 'default', '', builtTitle, txt(q('.subhead', q('#building'))));
-    add(q('#building'), 'default', '', builtTitle, txt(q('.subhead', q('#building'))));
+    add(q('#built'), 'default', '', builtTitle, txt(q('.subhead', q('#built-journey'))));
     add(q('#built-journey'), 'default', '', builtTitle, txt(q('.subhead', q('#built-journey'))));
-    add(q('#built-csap'), 'default', '', txt(q('#csap-title')), txt(q('.csap__eyebrow', q('#built-csap'))));
-    add(q('#built-portfolio'), 'default', '', txt(q('#portfolio-title')), txt(q('.csap__eyebrow', q('#built-portfolio'))));
+    add(q('#built-csap'), 'default', '', txt(q('#csap-title')), '');
     add(careerEl, '', 'hidden');
     var employerEls = careerEl.querySelectorAll('.employer');
     Array.prototype.forEach.call(employerEls, function (em) { add(em, em.getAttribute('data-employer'), 'career'); });
-    add(q('#recommendations'), '', 'hidden'); /* releases the Career context; the bar stays hidden through Recommendations */
-    var aboutTitle = document.documentElement.lang === 'en' ? 'About me' : txt(q('#about-title')); /* EN context label per brief; HU keeps its heading */
-    add(q('.about-open'), 'about', 'hidden'); /* bar stays hidden through the whole About introduction; it starts at Karate */
-    Array.prototype.forEach.call(document.querySelectorAll('#about .about-ch'), function (ch) {
-      add(ch, ch.id.replace('about-', ''), '', aboutTitle, txt(q('.about-ch__label', ch)));
-    });
+    add(q('#recommendations'), '', 'hidden'); /* releases the Career context; the bar stays hidden through Recommendations and Outside work */
+    add(q('#outside-work'), '', 'hidden');
     add(q('#contact'), '', 'hidden');
 
     var ctx = document.createElement('div');
