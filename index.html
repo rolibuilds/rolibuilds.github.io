@@ -175,48 +175,32 @@
 
   <section class="section section--tint" id="project" aria-labelledby="csap-title">
     <div class="wrap">
-      <article class="csap story" data-reveal id="built-csap" tabindex="-1" aria-labelledby="csap-title" data-story>
-<p class="csap__eyebrow">My flagship project</p>
-<h3 class="csap__title" id="csap-title">Corporate Services Automation Platform</h3>
+      <article class="csap" data-reveal id="built-csap" tabindex="-1" aria-labelledby="csap-title">
+<h2 class="csap__title" id="csap-title">Corporate Services Automation Platform (CSAP)</h2>
 <div class="csap__overview">
-<p>CSAP is my personal portfolio project, built around a realistic business problem: how to manage requests that require both approval and financial control without relying on disconnected emails and spreadsheets.</p>
-<p>It uses Dataverse and Power Automate to connect structured request data, financial validation, exchange rates, budget controls and approval workflows in one traceable process.</p>
-<p>My aim with CSAP is to gain hands-on, practical experience by building a focused MVP that is understandable, testable and useful.</p>
+<p>A personal MVP for requests that need both approval and financial control: one traceable process instead of disconnected emails and spreadsheets.</p>
 </div>
 <div class="csap__capability"><p class="facts-label" id="cap-t">Current capability</p>
 <ul class="chips" aria-labelledby="cap-t"><li>Financial validation</li><li>Multi-currency handling</li><li>FX-rate maintenance</li><li>Budget-capacity checks</li><li>Approval routing</li><li>Clarification and exception handling</li><li>Traceable approval history</li></ul>
-<div class="principle"><p class="facts-label">Project principle</p><p class="principle__statement">Human-led and built. AI-supported. Tested in practice.</p>
 </div>
-</div>
-<!-- DEMO: becomes a real link (assets/video/csap/) only when a real demo exists. Never publish a fake demo.
-     MVP: the demo control below is switched off with the temporary flag data-mvp="demo-off" plus the hidden attribute (no space, no focus, not announced).
-     To restore it later, remove both attributes from that button. -->
-<div class="csap__controls">
-<button type="button" class="disclosure-btn story__btn" aria-expanded="false" aria-controls="csap-more" data-label-open="Show less" data-label-closed="More about the project" hidden><span data-story-label>More about the project</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 6l5 5 5-5"/></svg></button>
-<button type="button" class="btn btn--ghost" aria-disabled="true" data-mvp="demo-off" hidden>Watch the demo<span class="coming-soon">Coming soon</span></button>
-</div>
-<div class="story__stage">
-<div class="story__full" id="csap-more">
-<p>When CSAP began, my practical Power Platform experience was still very limited. The project moved me from guided exercises and concepts to a much larger AI-supported build, where I make the design decisions, implement the solution, test the results and remain responsible for what we build.</p>
-<p>I worked through the requirements, process design, data model and financial rules before building the Dataverse foundation and Power Automate workflows. Testing has been part of the work from the beginning, and I’ve changed both the design and the scope when the evidence showed that I should.</p>
-<p>Building this as a private individual comes with technical limitations. I treat those as design constraints rather than excuses: simplify where it makes sense, find practical ways to test the important controls and clearly document what couldn’t be validated in the same way as it would be in a full organisational environment.</p>
-<div class="csap__lists">
-<section aria-labelledby="csap-role-t"><h4 id="csap-role-t" class="facts-label">My role</h4>
+<!-- DEMO VIDEO (inactive until the files exist; never publish a broken player or a fake demo).
+     To enable: add assets/video/csap-demo.mp4 and assets/video/csap-demo-poster.jpg, then remove the comment markers around the block below.
+<video controls muted playsinline preload="metadata" poster="assets/video/csap-demo-poster.jpg">
+<source src="assets/video/csap-demo.mp4" type="video/mp4">
+</video>
+-->
+<section class="principle" aria-labelledby="csap-ai-t">
+<h3 id="csap-ai-t" class="facts-label">How I used AI</h3>
 <ul class="facts-list">
-<li>Business analysis and requirements definition</li>
-<li>Financial-process and control design</li>
-<li>Dataverse data modelling and implementation</li>
-<li>Power Automate workflow design and build</li>
-<li>Runtime and exception testing</li>
-<li>Scope decisions and documentation</li>
-<li>Final responsibility for the working solution</li>
-</ul></section>
-<section aria-labelledby="csap-with-t"><h4 id="csap-with-t" class="facts-label">Created with</h4>
-<ul class="dot-list"><li>Microsoft Dataverse</li><li>Power Automate</li><li>Power Apps</li><li>Microsoft Copilot</li></ul></section>
+<li>Reviewed and trimmed the proposed MVP scope; extra features stayed out until there was a clear business need.</li>
+<li>Kept testing after the first checks passed and found an implementation error that would otherwise have gone unnoticed.</li>
+<li>Designed a practical unauthorised-user test and verified that the security control worked inside the automation, not only in the user interface.</li>
+</ul>
+</section>
+<div class="csap__overview">
+<p>Built with: Dataverse, Power Automate, Power Apps (Dataverse views). Copilot supported research, architecture, critical review and debugging. A custom UI is planned with Claude and is not built yet. Built in a personal environment with test data; controls validated through runtime tests; not tested at organisational scale.</p>
 </div>
-</div>
-</div>
-</article>
+      </article>
     </div>
   </section>
 
