@@ -522,6 +522,8 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .csap__facts dd { margin: 0; }
 @media (min-width: 48rem) { .csap__facts > div { grid-template-columns: 9rem minmax(0, 1fr); gap: var(--space-2); } }
 .csap p, .csap li, .csap dd { text-wrap: pretty; }
+/* Intro: the second sentence starts on its own line (small gap) on mobile and in portrait; one continuous paragraph on desktop and landscape */
+@media (max-width: 47.99rem), (orientation: portrait) { .csap__second { display: block; margin-top: var(--space-1); } }
 .csap h2, .csap h3 { text-wrap: balance; }
 .portfolio-card__title { font-size: clamp(1.375rem, 1.05rem + 1.4vw, 2rem); }
 .portfolio-card .prose { margin-top: var(--space-2); max-width: var(--measure); }
