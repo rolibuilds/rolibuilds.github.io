@@ -395,6 +395,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .journey-intro, .built-more { margin-top: var(--block-gap); }
 .built-more { display: grid; gap: var(--space-4); }
 .journey-lead { margin-bottom: var(--space-2); }
+.section__head + .journey-intro { margin-top: 0; }
 .journey-path { display: flex; flex-wrap: wrap; gap: .25rem .5rem; margin-bottom: var(--space-4); color: var(--color-muted); font-size: .8125rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
 .journey-path li { display: inline-flex; align-items: center; gap: .5rem; }
 .journey-path li:not(:last-child)::after { content: "\2192"; }
@@ -462,7 +463,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .interlude__title { margin-bottom: var(--space-1); color: var(--color-accent); font-size: .8125rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
 .interlude .story__stage { max-width: var(--measure); }
 .stage__kind { margin-bottom: .375rem; color: var(--color-accent); }
-.stage h4 { font-size: clamp(1.375rem, 1.1rem + 1.2vw, 2rem); font-weight: 700; letter-spacing: -.015em; }
+.stage h3 { font-size: clamp(1.375rem, 1.1rem + 1.2vw, 2rem); font-weight: 700; letter-spacing: -.015em; }
 .stage__more { margin-top: var(--space-1); }
 .deep-link-arrow { display: inline-block; padding-block: .5rem; font-size: .8125rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
 .deep-link-arrow::after { content: " \2192"; }
