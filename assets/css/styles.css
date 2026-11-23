@@ -509,6 +509,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .csap__lists { display: grid; gap: var(--space-3); margin-top: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
 /* Project card: one body size and one measure (70ch) for the intro, paragraphs, bullets and labelled lines */
 .csap__overview { max-width: 70ch; }
+.csap .principle .csap__overview { margin-top: .5rem; }
 .csap .facts-list { max-width: 70ch; font-size: var(--built-fs); line-height: 1.65; }
 .csap p, .csap li { text-wrap: pretty; }
 .csap h2, .csap h3 { text-wrap: balance; }
