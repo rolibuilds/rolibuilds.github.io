@@ -15,7 +15,7 @@ Cloudflare Web Analytics is used for aggregate site-usage measurement (page view
 - All three recommendation authors approved publication on the portfolio. The approval covers the recommendation text, name, professional title and supplied profile image.
 - The content originated as LinkedIn recommendations. The full wording is reproduced verbatim (including original punctuation); excerpts are exact extracts.
 - Portraits are 160×160 web derivatives in `assets/images/career/recommendations/` (metadata stripped, originals not stored in the repository).
-- The section sits between Professional Career and About in `en/index.html` and keeps the mobile context bar hidden.
+- The section sits between Professional Career and Outside work in `index.html` and keeps the mobile context bar hidden. It shows two short excerpts with a link to the full text on LinkedIn.
 
 ## Routing
 
