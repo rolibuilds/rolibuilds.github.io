@@ -733,6 +733,10 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 @media (min-width: 56rem) { #outside-work .cutout img { max-height: 20rem; margin-inline: 0 auto; } }
 #outside-work .outside__row { margin-top: var(--space-3); grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 48rem) { #outside-work .outside__row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* Outside work: the three concert cards from the old Music chapter (brown rule), hidden on mobile */
+#outside-work .concerts { margin-bottom: 0; }
+#outside-work .concert { border-top-color: var(--about-music-accent); }
+@media (max-width: 47.99rem) { #outside-work .concerts { display: none; } }
 /* The decorative belt mark gives way to the real cut-out when one is present */
 .about-ch__grid:has(.cutout) .karate-mark { display: none; }
 
