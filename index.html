@@ -179,7 +179,7 @@
       <article class="csap" data-reveal id="built-csap" tabindex="-1" aria-labelledby="csap-title">
 <h2 class="csap__title" id="csap-title">Corporate Services Automation Platform (CSAP)</h2>
 <div class="csap__overview">
-<p>A personal MVP for requests that need both approval and financial control: one traceable process instead of disconnected emails and spreadsheets.</p>
+<p>CSAP is my personal portfolio project, built around a realistic business problem: how to manage requests that require both approval and financial control without relying on disconnected emails and spreadsheets. It uses Dataverse and Power Automate to connect structured request data, financial validation, exchange rates, budget controls and approval workflows in one traceable process.</p>
 </div>
 <div class="csap__capability"><p class="facts-label" id="cap-t">Current capability</p>
 <ul class="chips" aria-labelledby="cap-t"><li>Financial validation</li><li>Multi-currency handling</li><li>FX-rate maintenance</li><li>Budget-capacity checks</li><li>Approval routing</li><li>Clarification and exception handling</li><li>Traceable approval history</li></ul>
@@ -190,6 +190,12 @@
 <source src="assets/video/csap-demo.mp4" type="video/mp4">
 </video>
 -->
+<section class="principle" aria-labelledby="csap-built-t">
+<h3 id="csap-built-t" class="facts-label">How it was built</h3>
+<div class="csap__overview">
+<p>I worked through the requirements, process design, data model and financial rules before building the Dataverse foundation and Power Automate workflows. Testing has been part of the work from the beginning, and I changed both the design and the scope when the evidence showed that I should.</p>
+</div>
+</section>
 <section class="principle" aria-labelledby="csap-ai-t">
 <h3 id="csap-ai-t" class="facts-label">How I used AI</h3>
 <ul class="facts-list">
@@ -198,8 +204,14 @@
 <li>Designed a practical unauthorised-user test and verified that the security control worked inside the automation, not only in the user interface.</li>
 </ul>
 </section>
-<div class="csap__overview">
-<p>Built with: Dataverse, Power Automate, Power Apps (Dataverse views). Copilot supported research, architecture, critical review and debugging. A custom UI is planned with Claude and is not built yet. Built in a personal environment with test data; controls validated through runtime tests; not tested at organisational scale.</p>
+<div class="principle">
+<ul class="facts-list">
+<li><strong>Controls:</strong> approval-authority and security guards, duplicate protection, pending funding holds, final financial revalidation; official Hungarian National Bank (MNB) exchange rates for EUR, USD, GBP and CHF</li>
+<li><strong>Built with:</strong> Dataverse, Power Automate, Power Apps (Dataverse views)</li>
+<li><strong>AI support:</strong> Copilot for research, architecture, critical review and debugging</li>
+<li><strong>UI:</strong> a custom UI is planned with Claude and is not built yet</li>
+<li><strong>Environment:</strong> personal environment with fictional test data; I tested the important controls in practice and documented what could not be validated as it would be in an organisational environment</li>
+</ul>
 </div>
       </article>
     </div>
