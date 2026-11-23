@@ -449,6 +449,13 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
   .stage__visual { grid-column: 2; grid-row: 2; align-self: center; justify-self: center; width: min(100%, 15rem); margin-block: var(--space-2); }
 }
 @media (min-width: 72rem) { .stage__visual { width: min(100%, 18.75rem); } }
+/* Journey figure: image plus caption share one slot; same placement as the bare image above. Hidden together on mobile. */
+.stage__figure { order: 4; margin: var(--space-1) 0 0; justify-self: start; align-self: start; width: min(100%, 15rem); }
+.stage__figure .stage__visual { display: block; width: 100%; margin-top: 0; }
+@media (min-width: 48rem) { .stage__figure { width: min(100%, 17rem); } }
+@media (min-width: 62rem) { .stage__figure { grid-column: 2; grid-row: 2; align-self: center; justify-self: center; width: min(100%, 15rem); margin-block: var(--space-2); } }
+@media (min-width: 72rem) { .stage__figure { width: min(100%, 18.75rem); } }
+@media (max-width: 40rem) { .stage__figure { display: none; } }
 /* Editorial interlude inside the Journey: not a numbered milestone (no node, no progression, no sticky summary) */
 .interlude { padding-block: var(--space-4); border-block: 1px solid var(--color-border); }
 .interlude__title { margin-bottom: var(--space-1); color: var(--color-accent); font-size: .8125rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
