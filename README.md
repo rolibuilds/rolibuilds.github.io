@@ -19,4 +19,8 @@ Cloudflare Web Analytics is used for aggregate site-usage measurement (page view
 
 ## Routing
 
-The English page is served directly at `/` (`index.html`), with no redirect. `en/index.html` and `hu/index.html` are small redirect pages to `/` (meta refresh, JavaScript redirect, canonical to `/`), because GitHub Pages has no server-side redirects. `hu/index.html` keeps its noindex setting. There is no Hungarian page or language switch at the moment. The earlier Hungarian draft is in git history: restore it with `git checkout 5f864cb -- hu/index.html` (also on `backup/portfolio-stable-5f864cb`).
+The English page is served directly at `/` (`index.html`), with no redirect. `en/index.html` and `hu/index.html` are small redirect pages to `/` (meta refresh, JavaScript redirect, canonical to `/`), because GitHub Pages has no server-side redirects. Neither page carries a robots directive. There is no Hungarian page or language switch at the moment. The earlier Hungarian draft is in git history: restore it with `git checkout 5f864cb -- hu/index.html` (also on `backup/portfolio-stable-5f864cb`).
+
+## Search
+
+No `noindex` or `nofollow` directive is used anywhere. `robots.txt` allows all crawlers and points to `sitemap.xml`, which lists only `https://rolandmalczanek.com/`.
