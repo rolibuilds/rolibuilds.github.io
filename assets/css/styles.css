@@ -510,12 +510,12 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .csap .story__full { padding-top: var(--space-4); }
 .csap .story__full > p { max-width: var(--measure); }
 .csap__lists { display: grid; gap: var(--space-3); margin-top: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
-/* Project card: one body size; on desktop text blocks use 80% of the card's inner width (at least as wide as the first chip row), 2rem gaps between blocks */
+/* Project card: one body size; on desktop text blocks use 88% of the card's inner width (at least as wide as the first chip row), 2rem gaps between blocks */
 .csap__overview { max-width: none; }
 .csap .principle .csap__overview { margin-top: .5rem; }
 .csap__capability, .csap .principle { margin-top: 2rem; }
 .csap .facts-list { gap: .6rem; font-size: var(--built-fs); line-height: 1.65; }
-@media (min-width: 64rem) { .csap__overview, .csap .facts-list, .csap__facts { max-width: 80%; } }
+@media (min-width: 64rem) { .csap__overview, .csap .facts-list, .csap__facts { max-width: 88%; } }
 .csap__facts { display: grid; gap: .6rem; margin-top: .5rem; font-size: var(--built-fs); line-height: 1.65; }
 .csap__facts > div { display: grid; gap: 0; }
 .csap__facts dt { font-weight: 700; }
