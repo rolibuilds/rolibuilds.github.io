@@ -507,11 +507,18 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 .csap .story__full { padding-top: var(--space-4); }
 .csap .story__full > p { max-width: var(--measure); }
 .csap__lists { display: grid; gap: var(--space-3); margin-top: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
-/* Project card: one body size and one measure (70ch) for the intro, paragraphs, bullets and labelled lines */
-.csap__overview { max-width: 70ch; }
+/* Project card: one body size; on desktop text blocks use 80% of the card's inner width (at least as wide as the first chip row), 2rem gaps between blocks */
+.csap__overview { max-width: none; }
 .csap .principle .csap__overview { margin-top: .5rem; }
-.csap .facts-list { max-width: 70ch; font-size: var(--built-fs); line-height: 1.65; }
-.csap p, .csap li { text-wrap: pretty; }
+.csap__capability, .csap .principle { margin-top: 2rem; }
+.csap .facts-list { gap: .6rem; font-size: var(--built-fs); line-height: 1.65; }
+@media (min-width: 64rem) { .csap__overview, .csap .facts-list, .csap__facts { max-width: 80%; } }
+.csap__facts { display: grid; gap: .6rem; margin-top: .5rem; font-size: var(--built-fs); line-height: 1.65; }
+.csap__facts > div { display: grid; gap: 0; }
+.csap__facts dt { font-weight: 700; }
+.csap__facts dd { margin: 0; }
+@media (min-width: 48rem) { .csap__facts > div { grid-template-columns: 9rem minmax(0, 1fr); gap: var(--space-2); } }
+.csap p, .csap li, .csap dd { text-wrap: pretty; }
 .csap h2, .csap h3 { text-wrap: balance; }
 .portfolio-card__title { font-size: clamp(1.375rem, 1.05rem + 1.4vw, 2rem); }
 .portfolio-card .prose { margin-top: var(--space-2); max-width: var(--measure); }
