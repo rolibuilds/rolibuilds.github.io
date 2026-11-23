@@ -3,7 +3,7 @@ Finance, automation and better ways of working.
 
 ## Analytics (internal note)
 
-Cloudflare Web Analytics is used for aggregate site-usage measurement (page views). The standard Cloudflare beacon is placed once, just before `</body>`, in `en/index.html`. (`hu/index.html` is currently a redirect shell and carries no beacon.) The root `index.html` is a redirect stub and carries no beacon.
+Cloudflare Web Analytics is used for aggregate site-usage measurement (page views). The standard Cloudflare beacon is placed once, just before `</body>`, in the root `index.html`, which is the English page. (`en/index.html` and `hu/index.html` are redirect shells to `/` and carry no beacon.)
 
 - No cookies, local storage, user IDs or consent banner are added by this integration; SPA mode is off because the site is a traditional multi-page site with anchor navigation.
 - No Content Security Policy is defined. If one is added later, allow `https://static.cloudflareinsights.com` (script) and `https://cloudflareinsights.com` (reporting).
@@ -17,6 +17,6 @@ Cloudflare Web Analytics is used for aggregate site-usage measurement (page view
 - Portraits are 160×160 web derivatives in `assets/images/career/recommendations/` (metadata stripped, originals not stored in the repository).
 - The section sits between Professional Career and About in `en/index.html` and keeps the mobile context bar hidden.
 
-## Hungarian page (temporary)
+## Routing
 
-Hungarian public route temporarily redirects to /en/ until full EN/HU localisation and parity work is completed. `hu/index.html` is a minimal redirect shell (noindex, canonical to /en/, JavaScript redirect plus meta refresh). The unfinished Hungarian document is kept in git history, not in the published tree (the site is served with `.nojekyll`, so any file in the repository is public): restore it with `git checkout 5f864cb -- hu/index.html` (also on `backup/portfolio-stable-5f864cb`). To restore: replace the shell with that document, complete parity and localisation testing, then restore the language switch and hreflang metadata.
+The English page is served directly at `/` (`index.html`), with no redirect. `en/index.html` and `hu/index.html` are small redirect pages to `/` (meta refresh, JavaScript redirect, canonical to `/`), because GitHub Pages has no server-side redirects. `hu/index.html` keeps its noindex setting. There is no Hungarian page or language switch at the moment. The earlier Hungarian draft is in git history: restore it with `git checkout 5f864cb -- hu/index.html` (also on `backup/portfolio-stable-5f864cb`).
