@@ -738,6 +738,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 /* Outside work: the three concert cards from the old Music chapter (brown rule), hidden on mobile */
 /* The concert cards sit inside the hobby grid: one joined brown rule (1px, like the line under the label), then CONCERTS, then the cards. On mobile the rule and cards are hidden and CONCERTS is the fourth stacked item. */
 #outside-work .concerts { margin: 0; }
+#outside-work .concert__name { overflow-wrap: normal; word-break: normal; hyphens: none; }
 #outside-work .concert { padding-top: 0; border-top: 0; }
 #outside-work .outside__rule { display: none; }
 @media (min-width: 48rem) {

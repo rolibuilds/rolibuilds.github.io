@@ -24,3 +24,7 @@ The English page is served directly at `/` (`index.html`), with no redirect. `en
 ## Search
 
 No robots-blocking directive is used on any page. `robots.txt` allows all crawlers and points to `sitemap.xml`, which lists only `https://rolandmalczanek.com/`.
+
+## Cache busting
+
+GitHub Pages serves CSS and JS with a 10-minute cache, so a visitor can briefly get new HTML with an old stylesheet. The page links `styles.css`, `main.js` and `theme-init.js` with a `?v=` query. Bump that value in `index.html` whenever those files change.
