@@ -524,4 +524,64 @@
       });
     });
   })();
+  /* ---------- Demo video: the slot is a poster that opens the same kind of dialog. Without JavaScript (or showModal) the native player stays as it is. ---------- */
+  (function () {
+    var fig = document.querySelector('.stage__figure--video');
+    var slotVideo = fig && fig.querySelector('video');
+    var probe = document.createElement('dialog');
+    if (!slotVideo || typeof probe.showModal !== 'function') return;
+    var src = slotVideo.querySelector('source');
+    if (!src) return;
+    var label = slotVideo.getAttribute('aria-label') || 'Demo video';
+    slotVideo.removeAttribute('controls');
+    slotVideo.setAttribute('preload', 'none');
+    slotVideo.tabIndex = -1;
+    var wrap = document.createElement('div');
+    wrap.className = 'video-trigger';
+    slotVideo.parentNode.insertBefore(wrap, slotVideo);
+    wrap.appendChild(slotVideo);
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'video-trigger__btn';
+    btn.setAttribute('aria-haspopup', 'dialog');
+    btn.setAttribute('aria-label', 'Play ' + label + ' (opens video dialog)');
+    btn.innerHTML = '<span class="video-trigger__icon" aria-hidden="true"></span>';
+    wrap.appendChild(btn);
+    var dlg = document.createElement('dialog');
+    dlg.className = 'img-modal img-modal--video';
+    dlg.setAttribute('aria-label', label);
+    var panel = document.createElement('div');
+    panel.className = 'img-modal__panel';
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'img-modal__close';
+    close.textContent = 'Close';
+    close.setAttribute('aria-label', 'Close video');
+    var vid = document.createElement('video');
+    vid.className = 'img-modal__video';
+    vid.controls = true;
+    vid.setAttribute('playsinline', '');
+    vid.preload = 'none';
+    vid.poster = slotVideo.getAttribute('poster') || '';
+    panel.appendChild(close);
+    panel.appendChild(vid);
+    dlg.appendChild(panel);
+    document.body.appendChild(dlg);
+    function shut() { if (dlg.open) dlg.close(); }
+    close.addEventListener('click', shut);
+    dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target === panel) shut(); });
+    dlg.addEventListener('close', function () {
+      vid.pause();
+      vid.removeAttribute('src');
+      vid.load();
+      btn.focus({ preventScroll: true });
+    });
+    btn.addEventListener('click', function () {
+      vid.src = src.getAttribute('src');
+      dlg.showModal();
+      close.focus({ preventScroll: true });
+      var p = vid.play();
+      if (p && p.catch) p.catch(function () {});
+    });
+  })();
 })();
