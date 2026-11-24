@@ -198,12 +198,11 @@
 </div>
 </section>
 <section class="principle" aria-labelledby="csap-ai-t">
-<h3 id="csap-ai-t" class="facts-label">How I used AI</h3>
+<h3 id="csap-ai-t" class="facts-label">How I worked with AI</h3>
 <ul class="facts-list">
-<li>Reviewed and trimmed the proposed MVP scope; extra features stayed out until there was a clear business need.</li>
-<li>Kept testing after the first checks passed and found an implementation error that would otherwise have gone unnoticed.</li>
-<li>With one real account behind all three test users, I designed a test for actions the flow must block (approving at the wrong approval level, approving my own request) and verified that the guards worked inside the automation, not only in the user interface.</li>
-<li>Testing exposed a bug where released holds were not cleared for rejected and cancelled requests; I fixed it and re-ran the checks.</li>
+<li>I defined the business design, including what belongs in the MVP and what comes later. Copilot turned it into a proposal I reviewed. It repeatedly expanded the scope or drifted from the frozen design, for example by inventing a separate step where the design treats final approval as the commitment event; I stopped it, corrected it and removed features to move faster.</li>
+<li>Copilot supplied most of the test cases; I ran them and checked the results. One test I proposed myself: with one real account behind all three test users, I verified that actions the flow must block (approving at the wrong approval level, approving my own request) were blocked inside the automation, not only in the user interface.</li>
+<li>Testing exposed a bug where released holds were not cleared for rejected and cancelled requests. Copilot helped diagnose it and told me what to change; I made the fix and re-ran the checks.</li>
 </ul>
 </section>
 <div class="principle">
