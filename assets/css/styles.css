@@ -736,8 +736,15 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
 #outside-work .outside__row { margin-top: var(--space-3); grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 48rem) { #outside-work .outside__row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 /* Outside work: the three concert cards from the old Music chapter (brown rule), hidden on mobile */
-#outside-work .concerts { margin-bottom: 0; }
-#outside-work .concert { border-top-color: var(--about-music-accent); }
+/* The concert cards sit inside the hobby grid: one joined brown rule (1px, like the line under the label), then CONCERTS, then the cards. On mobile the rule and cards are hidden and CONCERTS is the fourth stacked item. */
+#outside-work .concerts { margin: 0; }
+#outside-work .concert { padding-top: 0; border-top: 0; }
+#outside-work .outside__rule { display: none; }
+@media (min-width: 48rem) {
+  #outside-work .outside__rule { display: block; grid-column: 1 / -1; height: 0; border-top: 1px solid var(--about-music-accent); }
+  #outside-work .outside__concerts { grid-column: 1 / span 2; }
+  #outside-work .concerts { grid-column: 1 / -1; }
+}
 @media (max-width: 47.99rem) { #outside-work .concerts { display: none; } }
 /* The decorative belt mark gives way to the real cut-out when one is present */
 .about-ch__grid:has(.cutout) .karate-mark { display: none; }
