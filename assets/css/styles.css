@@ -948,3 +948,8 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
 .autorow__more { margin: var(--space-1) 0 0; font-size: .875rem; }
 .autorow .stage__figure { width: min(100%, 22rem); margin: var(--space-3) 0 0; justify-self: auto; align-self: auto; }
 
+/* Hero availability: one block, two lines */
+.hero__open { gap: 0; padding: .6rem .9rem; max-width: 100%; border-left: 3px solid var(--color-accent); background: var(--color-accent-soft); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.hero__open .hero__target { padding: 0; border: 0; background: none; border-radius: 0; }
+.hero__open .hero__until { margin-top: .2rem; }
+
