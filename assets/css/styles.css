@@ -882,3 +882,18 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
 .video-trigger__icon::after { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-35%, -50%); border-style: solid; border-width: .7rem 0 .7rem 1.1rem; border-color: transparent transparent transparent #fff; }
 .img-modal__video { display: block; width: min(100%, calc((100dvh - 2rem - 3.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 16 / 9)); aspect-ratio: 16 / 9; height: auto; margin-top: 3.5rem; border-radius: var(--radius-sm); background: #000; }
 .img-modal--video .img-modal__panel { width: min(100%, 80rem); }
+
+/* Hero, senior positioning: compact, text-led; figures and two buttons */
+.hero { min-height: 0; }
+.hero__inner { container-type: normal; padding-block: clamp(2rem, 5vw, 4rem) clamp(2rem, 5vw, 3.5rem); }
+.hero__main { justify-content: flex-start; max-width: 52rem; }
+.hero h1 { margin: 0 0 var(--space-2); max-width: 20ch; font-size: clamp(2.25rem, 1.2rem + 4.2vw, 4.25rem); line-height: 1.06; letter-spacing: -.03em; font-weight: 760; text-wrap: balance; }
+.hero__role { margin: 0 0 var(--space-2); font-size: clamp(1.0625rem, 1rem + .35vw, 1.25rem); font-weight: 650; color: var(--color-accent); }
+.hero .lead { max-width: 40rem; }
+.hero__target { margin: var(--space-3) 0 0; padding: .6rem .9rem; max-width: 100%; border-left: 3px solid var(--color-accent); background: var(--color-accent-soft); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-weight: 600; font-size: .9375rem; line-height: 1.4; }
+@media (min-width: 64rem) { .hero__target { font-size: 1rem; } }
+.hero__figures { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin: var(--space-3) 0 0; padding: 0; list-style: none; }
+.hero__figures li { display: grid; gap: .125rem; }
+.hero__figures strong { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem); font-weight: 740; letter-spacing: -.02em; line-height: 1.1; }
+.hero__figures span { font-size: .8125rem; color: var(--color-muted); }
+.hero__cta { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
