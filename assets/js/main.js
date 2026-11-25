@@ -336,15 +336,11 @@
     var q = function (sel, root) { return (root || document).querySelector(sel); };
     var zones = [];
     var add = function (el, tone, kind, primary, secondary, card, cap) { if (el) zones.push({ el: el, tone: tone, kind: kind, primary: primary, secondary: secondary, card: card, cap: cap }); };
-    add(q('.about-open'), 'about', 'hidden'); /* bar stays hidden through the About introduction */
-    var builtTitle = txt(q('#built-title'));
-    add(q('#built'), 'default', '', builtTitle, '');
-    add(q('#built-journey'), 'default', '', builtTitle, '');
-    add(q('#built-csap'), 'default', '', txt(q('#csap-title')), '');
-    add(careerEl, '', 'hidden');
-    var employerEls = careerEl.querySelectorAll('.employer');
-    Array.prototype.forEach.call(employerEls, function (em) { add(em, 'otp', 'career'); });
-    add(q('#recommendations'), '', 'hidden'); /* releases the Career context; the bar stays hidden through Recommendations and Outside work */
+    /* One uniform label per section, section name only (no employer or role text); hidden before Experience, in Beyond work and in Contact */
+    add(careerEl, 'otp', '', 'Experience', '');
+    add(q('#built'), 'default', '', 'Automation', '');
+    add(q('#built-csap'), 'default', '', 'Project', '');
+    add(q('#recommendations'), 'default', '', 'Recommendations', '');
     add(q('#outside-work'), '', 'hidden');
     add(q('#contact'), '', 'hidden');
 
