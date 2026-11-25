@@ -867,13 +867,15 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
 .rec__btn::after { content: "\2193" / ""; }
 .rec__btn[aria-expanded="true"]::after { content: "\2191" / ""; }
 .recs__note { margin-top: var(--space-4); font-size: .8125rem; color: var(--color-muted); }
-/* Demo video: poster slot with a play button that opens the video dialog (JavaScript only; without it the native player shows) */
-.video-trigger { position: relative; }
-.video-trigger__btn { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; padding: 0; border: 0; border-radius: var(--radius-sm); background: rgba(10, 14, 13, .18); cursor: pointer; }
-.video-trigger__btn:hover { background: rgba(10, 14, 13, .3); }
-.video-trigger__btn:focus-visible { outline: 3px solid #9fd0f0; outline-offset: 3px; }
-.video-trigger__icon { width: 3.25rem; height: 3.25rem; border-radius: 50%; background: rgba(20, 24, 22, .88); border: 2px solid rgba(255, 255, 255, .85); position: relative; }
-.video-trigger__icon::after { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-35%, -50%); border-style: solid; border-width: .7rem 0 .7rem 1.1rem; border-color: transparent transparent transparent #fff; }
+/* CSAP demo: poster thumbnail with a play button; opens the video dialog (JavaScript only; without it the link opens the file) */
+.csap__demo { margin: var(--space-3) 0 0; width: min(100%, 26rem); }
+.csap__demo-link { position: relative; display: block; border-radius: 12px; overflow: hidden; line-height: 0; background: #000; }
+.csap__demo-link img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.csap__demo-link:hover img { opacity: .92; }
+.csap__demo-link:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
+.csap__demo-play { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(10, 14, 13, .18); }
+.csap__demo-play::before { content: ""; grid-area: 1 / 1; width: 3.5rem; height: 3.5rem; border-radius: 50%; background: rgba(20, 24, 22, .88); border: 2px solid rgba(255, 255, 255, .85); }
+.csap__demo-play::after { content: ""; grid-area: 1 / 1; margin-left: .25rem; border-style: solid; border-width: .7rem 0 .7rem 1.1rem; border-color: transparent transparent transparent #fff; }
 .img-modal__video { display: block; width: min(100%, calc((100dvh - 2rem - 3.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 16 / 9)); aspect-ratio: 16 / 9; height: auto; margin-top: 3.5rem; border-radius: var(--radius-sm); background: #000; }
 .img-modal--video .img-modal__panel { width: min(100%, 80rem); }
 

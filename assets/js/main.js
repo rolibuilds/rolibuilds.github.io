@@ -516,29 +516,13 @@
       });
     });
   })();
-  /* ---------- Demo video: the slot is a poster that opens the same kind of dialog. Without JavaScript (or showModal) the native player stays as it is. ---------- */
+  /* ---------- CSAP demo: poster thumbnail opens a native <dialog> with the (silent) video. Without JavaScript the link opens the file. ---------- */
   (function () {
-    var fig = document.querySelector('.stage__figure--video');
-    var slotVideo = fig && fig.querySelector('video');
+    var link = document.querySelector('[data-demo]');
     var probe = document.createElement('dialog');
-    if (!slotVideo || typeof probe.showModal !== 'function') return;
-    var src = slotVideo.querySelector('source');
-    if (!src) return;
-    var label = slotVideo.getAttribute('aria-label') || 'Demo video';
-    slotVideo.removeAttribute('controls');
-    slotVideo.setAttribute('preload', 'none');
-    slotVideo.tabIndex = -1;
-    var wrap = document.createElement('div');
-    wrap.className = 'video-trigger';
-    slotVideo.parentNode.insertBefore(wrap, slotVideo);
-    wrap.appendChild(slotVideo);
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'video-trigger__btn';
-    btn.setAttribute('aria-haspopup', 'dialog');
-    btn.setAttribute('aria-label', 'Play ' + label + ' (opens video dialog)');
-    btn.innerHTML = '<span class="video-trigger__icon" aria-hidden="true"></span>';
-    wrap.appendChild(btn);
+    if (!link || typeof probe.showModal !== 'function') return;
+    var file = link.getAttribute('href');
+    var label = 'CSAP demo video with fictional data';
     var dlg = document.createElement('dialog');
     dlg.className = 'img-modal img-modal--video';
     dlg.setAttribute('aria-label', label);
@@ -552,24 +536,36 @@
     var vid = document.createElement('video');
     vid.className = 'img-modal__video';
     vid.controls = true;
+    vid.muted = true;
+    vid.setAttribute('muted', '');
     vid.setAttribute('playsinline', '');
     vid.preload = 'none';
-    vid.poster = slotVideo.getAttribute('poster') || '';
+    vid.setAttribute('aria-label', label);
+    var poster = link.querySelector('img');
+    if (poster) vid.poster = poster.getAttribute('src');
     panel.appendChild(close);
     panel.appendChild(vid);
     dlg.appendChild(panel);
     document.body.appendChild(dlg);
+    var loaded = false;
     function shut() { if (dlg.open) dlg.close(); }
     close.addEventListener('click', shut);
+    /* backdrop: a click on the dialog itself or its empty panel area (not on the video) */
     dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target === panel) shut(); });
+    /* scrolling outside the video closes it (the video itself keeps its native controls and wheel behaviour) */
+    function scrolled(e) { if (e.target !== vid) shut(); }
+    dlg.addEventListener('wheel', scrolled, { passive: true });
+    dlg.addEventListener('touchmove', scrolled, { passive: true });
     dlg.addEventListener('close', function () {
       vid.pause();
-      vid.removeAttribute('src');
-      vid.load();
-      btn.focus({ preventScroll: true });
+      try { vid.currentTime = 0; } catch (err) { /* not loaded yet */ }
+      link.focus({ preventScroll: true });
     });
-    btn.addEventListener('click', function () {
-      vid.src = src.getAttribute('src');
+    link.setAttribute('aria-haspopup', 'dialog');
+    link.setAttribute('aria-label', 'Play ' + label + ' (opens video dialog)');
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!loaded) { loaded = true; vid.src = file; }
       dlg.showModal();
       close.focus({ preventScroll: true });
       var p = vid.play();
