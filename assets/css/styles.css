@@ -907,3 +907,15 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
   .hero__photo { justify-self: end; width: 100%; max-width: 20rem; }
 }
 
+/* Experience: achievement cards, leadership block, one recommendation */
+.achievements { display: grid; gap: var(--space-2); margin-top: var(--space-3); }
+@media (min-width: 40rem) { .achievements { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); } }
+@media (min-width: 64rem) { .achievements { grid-template-columns: repeat(6, minmax(0, 1fr)); } .achievement { grid-column: span 2; } .achievement:nth-child(n+4) { grid-column: span 3; } }
+.achievement { padding: var(--space-3); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); border-top: 3px solid var(--t-accent); }
+.achievement__title { margin-bottom: var(--space-1); font-size: 1.125rem; font-weight: 700; letter-spacing: -.01em; }
+.achievement p { font-size: .9375rem; line-height: 1.55; }
+.leadership { margin-top: var(--space-5); max-width: var(--measure); }
+.exp-rec { margin-top: var(--space-5); max-width: 48rem; }
+.exp-rec .rec { height: auto; }
+.career .employers { margin-top: var(--space-5); }
+
