@@ -28,7 +28,7 @@
 <link rel="alternate" hreflang="x-default" href="https://rolandmalczanek.com/">
 <link rel="preload" href="assets/fonts/InterVariable-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="assets/js/theme-init.js?v=20261124"></script>
-<link rel="stylesheet" href="assets/css/styles.css?v=20261125e">
+<link rel="stylesheet" href="assets/css/styles.css?v=20261125f">
 <script src="assets/js/main.js?v=20261124c" defer></script>
 </head>
 <body>
@@ -173,98 +173,33 @@
   <section class="section" id="built" aria-labelledby="built-title">
     <div class="wrap">
       <div class="section__head" data-reveal><h2 id="built-title">Automation Journey</h2></div>
-      <div class="journey-intro" id="built-journey" tabindex="-1" data-reveal>
-        <p class="journey-lead">A few small experiments gradually became a professional direction.</p>
-        <ol class="journey-path" aria-label="Progression">
-<li><a href="#built-stage-1">task automation</a></li>
-<li><a href="#built-stage-2">reporting automation</a></li>
-<li><a href="#built-stage-3">reporting transformation</a></li>
-<li><a href="#built-stage-4">process automation</a></li>
-        </ol>
-      </div>
-      <ol class="journey" data-journey>
-<li class="stage" data-reveal data-stage id="built-stage-1" tabindex="-1">
-<div class="stage__summary">
-<div class="stage__head">
-<p class="stage__kind">Making repetitive work repeatable</p>
-<h3>PowerPoint VBA for customer kick-off decks</h3>
-</div>
-<dl class="stage__flow">
-<div><dt>From</dt><dd>Customer kick-off decks assembled manually, with differences in content and formatting</dd></div>
-<div><dt>Automation</dt><dd>PowerPoint VBA populated and formatted a standard presentation structure using customer- and implementation-specific information</dd></div>
-<div><dt>To</dt><dd>A consistent, ready-to-review kick-off deck: from 4-5 hours to about 30 minutes per deck, roughly 50 decks a year on my own workload, so around 200 hours a year. Adopted by the team after a pilot.</dd></div>
+      <ol class="autoflow" aria-label="Automation progression">
+<li class="autorow" id="built-stage-1" tabindex="-1" data-reveal>
+<div class="autorow__marker"><span class="autorow__num">01</span><span class="autorow__label">Vodafone</span></div>
+<h3 class="autorow__title">Task automation</h3>
+<dl class="autorow__cols">
+<div><dt>Context</dt><dd>Customer kick-off decks took 4-5 hours to prepare, and each colleague built them differently.</dd></div>
+<div><dt>Action</dt><dd>PowerPoint VBA: a short questionnaire fills the deck's placeholders.</dd></div>
+<div><dt>Result</dt><dd>About 30 minutes per deck and consistent output; roughly 50 decks a year on my workload, so around 200 hours. Adopted by the team after a pilot.</dd></div>
 </dl>
-</div>
-<div class="story story--stage is-open" data-state="open">
-<div class="story__stage">
-<div class="story__full">
-<p>Customer kick-off decks that took four to five hours to build by hand are generated from structured data in around 30 minutes.</p>
-</div>
-</div>
-</div>
-<figure class="stage__figure"><img class="stage__visual" src="assets/images/built/automation-journey/journey-02-powerpoint-vba.png" alt="Illustration of user choices shaping a presentation, removing unnecessary slides and producing a PowerPoint deck and PDF." width="720" height="360" loading="lazy" decoding="async">
-<figcaption class="stage__caption">Recreated demonstration based on the original workflow.</figcaption></figure></li>
-<li class="stage" data-reveal data-stage id="built-stage-2" tabindex="-1">
-<div class="stage__summary">
-<div class="stage__head">
-<p class="stage__kind">Automating the monthly cycle</p>
-<h3>Excel VBA for the monthly financial report</h3>
-</div>
-<dl class="stage__flow">
-<div><dt>From</dt><dd>Two working days of repetitive monthly report preparation</dd></div>
-<div><dt>Automation</dt><dd>Excel VBA handled most of the data preparation and created the report’s PivotTables</dd></div>
-<div><dt>To</dt><dd>A repeatable process completed in approximately half a day</dd></div>
+</li>
+<li class="autorow" id="built-stage-2" tabindex="-1" data-reveal>
+<div class="autorow__marker"><span class="autorow__num">02</span><span class="autorow__label">OTP Bank</span></div>
+<h3 class="autorow__title">Reporting automation</h3>
+<dl class="autorow__cols">
+<div><dt>Context</dt><dd>A monthly management report took about two working days of manual SAP data preparation, formulas, pivots and charts.</dd></div>
+<div><dt>Action</dt><dd>Automated it with Excel VBA, later initiated its move to Power BI and owned the business side end to end. Development by an external specialist.</dd></div>
+<div><dt>Result</dt><dd>Two working days down to half a day, then to about 30 minutes of recurring effort. Adopted by another controlling team.</dd></div>
 </dl>
-</div>
-<div class="story story--stage is-open" data-state="open">
-<div class="story__stage">
-<div class="story__full">
-<p>A monthly report of more than 20 worksheets that took two working days now takes about half a day, which saves roughly 18 working days a year. Another controlling team adopted it.</p>
-</div>
-</div>
-</div>
-<figure class="stage__figure"><img class="stage__visual" src="assets/images/built/automation-journey/journey-03-excel-vba.png" alt="Illustration of an Excel table being expanded and populated before additional worksheets and a PivotTable are generated." width="720" height="360" loading="lazy" decoding="async">
-<figcaption class="stage__caption">Recreated demonstration based on the original workflow.</figcaption></figure></li>
-<li class="stage" data-reveal data-stage id="built-stage-3" tabindex="-1">
-<div class="stage__summary">
-<div class="stage__head">
-<p class="stage__kind">Moving beyond the spreadsheet</p>
-<h3>From Excel to Power BI</h3>
-</div>
-<dl class="stage__flow">
-<div><dt>From</dt><dd>A VBA-supported Excel report spread across more than 20 worksheets</dd></div>
-<div><dt>Transformation</dt><dd>The existing financial logic and management requirements redesigned for an interactive Power BI dashboard</dd></div>
-<div><dt>To</dt><dd>A more focused management report with a recurring update process of around 30 minutes</dd></div>
+</li>
+<li class="autorow" id="built-stage-3" tabindex="-1" data-reveal>
+<div class="autorow__marker"><span class="autorow__num">03</span><span class="autorow__label">Personal project</span></div>
+<h3 class="autorow__title">Process automation</h3>
+<dl class="autorow__cols">
+<div><dt>Context</dt><dd>Training exercises and concepts.</dd></div>
+<div><dt>Action</dt><dd>Designed and built CSAP on Power Platform: the business design was mine, Copilot guided the build.</dd></div>
+<div><dt>Result</dt><dd>A working, tested approval workflow with guardrails; the MVP is still in progress.<p class="autorow__more"><a class="media-link" href="#project">See the project</a></p></dd></div>
 </dl>
-</div>
-<div class="story story--stage is-open" data-state="open">
-<div class="story__stage">
-<div class="story__full">
-<p>I initiated the move and owned the business side end to end: I interviewed the Managing Director, specified the requirements, designed the dashboard, then tested and accepted it. An external specialist built it. Refreshing it takes around 30 minutes.</p>
-</div>
-</div>
-</div>
-<figure class="stage__figure"><img class="stage__visual" src="assets/images/built/automation-journey/journey-04-power-bi.png" alt="Illustration of several Excel report views being consolidated into an interactive Power BI dashboard." width="720" height="360" loading="lazy" decoding="async">
-<figcaption class="stage__caption">Recreated demonstration based on the original workflow.</figcaption></figure></li>
-<li class="stage" data-reveal data-stage id="built-stage-4" tabindex="-1">
-<div class="stage__summary">
-<div class="stage__head">
-<p class="stage__kind">The next step</p>
-<h3>Building CSAP on Power Platform</h3>
-</div>
-<dl class="stage__flow">
-<div><dt>From</dt><dd>Training exercises and concepts</dd></div>
-<div><dt>Automation</dt><dd>A much larger build: my idea and business design, Copilot&#39;s step-by-step guidance, my hands-on implementation and testing</dd></div>
-<div><dt>To</dt><dd>A working, tested approval workflow with guardrails; the rest of the MVP is still in progress</dd></div>
-</dl>
-</div>
-<div class="story story--stage is-open" data-state="open">
-<div class="story__stage">
-<div class="story__full">
-<p>Hands-on exercises at an OTP LAB open day showed me what Power Platform could do for finance processes, so I started building my own use case: the Corporate Services Automation Platform (CSAP), below.</p>
-</div>
-</div>
-</div>
 <figure class="stage__figure stage__figure--video">
 <video controls playsinline preload="metadata" poster="assets/video/csap-demo-poster.png" aria-label="CSAP demo video with fictional data">
 <source src="assets/video/csap-demo.mp4" type="video/mp4">
