@@ -928,7 +928,8 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
 /* Automation: three rounded rows on one scroll-linked progression line (rail, fill and nodes follow the original journey behaviour) */
 .autoflow { --t-accent: var(--tone-otp-accent); --journey-progress: 0; position: relative; isolation: isolate; display: grid; gap: var(--space-4); margin: var(--space-3) 0 0; padding: 0 0 0 2rem; list-style: none; }
 .autoflow::before, .autoflow::after { content: ""; position: absolute; z-index: -1; left: .375rem; top: .75rem; width: 2px; margin-left: -1px; border-radius: 2px; }
-.autoflow::before { bottom: var(--journey-end, .75rem); background: var(--color-border-strong); }
+/* empty rail: thin and pale, so the accent fill reads clearly on top of it */
+.autoflow::before { bottom: var(--journey-end, .75rem); width: 1px; margin-left: -.5px; background: var(--color-border); }
 .autoflow::after { height: calc(100% - .75rem - var(--journey-end, .75rem)); background: var(--t-accent); }
 .autoflow.is-live::after { height: calc((100% - .75rem - var(--journey-end, .75rem)) * var(--journey-progress)); }
 .autorow { position: relative; }

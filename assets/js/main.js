@@ -336,18 +336,18 @@
     var q = function (sel, root) { return (root || document).querySelector(sel); };
     var zones = [];
     var add = function (el, tone, kind, primary, secondary, card, cap) { if (el) zones.push({ el: el, tone: tone, kind: kind, primary: primary, secondary: secondary, card: card, cap: cap }); };
-    /* Zones are keyed to each section's heading: the bar changes when that heading reaches the bottom of the fixed header.
-       Experience shows one line; each career station shows CAREER with the employer name below; hidden in Beyond work and Contact. */
-    add(q('#career-title'), 'otp', '', 'Experience', '');
+    /* Zones are keyed to the horizontal divider that opens each section or career station: the bar changes when that divider reaches the bottom of the fixed header.
+       Experience shows one line; each career station shows CAREER with the employer name below. The bar is released at the end of the last recommendation card. */
+    add(q('#career'), 'otp', '', 'Experience', '');
     Array.prototype.forEach.call(careerEl.querySelectorAll('.employer'), function (em) {
       var nm = em.querySelector('.employer__name');
-      add(nm, 'otp', 'career', 'Career', txt(nm));
+      add(em, 'otp', 'career', 'Career', txt(nm));
     });
-    add(q('#built-title'), 'default', '', 'Automation', '');
-    add(q('#csap-title'), 'default', '', 'Project', '');
-    add(q('#recommendations .eyebrow'), 'default', '', 'Recommendations', '');
-    add(q('#outside-work'), '', 'hidden');
-    add(q('#contact-title'), '', 'hidden');
+    add(q('#built'), 'default', '', 'Automation', '');
+    add(q('#project'), 'default', '', 'Project', '');
+    add(q('#recommendations'), 'default', '', 'Recommendations', '');
+    var recCards = document.querySelectorAll('#recommendations .rec'), recCard = recCards[recCards.length - 1], recNote = q('#recommendations .recs__note');
+    var ctxEnded = false;
 
     var ctx = document.createElement('div');
     ctx.className = 'page-ctx';
@@ -371,16 +371,17 @@
     var ctxUpdate = function () {
       ctxTicking = false;
       if (!mobileMq.matches) { ctx.classList.remove('is-visible'); return; }
-      /* zones are in document order, so the last heading at or above the bottom edge of the fixed header is current */
-      var line = headerHeight() + (ctx.classList.contains('is-visible') ? ctx.offsetHeight : 0) + 1, cur = null;
-      /* At the very end of the page the last short sections can never scroll up to the header: a visible hidden-zone heading then releases the bar */
-      /* Beyond work releases the bar at the section's top border (the grey line under the recommendations note), always measured at the bar's bottom edge so it is symmetric when scrolling back */
-      var hideLine = headerHeight() + ctx.offsetHeight + 1;
-      var atPageEnd = (window.pageYOffset || document.documentElement.scrollTop) + window.innerHeight >= document.documentElement.scrollHeight - 2;
+      /* zones are in document order, so the last divider at or above the switch line is current: the bar's bottom edge while the bar is visible, the header's bottom edge when it is not */
+      var navLine = headerHeight() + 1, line = navLine + (ctx.classList.contains('is-visible') ? ctx.offsetHeight : 0), cur = null;
       for (var i = 0; i < zones.length; i++) {
-        var zt = zones[i].el.getBoundingClientRect().top;
-        if (zt <= (zones[i].kind === 'hidden' ? hideLine : line) || (atPageEnd && zones[i].kind === 'hidden' && zt < window.innerHeight)) cur = zones[i];
+        if (zones[i].el.getBoundingClientRect().top <= line) cur = zones[i];
       }
+      /* Scrolling down the bar is released when the last recommendation card ends at the header; scrolling up it returns once the note below the cards has cleared the header */
+      if (recCard && recNote) {
+        if (recCard.getBoundingClientRect().bottom <= navLine) ctxEnded = true;
+        else if (recNote.getBoundingClientRect().bottom > navLine) ctxEnded = false;
+      }
+      if (ctxEnded && cur && cur.primary === 'Recommendations') cur = null;
       if (!cur || cur.kind === 'hidden') { ctx.classList.remove('is-visible'); return; }
       setCtx(cur.tone, cur.kind, cur.primary, cur.secondary);
       ctx.classList.add('is-visible');
