@@ -336,13 +336,18 @@
     var q = function (sel, root) { return (root || document).querySelector(sel); };
     var zones = [];
     var add = function (el, tone, kind, primary, secondary, card, cap) { if (el) zones.push({ el: el, tone: tone, kind: kind, primary: primary, secondary: secondary, card: card, cap: cap }); };
-    /* One uniform label per section, section name only (no employer or role text); hidden before Experience, in Beyond work and in Contact */
-    add(careerEl, 'otp', '', 'Experience', '');
-    add(q('#built'), 'default', '', 'Automation', '');
-    add(q('#built-csap'), 'default', '', 'Project', '');
-    add(q('#recommendations'), 'default', '', 'Recommendations', '');
-    add(q('#outside-work'), '', 'hidden');
-    add(q('#contact'), '', 'hidden');
+    /* Zones are keyed to each section's heading: the bar changes when that heading reaches the bottom of the fixed header.
+       Experience shows one line; each career station shows CAREER with the employer name below; hidden in Beyond work and Contact. */
+    add(q('#career-title'), 'otp', '', 'Experience', '');
+    Array.prototype.forEach.call(careerEl.querySelectorAll('.employer'), function (em) {
+      var nm = em.querySelector('.employer__name');
+      add(nm, 'otp', 'career', 'Career', txt(nm));
+    });
+    add(q('#built-title'), 'default', '', 'Automation', '');
+    add(q('#csap-title'), 'default', '', 'Project', '');
+    add(q('#recs-title'), 'default', '', 'Recommendations', '');
+    add(q('#outside-t'), '', 'hidden');
+    add(q('#contact-title'), '', 'hidden');
 
     var ctx = document.createElement('div');
     ctx.className = 'page-ctx';
@@ -366,33 +371,16 @@
     var ctxUpdate = function () {
       ctxTicking = false;
       if (!mobileMq.matches) { ctx.classList.remove('is-visible'); return; }
-      /* zones are in document order, so the last one above the reading line is current */
-      var line = headerHeight() + ctx.offsetHeight + 8, cur = null, curTop = 0;
-      /* On tall viewports Contact may never rise above 70% of the screen: at the very end of the page it is fully in view, so it releases the bar anyway */
+      /* zones are in document order, so the last heading at or above the bottom edge of the fixed header is current */
+      var line = headerHeight() + 1, cur = null;
+      /* At the very end of the page the last short sections can never scroll up to the header: a visible hidden-zone heading then releases the bar */
       var atPageEnd = (window.pageYOffset || document.documentElement.scrollTop) + window.innerHeight >= document.documentElement.scrollHeight - 2;
       for (var i = 0; i < zones.length; i++) {
-        /* Contact releases the bar as soon as it is well into view */
-        var at = zones[i].el.id === 'contact' ? (atPageEnd ? Infinity : Math.max(line, window.innerHeight * 0.7)) : line;
         var zt = zones[i].el.getBoundingClientRect().top;
-        /* cards in the same grid row share a top: the first (leftmost) one stays current */
-        if (zt <= at && !(zones[i].card && cur && cur.card && Math.abs(zt - curTop) < 2)) { cur = zones[i]; curTop = zt; }
+        if (zt <= line || (atPageEnd && zones[i].kind === 'hidden' && zt < window.innerHeight)) cur = zones[i];
       }
       if (!cur || cur.kind === 'hidden') { ctx.classList.remove('is-visible'); return; }
-      if (cur.kind === 'career') {
-        var em = cur.el, roles = em.querySelectorAll('.role'), roleEl;
-        if (roles.length) {
-          roleEl = roles[0];
-          Array.prototype.forEach.call(roles, function (r) { if (r.getBoundingClientRect().top <= line) roleEl = r; });
-          roleEl = roleEl.querySelector('h4');
-        } else {
-          roleEl = em.querySelector('.progression .is-latest');
-        }
-        setCtx(cur.tone, 'career', txt(em.querySelector('.employer__name')), txt(roleEl));
-      } else {
-        /* With a multi-column Capabilities grid no single card is current: show the primary line only */
-        var cols = cur.cap ? getComputedStyle(q('.card-grid')).gridTemplateColumns.split(' ').length : 1;
-        setCtx(cur.tone, '', cur.primary, cols > 1 ? '' : cur.secondary);
-      }
+      setCtx(cur.tone, cur.kind, cur.primary, cur.secondary);
       ctx.classList.add('is-visible');
     };
     var ctxQueue = function () { if (!ctxTicking) { ctxTicking = true; requestAnimationFrame(ctxUpdate); } };

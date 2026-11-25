@@ -618,13 +618,13 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
     display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;
     position: sticky; top: var(--header-h); z-index: 5; height: var(--ctx-h); margin-bottom: calc(-1 * var(--ctx-h));
     padding: 0 max(var(--space-2), env(safe-area-inset-right)) 0 max(var(--space-2), env(safe-area-inset-left));
-    border-bottom: 1px solid color-mix(in srgb, var(--ctx-accent) 35%, transparent);
-    background: color-mix(in srgb, var(--ctx-bg) 96%, transparent);
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
     opacity: 0; visibility: hidden; pointer-events: none;
     transition: opacity 200ms var(--ease), visibility 0s linear 200ms, background-color 300ms var(--ease);
   }
   .page-ctx.is-visible { opacity: 1; visibility: visible; transition-delay: 0s; }
-  @supports (backdrop-filter: blur(1px)) { .page-ctx { backdrop-filter: blur(8px); } }
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .page-ctx { -webkit-backdrop-filter: blur(10px) saturate(1.05); backdrop-filter: blur(10px) saturate(1.05); } }
   .page-ctx[data-tone="otp"] { --ctx-accent: var(--tone-otp-accent); --ctx-bg: var(--tone-otp-tint); }
   .page-ctx[data-tone="vodafone"] { --ctx-accent: var(--tone-vodafone-accent); --ctx-bg: var(--tone-vodafone-tint); }
   .page-ctx[data-tone="docler"] { --ctx-accent: var(--tone-docler-accent); --ctx-bg: var(--tone-docler-tint); }
@@ -638,7 +638,7 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
   .page-ctx__primary, .page-ctx__secondary { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .page-ctx__primary { color: var(--ctx-accent); font-size: .875rem; font-weight: 700; letter-spacing: .04em; line-height: 1.3; text-transform: uppercase; }
   .page-ctx__primary.is-long { font-size: .75rem; letter-spacing: .02em; }
-  .page-ctx__secondary { color: var(--color-text); font-size: .75rem; line-height: 1.3; }
+  .page-ctx__secondary { color: var(--color-text); font-size: .75rem; font-weight: 400; line-height: 1.3; }
   .page-ctx__secondary[hidden] { display: none; }
   .employer, .role { scroll-margin-top: var(--ctx-offset); }
 }
