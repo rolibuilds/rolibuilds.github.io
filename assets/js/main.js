@@ -345,8 +345,8 @@
     });
     add(q('#built-title'), 'default', '', 'Automation', '');
     add(q('#csap-title'), 'default', '', 'Project', '');
-    add(q('#recs-title'), 'default', '', 'Recommendations', '');
-    add(q('#outside-t'), '', 'hidden');
+    add(q('#recommendations .eyebrow'), 'default', '', 'Recommendations', '');
+    add(q('#outside-work'), '', 'hidden');
     add(q('#contact-title'), '', 'hidden');
 
     var ctx = document.createElement('div');
@@ -374,10 +374,12 @@
       /* zones are in document order, so the last heading at or above the bottom edge of the fixed header is current */
       var line = headerHeight() + (ctx.classList.contains('is-visible') ? ctx.offsetHeight : 0) + 1, cur = null;
       /* At the very end of the page the last short sections can never scroll up to the header: a visible hidden-zone heading then releases the bar */
+      /* Beyond work releases the bar at the section's top border (the grey line under the recommendations note), always measured at the bar's bottom edge so it is symmetric when scrolling back */
+      var hideLine = headerHeight() + ctx.offsetHeight + 1;
       var atPageEnd = (window.pageYOffset || document.documentElement.scrollTop) + window.innerHeight >= document.documentElement.scrollHeight - 2;
       for (var i = 0; i < zones.length; i++) {
         var zt = zones[i].el.getBoundingClientRect().top;
-        if (zt <= line || (atPageEnd && zones[i].kind === 'hidden' && zt < window.innerHeight)) cur = zones[i];
+        if (zt <= (zones[i].kind === 'hidden' ? hideLine : line) || (atPageEnd && zones[i].kind === 'hidden' && zt < window.innerHeight)) cur = zones[i];
       }
       if (!cur || cur.kind === 'hidden') { ctx.classList.remove('is-visible'); return; }
       setCtx(cur.tone, cur.kind, cur.primary, cur.secondary);
