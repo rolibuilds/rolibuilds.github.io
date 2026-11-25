@@ -541,12 +541,6 @@ html[lang="hu"] .hero h1 { --hero-fs: 12.2cqi; }
    changes only: background tint, markers, heading accents, links, result details.
    ========================================================================== */
 .career { --t-accent: var(--tone-otp-accent); --t-tint: var(--tone-otp-tint); }
-.career[data-tone="vodafone"] { --t-accent: var(--tone-vodafone-accent); --t-tint: var(--tone-vodafone-tint); }
-.career[data-tone="docler"] { --t-accent: var(--tone-docler-accent); --t-tint: var(--tone-docler-tint); }
-.career[data-tone="realszisztema"] { --t-accent: var(--tone-realszisztema-accent); --t-tint: var(--tone-realszisztema-tint); }
-.no-js .employer[data-employer="vodafone"] { --t-accent: var(--tone-vodafone-accent); }
-.no-js .employer[data-employer="docler"] { --t-accent: var(--tone-docler-accent); }
-.no-js .employer[data-employer="realszisztema"] { --t-accent: var(--tone-realszisztema-accent); }
 .career { background-color: var(--t-tint); transition: background-color var(--tone-dur) var(--ease); }
 .career a { color: var(--t-accent); transition: color var(--tone-dur) var(--ease); }
 .career a:hover { color: color-mix(in srgb, var(--t-accent) 65%, var(--color-text)); }

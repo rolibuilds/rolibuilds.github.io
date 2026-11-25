@@ -309,31 +309,6 @@
     window.addEventListener('scroll', syncScrolled, { passive: true });
   }
 
-  /* ---------- Career tone: follows the employer chapter that dominates the viewport, in both scroll directions ---------- */
-  var career = document.getElementById('career');
-  var employers = career ? career.querySelectorAll('[data-employer]') : [];
-  if (employers.length) {
-    var toneTicking = false;
-    var syncTone = function () {
-      toneTicking = false;
-      /* Dominant chapter = the one closest to a reading line 40% down the viewport */
-      var line = window.innerHeight * 0.4, best = null, bestDist = Infinity;
-      Array.prototype.forEach.call(employers, function (el) {
-        var r = el.getBoundingClientRect();
-        var dist = line < r.top ? r.top - line : (line > r.bottom ? line - r.bottom : 0);
-        if (dist < bestDist) { bestDist = dist; best = el; }
-      });
-      if (best && career.getAttribute('data-tone') !== best.getAttribute('data-employer')) {
-        career.setAttribute('data-tone', best.getAttribute('data-employer'));
-      }
-    };
-    syncTone();
-    window.addEventListener('scroll', function () {
-      if (!toneTicking) { toneTicking = true; requestAnimationFrame(syncTone); }
-    }, { passive: true });
-    window.addEventListener('resize', syncTone);
-  }
-
   /* ---------- Mobile page context bar: one sticky, aria-hidden bar (primary + secondary title) derived from existing headings ---------- */
   var mainEl = document.getElementById('main');
   var careerEl = document.getElementById('career');
@@ -349,7 +324,7 @@
     add(q('#built-csap'), 'default', '', txt(q('#csap-title')), '');
     add(careerEl, '', 'hidden');
     var employerEls = careerEl.querySelectorAll('.employer');
-    Array.prototype.forEach.call(employerEls, function (em) { add(em, em.getAttribute('data-employer'), 'career'); });
+    Array.prototype.forEach.call(employerEls, function (em) { add(em, 'otp', 'career'); });
     add(q('#recommendations'), '', 'hidden'); /* releases the Career context; the bar stays hidden through Recommendations and Outside work */
     add(q('#outside-work'), '', 'hidden');
     add(q('#contact'), '', 'hidden');
