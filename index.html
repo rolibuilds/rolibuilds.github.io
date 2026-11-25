@@ -28,7 +28,7 @@
 <link rel="alternate" hreflang="x-default" href="https://rolandmalczanek.com/">
 <link rel="preload" href="assets/fonts/InterVariable-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="assets/js/theme-init.js?v=20261124"></script>
-<link rel="stylesheet" href="assets/css/styles.css?v=20261125c">
+<link rel="stylesheet" href="assets/css/styles.css?v=20261125d">
 <script src="assets/js/main.js?v=20261124c" defer></script>
 </head>
 <body>
@@ -279,31 +279,22 @@
 <p>CSAP is my personal portfolio project, built around a realistic business problem: how to manage requests that require both approval and financial control without relying on disconnected emails and spreadsheets. <span class="csap__second">It uses Dataverse and Power Automate to connect structured request data, financial validation, exchange rates, budget controls and approval workflows in one traceable process.</span></p>
 </div>
 <div class="csap__capability"><p class="facts-label" id="cap-t">Current capability</p>
-<ul class="chips" aria-labelledby="cap-t"><li>Financial validation</li><li>Multi-currency handling</li><li>FX-rate maintenance</li><li>Budget-capacity checks</li><li>Approval routing</li><li>Clarification and exception handling</li><li>Traceable approval history</li></ul>
+<ul class="chips" aria-labelledby="cap-t"><li>Financial validation</li><li>Approval routing</li><li>Budget-capacity checks</li><li>Traceable approval history</li></ul>
 </div>
-<section class="principle" aria-labelledby="csap-built-t">
-<h3 id="csap-built-t" class="facts-label">How it was built</h3>
-<div class="csap__overview">
-<p>I worked through the requirements, process design, data model and financial rules before building the Dataverse foundation and Power Automate workflows. Testing has been part of the work from the beginning, and I changed both the design and the scope when the evidence showed that I should.</p>
-</div>
-</section>
 <section class="principle" aria-labelledby="csap-ai-t">
 <h3 id="csap-ai-t" class="facts-label">How I worked with AI</h3>
-<ul class="facts-list">
-<li>I defined the business design, including what belongs in the MVP and what comes later. Copilot turned it into a proposal I reviewed. It repeatedly expanded the scope or drifted from the frozen design, for example by inventing a separate step where the design treats final approval as the commitment event; I stopped it, corrected it and removed features to move faster.</li>
-<li>Copilot supplied most of the test cases; I ran them and checked the results. One test I proposed myself: with one real account behind all three test users, I verified that actions the flow must block (approving at the wrong approval level, approving my own request) were blocked inside the automation, not only in the user interface.</li>
-<li>Testing exposed a bug where released holds were not cleared for rejected and cancelled requests. Copilot helped diagnose it and told me what to change; I made the fix and re-ran the checks.</li>
-</ul>
+<div class="csap__overview">
+<p>Built with AI assistance: Copilot guided the build and drafted most test cases. The business design, financial rules, scope decisions and acceptance testing were mine; I corrected scope drift and verified that the controls hold in the automation itself, not only in the interface.</p>
+</div>
 </section>
 <div class="principle">
 <dl class="csap__facts">
 <div><dt>Controls</dt><dd>approval-authority and security guards, duplicate protection, pending funding holds, final financial revalidation; official Hungarian National Bank (MNB) exchange rates for EUR, USD, GBP and CHF</dd></div>
 <div><dt>Built with</dt><dd>Dataverse, Power Automate, Power Apps (Dataverse views)</dd></div>
-<div><dt>Who did what</dt><dd>I brought the idea and the business design, built every Dataverse table and flow myself and ran every test. Copilot guided how to build each part and how to test and document it.</dd></div>
-<div><dt>UI</dt><dd>a custom UI is planned with Claude and is not built yet. Still to come: recording the approved amount at final approval, actual-cost tracking with a simple reconciliation, and a Power BI plan-versus-actual dashboard.</dd></div>
 <div><dt>Environment</dt><dd>personal environment with fictional test data; I tested the important controls in practice and documented what could not be validated as it would be in an organisational environment</dd></div>
 </dl>
 </div>
+<p class="csap__status">The MVP is still in progress.</p>
       </article>
     </div>
   </section>

@@ -918,4 +918,4 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
 .exp-rec { margin-top: var(--space-5); max-width: 48rem; }
 .exp-rec .rec { height: auto; }
 .career .employers { margin-top: var(--space-5); }
-
+.csap__status { margin-top: var(--space-3); font-weight: 600; }
