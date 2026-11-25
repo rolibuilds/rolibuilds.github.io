@@ -293,6 +293,23 @@
   }
   initReveal();
 
+  /* ---------- Automation rows: once-only fade/rise at 15% visibility, staggered when several enter together ---------- */
+  (function () {
+    var rows = document.querySelectorAll('[data-autoreveal]');
+    if (!rows.length) return;
+    if (!('IntersectionObserver' in window) || reduceMotion.matches) { Array.prototype.forEach.call(rows, function (r) { r.classList.add('is-in'); }); return; }
+    var rio = new IntersectionObserver(function (entries) {
+      var batch = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
+      batch.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+      batch.forEach(function (el, i) {
+        el.style.transitionDelay = i * 80 + 'ms';
+        el.classList.add('is-in');
+        rio.unobserve(el);
+      });
+    }, { threshold: 0.15 });
+    Array.prototype.forEach.call(rows, function (r) { rio.observe(r); });
+  })();
+
   /* ---------- Hero fills the first viewport: measure the real header height ---------- */
   var header = document.querySelector('.site-header');
   if (header) {

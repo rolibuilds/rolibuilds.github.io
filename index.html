@@ -28,8 +28,8 @@
 <link rel="alternate" hreflang="x-default" href="https://rolandmalczanek.com/">
 <link rel="preload" href="assets/fonts/InterVariable-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="assets/js/theme-init.js?v=20261124"></script>
-<link rel="stylesheet" href="assets/css/styles.css?v=20261125g">
-<script src="assets/js/main.js?v=20261125g" defer></script>
+<link rel="stylesheet" href="assets/css/styles.css?v=20261125h">
+<script src="assets/js/main.js?v=20261125h" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -171,27 +171,34 @@
   <section class="section" id="built" aria-labelledby="built-title">
     <div class="wrap">
       <div class="section__head" data-reveal><h2 id="built-title">Automation Journey</h2></div>
-      <ol class="autoflow" aria-label="Automation progression">
-<li class="autorow" id="built-stage-1" tabindex="-1" data-reveal>
+      <ol class="autoflow" aria-label="Automation progression" data-journey>
+<li class="autorow" id="built-stage-1" tabindex="-1" data-stage data-autoreveal>
 <div class="autorow__marker"><span class="autorow__num">01</span><span class="autorow__label">Vodafone</span></div>
+<div class="autorow__card">
 <h3 class="autorow__title">Task automation</h3>
 <dl class="autorow__cols">
 <div><dt>Context</dt><dd>Customer kick-off decks took 4-5 hours to prepare, and each colleague built them differently.</dd></div>
 <div><dt>Action</dt><dd>PowerPoint VBA: a short questionnaire fills the deck's placeholders.</dd></div>
-<div><dt>Result</dt><dd>About 30 minutes per deck and consistent output; roughly 50 decks a year on my workload, so around 200 hours. Adopted by the team after a pilot.</dd></div>
+<div><dt>Result</dt><dd>About 30 minutes per deck and consistent output; roughly 50 decks a year on my workload, so around 200 hours. Adopted by the team after a pilot.
+<p class="autorow__figure"><span class="autorow__fig-pre">saved roughly</span><strong>25</strong><span class="autorow__fig-post">workdays a year</span></p></dd></div>
 </dl>
+</div>
 </li>
-<li class="autorow" id="built-stage-2" tabindex="-1" data-reveal>
+<li class="autorow" id="built-stage-2" tabindex="-1" data-stage data-autoreveal>
 <div class="autorow__marker"><span class="autorow__num">02</span><span class="autorow__label">OTP Bank</span></div>
+<div class="autorow__card">
 <h3 class="autorow__title">Reporting automation</h3>
 <dl class="autorow__cols">
 <div><dt>Context</dt><dd>A monthly management report took about two working days of manual SAP data preparation, formulas, pivots and charts.</dd></div>
-<div><dt>Action</dt><dd>Automated it with Excel VBA, later initiated its move to Power BI and owned the business side end to end. Development by an external specialist.</dd></div>
-<div><dt>Result</dt><dd>Two working days down to half a day, then to about 30 minutes of recurring effort. Adopted by another controlling team.</dd></div>
+<div><dt>Action</dt><dd>As a first step, I automated it with Excel VBA. I later initiated its move to Power BI and owned the business side end to end. Power BI development was done by an external specialist.</dd></div>
+<div><dt>Result</dt><dd>Two working days down to half a day, then to about 30 minutes of recurring effort. Adopted by another controlling team.
+<p class="autorow__figure"><span class="autorow__fig-pre">saved roughly</span><strong>18</strong><span class="autorow__fig-post">workdays a year</span></p></dd></div>
 </dl>
+</div>
 </li>
-<li class="autorow" id="built-stage-3" tabindex="-1" data-reveal>
+<li class="autorow" id="built-stage-3" tabindex="-1" data-stage data-autoreveal>
 <div class="autorow__marker"><span class="autorow__num">03</span><span class="autorow__label">Personal project</span></div>
+<div class="autorow__card">
 <h3 class="autorow__title">Process automation</h3>
 <dl class="autorow__cols">
 <div><dt>Context</dt><dd>Training exercises and concepts.</dd></div>
@@ -204,8 +211,10 @@
 </video>
 <figcaption class="stage__caption">Demo of the working approval process (MVP in progress), recorded in my personal environment with fictional data. Shortened for length.</figcaption>
 </figure>
+</div>
 </li>
       </ol>
+      <p class="autoflow__note">Workday = 8 hours.</p>
     </div>
   </section>
 
