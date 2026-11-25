@@ -983,3 +983,13 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
 .hero__roles { margin-top: 0; margin-bottom: clamp(1.5rem, 3.5vh, 2.5rem); }
 .hero__cta { margin-top: 0; }
 
+/* Hero on mobile: the portrait sits directly under the headline (desktop keeps two columns) */
+@media (max-width: 55.99rem) {
+  .hero__inner { display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
+  .hero__main { display: contents; }
+  .hero__main > *, .hero__photo { order: 3; }
+  .hero .eyebrow { order: 0; }
+  .hero h1 { order: 1; margin-bottom: clamp(1rem, 3vh, 1.5rem); }
+  .hero__photo { order: 2; margin-bottom: clamp(1.25rem, 3vh, 2rem); }
+}
+
