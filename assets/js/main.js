@@ -372,7 +372,7 @@
       ctxTicking = false;
       if (!mobileMq.matches) { ctx.classList.remove('is-visible'); return; }
       /* zones are in document order, so the last heading at or above the bottom edge of the fixed header is current */
-      var line = headerHeight() + 1, cur = null;
+      var line = headerHeight() + (ctx.classList.contains('is-visible') ? ctx.offsetHeight : 0) + 1, cur = null;
       /* At the very end of the page the last short sections can never scroll up to the header: a visible hidden-zone heading then releases the bar */
       var atPageEnd = (window.pageYOffset || document.documentElement.scrollTop) + window.innerHeight >= document.documentElement.scrollHeight - 2;
       for (var i = 0; i < zones.length; i++) {
