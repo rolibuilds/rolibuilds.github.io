@@ -297,7 +297,9 @@
   (function () {
     var rows = document.querySelectorAll('[data-autoreveal]');
     if (!rows.length) return;
-    if (!('IntersectionObserver' in window) || reduceMotion.matches) { Array.prototype.forEach.call(rows, function (r) { r.classList.add('is-in'); }); return; }
+    if (!('IntersectionObserver' in window)) { Array.prototype.forEach.call(rows, function (r) { r.classList.add('is-in'); }); return; }
+    /* reduced motion: the same once-only reveal, but as a plain opacity fade (CSS removes the movement) */
+    if (reduceMotion.matches) rows[0].parentNode.classList.add('is-fade');
     var rio = new IntersectionObserver(function (entries) {
       var batch = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
       batch.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });

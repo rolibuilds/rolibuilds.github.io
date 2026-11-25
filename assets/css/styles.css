@@ -947,17 +947,19 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
 .autorow__cols dd { margin: 0; font-size: .9375rem; line-height: 1.55; }
 @media (min-width: 48rem) { .autorow__cols { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); } .autorow__card { padding: var(--space-4); } }
 .autorow__more { margin: var(--space-1) 0 0; font-size: .875rem; }
-.autorow__figure { display: grid; justify-items: start; gap: 0; margin: var(--space-2) 0 0; line-height: 1.1; }
+.autorow__figure { display: grid; justify-items: center; text-align: center; gap: 0; margin: var(--space-2) 0 0; line-height: 1.1; }
 .autorow__figure strong { font-size: clamp(2.5rem, 1.9rem + 2.4vw, 3.5rem); font-weight: 740; letter-spacing: -.03em; color: var(--t-accent); }
 .autorow__fig-pre, .autorow__fig-post { font-size: .8125rem; color: var(--color-muted); }
-.autoflow__note { margin-top: var(--space-3); font-size: .8125rem; color: var(--color-muted); }
 .autorow .stage__figure { width: min(100%, 22rem); margin: var(--space-3) 0 0; justify-self: auto; align-self: auto; }
 /* Row reveal: once per row, fade and rise; armed only by JS and never for reduced motion (theme-init sets reveal-ready) */
 .reveal-ready .autorow[data-autoreveal] { opacity: 0; transform: translateY(8px); }
 .reveal-ready .autorow[data-autoreveal].is-in { opacity: 1; transform: none; transition: opacity 450ms ease-out, transform 450ms ease-out; }
 @media (min-width: 40rem) { .reveal-ready .autorow[data-autoreveal] { transform: translateY(14px); } }
 @media (prefers-reduced-motion: reduce) {
-  .autorow[data-autoreveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .autoflow:not(.is-fade) .autorow[data-autoreveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  /* reduced motion: a plain opacity fade, no movement */
+  .autoflow.is-fade .autorow[data-autoreveal] { opacity: 0; transform: none !important; }
+  .autoflow.is-fade .autorow[data-autoreveal].is-in { opacity: 1; transition: opacity 450ms ease-out !important; }
   .autoflow::after, .autoflow.is-live::after { height: calc(100% - .75rem - var(--journey-end, .75rem)) !important; }
   .autoflow .autorow::before, .autoflow.is-live .autorow::before { background: var(--t-accent) !important; }
 }
