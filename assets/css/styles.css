@@ -886,14 +886,24 @@ a.contact-cta[href]:hover { color: var(--color-accent-hover); background: var(--
 /* Hero, senior positioning: compact, text-led; figures and two buttons */
 .hero { min-height: 0; }
 .hero__inner { container-type: normal; padding-block: clamp(2rem, 5vw, 4rem) clamp(2rem, 5vw, 3.5rem); }
-.hero__main { justify-content: flex-start; max-width: 52rem; }
+.hero__main { justify-content: flex-start; }
 .hero h1 { margin: 0 0 var(--space-2); max-width: 20ch; font-size: clamp(2.25rem, 1.2rem + 4.2vw, 4.25rem); line-height: 1.06; letter-spacing: -.03em; font-weight: 760; text-wrap: balance; }
 .hero__role { margin: 0 0 var(--space-2); font-size: clamp(1.0625rem, 1rem + .35vw, 1.25rem); font-weight: 650; color: var(--color-accent); }
 .hero .lead { max-width: 40rem; }
 .hero__target { margin: var(--space-3) 0 0; padding: .6rem .9rem; max-width: 100%; border-left: 3px solid var(--color-accent); background: var(--color-accent-soft); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-weight: 600; font-size: .9375rem; line-height: 1.4; }
-@media (min-width: 64rem) { .hero__target { font-size: 1rem; } }
+.hero__target { width: fit-content; }
 .hero__figures { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin: var(--space-3) 0 0; padding: 0; list-style: none; }
 .hero__figures li { display: grid; gap: .125rem; }
 .hero__figures strong { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem); font-weight: 740; letter-spacing: -.02em; line-height: 1.1; }
 .hero__figures span { font-size: .8125rem; color: var(--color-muted); }
 .hero__cta { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+/* Hero portrait: stacked and small on mobile, second column on desktop */
+.hero__inner { display: grid; gap: var(--space-4); align-items: center; }
+.hero__photo { margin: 0; justify-self: start; width: min(100%, 9rem); }
+.hero__photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); background: var(--color-surface); }
+@media (min-width: 40rem) { .hero__photo { width: min(100%, 11rem); } }
+@media (min-width: 56rem) {
+  .hero__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); gap: var(--space-5); }
+  .hero__photo { justify-self: end; width: 100%; max-width: 20rem; }
+}
+
